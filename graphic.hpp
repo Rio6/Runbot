@@ -3,15 +3,15 @@
 
 #include <SDL2/SDL.h>
 
-namespace graphic {
-    class Graphic {
-        public:
-            Graphic();
-            ~Graphic();
-            int init();
-        private:
-            SDL_Renderer *rend;
-    };
+class Graphic {
+
+    public:
+        Graphic();
+        ~Graphic();
+
+    private:
+        SDL_Renderer *rend;
+        SDL_Window *win;
 };
 
 #endif

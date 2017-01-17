@@ -1,17 +1,22 @@
-#include "graphic.hpp"
+#include <iostream>
 
-using namespace graphic;
+#include "graphic.hpp"
+#include "main.hpp"
 
 Graphic::Graphic() {
+
+    if(SDL_Init(SDL_INIT_VIDEO) != 0)
+        throw std::runtime_error(SDL_GetError());
+
+    win = SDL_CreateWindow(config::TITLE.c_str(),
+            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+            config::WIN_W, config::WIN_H,
+            SDL_WINDOW_FULLSCREEN_DESKTOP);
+    if(win == NULL)
+        throw std::runtime_error(SDL_GetError());
 }
 
 Graphic::~Graphic() {
-}
-
-int Graphic::init() {
-
-    if(SDL_Init(SDL_INIT_VIDEO) != 0) {
-        SDL_Log("SDL init failed: %s", SDL_GetError());
-        return 1;
-    }
+    SDL_DestroyWindow(win);
+    SDL_Quit();
 }
