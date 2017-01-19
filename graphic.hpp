@@ -8,6 +8,7 @@ class Graphic {
     public:
         Graphic();
         ~Graphic();
+        void draw();
 
     private:
         SDL_Renderer *rend;

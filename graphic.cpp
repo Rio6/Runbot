@@ -14,9 +14,27 @@ Graphic::Graphic() {
             SDL_WINDOW_FULLSCREEN_DESKTOP);
     if(win == NULL)
         throw std::runtime_error(SDL_GetError());
+
+    rend = SDL_CreateRenderer(win, -1,
+            SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if(rend == NULL)
+        throw std::runtime_error(SDL_GetError());
+
 }
 
 Graphic::~Graphic() {
+
+    SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(win);
+
+    rend = NULL;
+    win = NULL;
+
     SDL_Quit();
+}
+
+void Graphic::draw() {
+    SDL_SetRenderDrawColor(rend, 0xff, 0xff, 0xff, 0xff);
+    SDL_RenderClear(rend);
+    SDL_RenderPresent(rend);
 }
