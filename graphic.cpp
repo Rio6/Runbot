@@ -8,10 +8,10 @@ Graphic::Graphic() {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
         throw std::runtime_error(SDL_GetError());
 
-    win = SDL_CreateWindow(config::TITLE.c_str(),
+    win = SDL_CreateWindow(config::NAME.c_str(),
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             config::WIN_W, config::WIN_H,
-            SDL_WINDOW_FULLSCREEN_DESKTOP);
+            SDL_WINDOW_FULLSCREEN);
     if(win == NULL)
         throw std::runtime_error(SDL_GetError());
 
