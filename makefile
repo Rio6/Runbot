@@ -1,6 +1,6 @@
 CFLAGS=-O2 -Wall
 LIBS=-lSDL2
-OBJS=main.o graphic.o
+OBJS=main.o graphic.o game.o
 TGT=runbot
 
 all: $(TGT)
