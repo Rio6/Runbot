@@ -4,7 +4,9 @@
 #include "graphic.hpp"
 #include "main.hpp"
 
-Game::Game() {}
+Game::Game() {
+    graphic.init();
+}
 
 Game::~Game() {}
 

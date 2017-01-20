@@ -10,11 +10,12 @@ class Graphic {
     public:
         Graphic();
         ~Graphic();
+        int init();
         void draw();
 
     private:
         SDL_Renderer *rend;
-        SDL_Texture *rendBuff
+        SDL_Texture *rendBuff;
         SDL_Window *win;
 };
 
