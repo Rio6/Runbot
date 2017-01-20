@@ -3,6 +3,8 @@
 
 #include <SDL2/SDL.h>
 
+#include "graphic.hpp"
+
 class Graphic {
 
     public:
@@ -12,6 +14,7 @@ class Graphic {
 
     private:
         SDL_Renderer *rend;
+        SDL_Texture *rendBuff
         SDL_Window *win;
 };
 
