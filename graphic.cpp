@@ -4,6 +4,21 @@
 #include "main.hpp"
 
 Graphic::Graphic() {
+
+    if(SDL_Init(SDL_INIT_VIDEO) != 0)
+        throw std::runtime_error(SDL_GetError());
+
+    win = SDL_CreateWindow(config::NAME,
+            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
+            config::WIN_W, config::WIN_H,
+            SDL_WINDOW_FULLSCREEN);
+    if(win == NULL)
+        throw std::runtime_error(SDL_GetError());
+
+    rend = SDL_CreateRenderer(win, -1,
+            SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if(rend == NULL)
+        throw std::runtime_error(SDL_GetError());
 }
 
 Graphic::~Graphic() {
@@ -15,33 +30,6 @@ Graphic::~Graphic() {
     win = NULL;
 
     SDL_Quit();
-}
-
-int Graphic::init() {
-
-    if(SDL_Init(SDL_INIT_VIDEO) != 0) {
-        logError("Graphic::init()", SDL_GetError);
-        return -1;
-    }
-
-    win = SDL_CreateWindow(config::NAME,
-            SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-            config::WIN_W, config::WIN_H,
-            SDL_WINDOW_FULLSCREEN);
-    if(win == NULL) {
-        logError("Graphic::init()", SDL_GetError);
-        return -1;
-    }
-
-    rend = SDL_CreateRenderer(win, -1,
-            SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if(rend == NULL) {
-        logError("Graphic::init()", SDL_GetError);
-        return -1;
-        throw std::runtime_error(SDL_GetError());
-    }
-
-    return 0;
 }
 
 void Graphic::draw() {

@@ -10,7 +10,6 @@ class Graphic {
     public:
         Graphic();
         ~Graphic();
-        int init();
         void draw();
 
     private:

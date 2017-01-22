@@ -9,6 +9,6 @@ inline namespace config {
     const int TPF = 1000 / FPS; // ticks per frame
 };
 
-void logError(const char *msg, const char* (*getErr)(void));
+void logError(const char *msg, const char* err);
 
 #endif

@@ -1,11 +1,13 @@
+#include <iostream>
 #include <SDL2/SDL.h>
 
 #include "game.hpp"
 #include "graphic.hpp"
 #include "main.hpp"
 
-Game::Game() {
-    graphic.init();
+Game::Game() try : graphic() {
+} catch (std::runtime_error exc) {
+    logError("Failed to initilize", exc.what());
 }
 
 Game::~Game() {}
