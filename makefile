@@ -10,10 +10,10 @@ $(TGT): $(OBJS)
 	$(CXX) $(CFLAGS) $(LIBS) $(OBJS) -o $(TGT)
 
 .cpp.o:
-	$(CC) $(CFLAGS) -c $<
+	$(CXX) $(CFLAGS) -c $<
 
 clean:
 	$(RM) -f *.o
 
 depend: $(SRCS)
-	$(CC) $(CFLAGS) -MM $^ > .depend
+	$(CXX) $(CFLAGS) -MM $^ > .depend
