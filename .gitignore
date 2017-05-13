@@ -1,3 +1,4 @@
 *.o
 .depend
 runbot
+*.blend[0-9]
