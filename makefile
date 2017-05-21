@@ -1,6 +1,7 @@
 CXXFLAGS=-O2 -Wall
-LIBS=-lSDL2
-SRCS=main.cpp main.hpp graphic.cpp graphic.hpp game.cpp game.hpp
+LIBS=-lSDL2 -lSDL2_image
+SRCS=main.cpp  graphic.cpp  game.cpp  robot.cpp  anim.cpp 
+HDRS=main.hpp  graphic.hpp  game.hpp  robot.hpp  anim.hpp
 OBJS=main.o graphic.o game.o
 TGT=runbot
 
@@ -15,5 +16,9 @@ $(TGT): $(OBJS)
 clean:
 	$(RM) -f *.o
 
-depend: $(SRCS)
+depend: .depend
+
+.depend: $(SRCS) $(HDRS)
 	$(CXX) $(CXXFLAGS) -MM $^ > .depend
+
+include .depend
