@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/21
+ * Date: 2017/05/22
  */
 
 #ifndef _GAME_H_
@@ -11,19 +11,18 @@
 
 namespace runbot {
     class Game {
+        private:
+            bool running;
+            Graphic graphic;
+
+            void processEvents();
+
         public:
+            Robot robot;
+
             Game();
             ~Game();
             void loop();
-            Robot &getRobot();
-
-        private:
-            bool running;
-
-            Graphic graphic;
-            Robot robot;
-
-            void processEvents();
     };
 };
 

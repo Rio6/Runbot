@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/21
+ * Date: 2017/05/22
  */
 
 #include <iostream>
@@ -68,11 +68,10 @@ void Graphic::draw() {
 
     SDL_RenderClear(rend);
 
-    Animation &anim = game.getRobot().getAnimaion();
-    SDL_Rect src = anim.getSpriteClip();
+    Animation &anim = game.robot.getAnimaion();
+    SDL_Rect src = anim.getCurrentClip();
     SDL_Rect des = {0, 0, 100, 200};
-    std::cout << src.x << std::endl;
-    SDL_RenderCopy(rend, anim.getSprite(), &src, &des);
+    SDL_RenderCopy(rend, game.robot.getSprite(), &src, &des);
 
     SDL_SetRenderTarget(rend, NULL);
     SDL_RenderCopy(rend, rendBuff, NULL, NULL);

@@ -1,10 +1,12 @@
 /*
  * Author: Rio
- * Date: 2017/05/21
+ * Date: 2017/05/22
  */
 
 #ifndef _ROBOT_H_
 #define _ROBOT_H_
+
+#include "SDL2/SDL.h"
 
 #include "graphic.hpp"
 #include "anim.hpp"
@@ -14,6 +16,7 @@ namespace runbot {
         private:
             int y;
             int frame;
+            SDL_Texture *sprite;
             Animation anim;
 
         public:
@@ -21,6 +24,7 @@ namespace runbot {
             static const int h = 400;
             Robot(Graphic &graphic);
             ~Robot();
+            SDL_Texture *getSprite();
             Animation &getAnimaion();
     };
 };

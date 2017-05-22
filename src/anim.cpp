@@ -1,56 +1,35 @@
 /*
  * Author: Rio
- * Date: 2017/05/21
+ * Date: 2017/05/22
  */
 
-#include <iostream>
 #include <vector>
 
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
-
 #include "anim.hpp"
-#include "graphic.hpp"
 
 using runbot::Animation;
 
-Animation::Animation(Graphic &graphic,
-        const char *path, int x, int y, int w, int h) : spriteClips(0) {
+Animation::Animation(int x, int y, int w, int h) : x(x), y(y), w(w), h(h) {
+}
 
-    SDL_Surface *loadSurface = IMG_Load(path);
-    if(loadSurface == NULL) 
-        throw std::runtime_error(IMG_GetError());
+Animation::~Animation() {
+}
 
-    sprite = SDL_CreateTextureFromSurface(graphic.getRenderer(),
-            loadSurface);
+void Animation::createClips(int clipCount) {
 
-    crntFrame = 0;
-
-    spriteClips.resize(loadSurface->w / w);
+    spriteClips.resize(clipCount);
 
     for(int i = 0; i < (signed) spriteClips.capacity(); i++) {
         spriteClips[i] = {i * w + x, y, w, h};
     }
-
-    SDL_FreeSurface(loadSurface);
-    loadSurface = NULL;
 }
 
-
-Animation::~Animation() {
-    SDL_DestroyTexture(sprite);
-}
-
-SDL_Texture *Animation::getSprite() {
-    return sprite;
-}
-
-SDL_Rect Animation::getSpriteClip() {
-    return spriteClips[crntFrame];
+SDL_Rect Animation::getCurrentClip() {
+    return spriteClips[frame];
 }
 
 void Animation::nextFrame() {
-    crntFrame += 1;
-    if(crntFrame >= (signed) spriteClips.size())
-        crntFrame = 0;
+    frame += 1;
+    if(frame >= (signed) spriteClips.size())
+        frame = 0;
 }

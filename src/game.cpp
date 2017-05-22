@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/21
+ * Date: 2017/05/22
  */
 
 #include <iostream>
@@ -51,8 +51,4 @@ void Game::processEvents() {
                 break;
         }
     }
-}
-
-runbot::Robot &Game::getRobot() {
-    return robot;
 }
