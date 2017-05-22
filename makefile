@@ -1,24 +1,30 @@
-CXXFLAGS=-O2 -Wall
-LIBS=-lSDL2 -lSDL2_image
-SRCS=main.cpp graphic.cpp game.cpp robot.cpp anim.cpp 
-HDRS=main.hpp graphic.hpp game.hpp robot.hpp anim.hpp
-OBJS=main.o graphic.o game.o robot.o anim.o
-TGT=runbot
+SRCDIR:=src
+BUILDDIR:=build
 
-all: $(TGT)
+CXXFLAGS:=-O2 -Wall
+LIBS:=-lSDL2 -lSDL2_image
+SRCS:=$(wildcard $(SRCDIR)/*.cpp)
+HDRS:=$(wildcard $(SRCDIR)/*.hpp)
+OBJS:= $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
+TGT:=runbot
+
+all: $(BUILDDIR) $(TGT)
 
 $(TGT): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(LIBS) $(OBJS) -o $(TGT)
 
-.cpp.o:
-	$(CXX) $(CXXFLAGS) -c $<
+$(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BUILDDIR):
+	mkdir -p $(BUILDDIR)
 
 clean:
-	$(RM) *.o
+	$(RM) -r build
 
 depend: .depend
 
 .depend: $(SRCS) $(HDRS)
-	$(CXX) $(CXXFLAGS) -MM $^ > .depend
+	$(CXX) $(CXXFLAGS) -MM $^ | sed 's|[a-zA-Z0-9_-]*\.o|$(BUILDDIR)/&|' > .depend
 
 include .depend
