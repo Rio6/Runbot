@@ -1,11 +1,19 @@
+/*
+ * Author: Rio
+ * Date: 2017/05/21
+ */
+
 #include <iostream>
 #include <SDL2/SDL.h>
 
 #include "game.hpp"
 #include "graphic.hpp"
 #include "main.hpp"
+#include "robot.hpp"
 
-Game::Game() try : graphic() {
+using runbot::Game;
+
+Game::Game() try : graphic(), robot(graphic) {
 } catch (std::runtime_error exc) {
     logError("Failed to initilize", exc.what());
 }
@@ -21,10 +29,12 @@ void Game::loop() {
 
         // Stuff here
         processEvents();
+
+        robot.getAnimaion().nextFrame();
         
         int frameTicks = SDL_GetTicks() - frameStart;
-        if(frameTicks > config::TPF) continue;
-        SDL_Delay(config::TPF - frameTicks);
+        if(frameTicks > runbot::TPF) continue;
+        SDL_Delay(runbot::TPF - frameTicks);
 
         // Render
         graphic.draw();
@@ -41,4 +51,8 @@ void Game::processEvents() {
                 break;
         }
     }
+}
+
+runbot::Robot &Game::getRobot() {
+    return robot;
 }

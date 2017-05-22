@@ -1,20 +1,30 @@
+/*
+ * Author: Rio
+ * Date: 2017/05/21
+ */
+
 #ifndef _GAME_H_
 #define _GAME_H_
 
 #include "graphic.hpp"
+#include "robot.hpp"
 
-class Game {
-    public:
-        Game();
-        ~Game();
+namespace runbot {
+    class Game {
+        public:
+            Game();
+            ~Game();
+            void loop();
+            Robot &getRobot();
 
-        void loop();
+        private:
+            bool running;
 
-    private:
-        Graphic graphic;
-        bool running;
+            Graphic graphic;
+            Robot robot;
 
-        void processEvents();
+            void processEvents();
+    };
 };
 
 #endif
