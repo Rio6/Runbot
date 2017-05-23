@@ -34,7 +34,7 @@ Robot::Robot(Graphic &graphic) :
 
 Robot::~Robot() {
     SDL_DestroyTexture(sprite);
-};
+}
 
 SDL_Texture *Robot::getSprite() {
     return sprite;
