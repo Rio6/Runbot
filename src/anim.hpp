@@ -12,17 +12,17 @@
 
 namespace runbot {
     class Animation {
+        private:
+            int frame;
+            int x, y, w, h; // Start pint, size
+            std::vector<SDL_Rect> spriteClips;
+
         public:
             Animation(int, int, int, int);
             ~Animation();
             void createClips(int);
             SDL_Rect getCurrentClip();
             void nextFrame();
-
-        private:
-            int frame;
-            int x, y, w, h; // Start pint, size
-            std::vector<SDL_Rect> spriteClips;
     };
 };
 
