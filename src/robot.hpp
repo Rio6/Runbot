@@ -14,8 +14,6 @@
 namespace runbot {
     class Robot {
         private:
-            int y;
-            int frame;
             SDL_Texture *sprite;
             Animation anim;
 
