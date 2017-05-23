@@ -20,7 +20,8 @@ namespace runbot {
         public:
             static const int w = 200;
             static const int h = 400;
-            Robot(Graphic &graphic);
+
+            Robot(Graphic&);
             ~Robot();
             SDL_Texture *getSprite();
             Animation &getAnimaion();
