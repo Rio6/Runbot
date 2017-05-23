@@ -19,7 +19,7 @@ void Animation::createClips(int clipCount) {
 
     spriteClips.resize(clipCount);
 
-    for(int i = 0; i < (signed) spriteClips.capacity(); i++) {
+    for(int i = 0; i < (signed) spriteClips.size(); i++) {
         spriteClips[i] = {i * w + x, y, w, h};
     }
 }
