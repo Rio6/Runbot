@@ -24,6 +24,7 @@ namespace runbot {
             ~Robot();
             SDL_Texture *getSprite();
             Animation &getAnimaion();
+            void doTick();
     };
 };
 

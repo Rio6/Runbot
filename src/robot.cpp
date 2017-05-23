@@ -15,7 +15,7 @@
 using runbot::Robot;
 
 Robot::Robot(Graphic &graphic) :
-    anim(0, 0, Robot::w, Robot::h) {
+    anim(0, 0, Robot::w, Robot::h, 15) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -42,4 +42,8 @@ SDL_Texture *Robot::getSprite() {
 
 runbot::Animation &Robot::getAnimaion() {
     return anim;
+}
+
+void Robot::doTick() {
+    anim.doTick();
 }

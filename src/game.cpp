@@ -30,7 +30,7 @@ void Game::loop() {
         // Stuff here
         processEvents();
 
-        robot.getAnimaion().nextFrame();
+        robot.doTick();
         
         int frameTicks = SDL_GetTicks() - frameStart;
         if(frameTicks > runbot::TPF) continue;
