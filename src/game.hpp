@@ -6,6 +6,9 @@
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include <map>
+#include <string>
+
 #include "graphic.hpp"
 #include "robot.hpp"
 
@@ -21,6 +24,7 @@ namespace runbot {
     class Game {
         private:
             bool running;
+            std::map<std::string, bool> keys;
             Graphic graphic;
 
             void processEvents();

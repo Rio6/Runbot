@@ -4,6 +4,8 @@
  */
 
 #include <stdexcept>
+#include <map>
+#include <string>
 
 #include "SDL2/SDL.h"
 
@@ -46,6 +48,20 @@ void Game::processEvents() {
     SDL_Event eve;
     while(SDL_PollEvent(&eve)) {
         switch(eve.type) {
+            case SDL_KEYDOWN:
+                switch(eve.key.keysym.sym) {
+                    case SDLK_SPACE:
+                        keys["space"] = true;
+                        break;
+                }
+                break;
+            case SDL_KEYUP:
+                switch(eve.key.keysym.sym) {
+                    case SDLK_SPACE:
+                        keys["space"] = false;
+                        break;
+                }
+                break;
             case SDL_QUIT:
                 running = false;
                 break;
