@@ -8,7 +8,6 @@
 
 #include "game.hpp"
 #include "graphic.hpp"
-#include "main.hpp"
 #include "robot.hpp"
 
 using runbot::Game;
@@ -51,4 +50,8 @@ void Game::processEvents() {
                 break;
         }
     }
+}
+
+void runbot::logError(const char *msg, const char* err) {
+    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s: %s", msg, err);
 }

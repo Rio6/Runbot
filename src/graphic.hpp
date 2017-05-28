@@ -10,7 +10,6 @@
 
 namespace runbot {
     class Graphic {
-
         public:
             Graphic();
             ~Graphic();

@@ -10,6 +10,14 @@
 #include "robot.hpp"
 
 namespace runbot {
+    const int GAME_W = 640;
+    const int GAME_H = 480;
+    const char *const NAME = "Runbot";
+    const int FPS = 30;
+    const int TPF = 1000 / FPS; // ticks per frame
+
+    void logError(const char*, const char*);
+
     class Game {
         private:
             bool running;

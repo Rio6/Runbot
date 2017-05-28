@@ -10,6 +10,7 @@
 
 #include "graphic.hpp"
 #include "main.hpp"
+#include "game.hpp"
 #include "robot.hpp"
 #include "anim.hpp"
 
@@ -67,6 +68,8 @@ void Graphic::draw() {
     SDL_SetRenderDrawColor(rend, 0xff, 0xff, 0xff, 0xff);
 
     SDL_RenderClear(rend);
+
+    // game is runbot::game in main.hpp
 
     Animation &anim = game.robot.getAnimaion();
     SDL_Rect src = anim.getCurrentClip();
