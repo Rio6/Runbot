@@ -3,8 +3,9 @@
  * Date: 2017/05/22
  */
 
-#include <iostream>
-#include <SDL2/SDL.h>
+#include <stdexcept>
+
+#include "SDL2/SDL.h"
 
 #include "game.hpp"
 #include "graphic.hpp"
