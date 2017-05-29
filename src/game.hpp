@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/22
+ * Date: 2017/05/28
  */
 
 #ifndef _GAME_H_
@@ -22,19 +22,19 @@ namespace runbot {
     void logError(const char*, const char*);
 
     class Game {
+        public:
+            Game();
+            ~Game();
+            void loop();
+
         private:
             bool running;
             std::map<std::string, bool> keys;
             Graphic graphic;
-
-            void processEvents();
-
-        public:
             Robot robot;
 
-            Game();
-            ~Game();
-            void loop();
+            void processEvents();
+            void draw();
     };
 };
 

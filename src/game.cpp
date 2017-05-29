@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/22
+ * Date: 2017/05/28
  */
 
 #include <stdexcept>
@@ -32,6 +32,10 @@ void Game::loop() {
         // Stuff here
         processEvents();
 
+        if(keys["space"]) {
+            robot.jump(10);
+        }
+
         robot.doTick();
         
         int frameTicks = SDL_GetTicks() - frameStart;
@@ -39,7 +43,7 @@ void Game::loop() {
         SDL_Delay(runbot::TPF - frameTicks);
 
         // Render
-        graphic.draw();
+        draw();
     }
 }
 
@@ -67,6 +71,16 @@ void Game::processEvents() {
                 break;
         }
     }
+}
+
+void Game::draw() {
+
+    SDL_Renderer *rend = graphic.getRenderer();
+    SDL_Texture *texture = graphic.getGameTexture();
+    robot.draw(rend, texture);
+
+    // Apply drawings to window
+    graphic.drawToWindow();
 }
 
 void runbot::logError(const char *msg, const char* err) {

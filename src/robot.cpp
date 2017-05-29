@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/22
+ * Date: 2017/05/28
  */
 
 #include <stdexcept>
@@ -9,13 +9,14 @@
 #include "SDL2/SDL_image.h"
 
 #include "robot.hpp"
+#include "game.hpp"
 #include "graphic.hpp"
 #include "anim.hpp"
 
 using runbot::Robot;
 
 Robot::Robot(Graphic &graphic) :
-    anim(0, 0, Robot::w, Robot::h, 15) {
+    anim(0, 0, Robot::W, Robot::H, 15) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -27,7 +28,7 @@ Robot::Robot(Graphic &graphic) :
         throw std::runtime_error(SDL_GetError());
     }
 
-    anim.createClips(loadSurface->w / Robot::w);
+    anim.createClips(loadSurface->w / Robot::W);
 
     SDL_FreeSurface(loadSurface);
 }
@@ -40,10 +41,28 @@ SDL_Texture *Robot::getSprite() {
     return sprite;
 }
 
-runbot::Animation &Robot::getAnimaion() {
-    return anim;
+void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
+    SDL_Rect src = anim.getCurrentClip();
+    SDL_Rect des = {10, y, Robot::W, Robot::H};
+    SDL_RenderCopy(rend, getSprite(), &src, &des);
+}
+
+void Robot::jump(int force) {
+    if(y + Robot::H == GAME_H) {
+        jumpForce = force;
+    }
 }
 
 void Robot::doTick() {
+
+    if(y + Robot::H < GAME_H) {
+        jumpForce -= 1;
+    } else if(y + Robot::H > GAME_H) {
+        jumpForce = 0;
+        y = GAME_H - Robot::H;
+    }
+
+    y -= jumpForce;
+
     anim.doTick();
 }

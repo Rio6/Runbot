@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/21
+ * Date: 2017/05/28
  */
 
 #ifndef _GRAPHIC_H_
@@ -14,7 +14,8 @@ namespace runbot {
             Graphic();
             ~Graphic();
             SDL_Renderer *getRenderer();
-            void draw();
+            SDL_Texture *getGameTexture();
+            void drawToWindow();
 
         private:
             SDL_Renderer *rend;

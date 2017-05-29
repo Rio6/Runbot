@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/22
+ * Date: 2017/05/28
  */
 
 #include <stdexcept>
@@ -43,6 +43,11 @@ Graphic::Graphic() {
             GAME_W, GAME_H);
     if(rendBuff == NULL)
         throw std::runtime_error(SDL_GetError());
+
+    // Configure the renderer
+    SDL_SetRenderDrawColor(rend, 0xff, 0xff, 0xff, 0xff);
+    SDL_SetRenderTarget(rend, rendBuff);
+    SDL_RenderClear(rend);
 }
 
 Graphic::~Graphic() {
@@ -63,20 +68,17 @@ SDL_Renderer *Graphic::getRenderer() {
     return rend;
 }
 
-void Graphic::draw() {
-    SDL_SetRenderTarget(rend, rendBuff);
-    SDL_SetRenderDrawColor(rend, 0xff, 0xff, 0xff, 0xff);
+SDL_Texture *Graphic::getGameTexture() {
+    return rendBuff;
+}
 
-    SDL_RenderClear(rend);
-
-    // game is runbot::game in main.hpp
-
-    Animation &anim = game.robot.getAnimaion();
-    SDL_Rect src = anim.getCurrentClip();
-    SDL_Rect des = {0, 0, 100, 200};
-    SDL_RenderCopy(rend, game.robot.getSprite(), &src, &des);
-
+void Graphic::drawToWindow() {
+    // Set render target to default target (window)
     SDL_SetRenderTarget(rend, NULL);
     SDL_RenderCopy(rend, rendBuff, NULL, NULL);
     SDL_RenderPresent(rend);
+
+    // Set render target back to the buffer texture
+    SDL_SetRenderTarget(rend, rendBuff);
+    SDL_RenderClear(rend);
 }

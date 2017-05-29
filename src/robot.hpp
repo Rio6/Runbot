@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/22
+ * Date: 2017/05/28
  */
 
 #ifndef _ROBOT_H_
@@ -13,19 +13,24 @@
 
 namespace runbot {
     class Robot {
-        private:
-            SDL_Texture *sprite;
-            Animation anim;
-
         public:
-            static const int w = 200;
-            static const int h = 400;
+            static const int W = 200;
+            static const int H = 400;
 
             Robot(Graphic&);
             ~Robot();
             SDL_Texture *getSprite();
-            Animation &getAnimaion();
+            void draw(SDL_Renderer*, SDL_Texture*);
+
+            void jump(int);
             void doTick();
+
+        private:
+            SDL_Texture *sprite;
+            Animation anim;
+            int y;
+
+            int jumpForce;
     };
 };
 
