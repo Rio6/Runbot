@@ -32,8 +32,10 @@ void Game::loop() {
         // Stuff here
         processEvents();
 
-        if(keys["space"]) {
-            robot.jump(10);
+        if(keys["up"]) {
+            robot.jump(30);
+        } else {
+            robot.jump(-10);
         }
 
         robot.doTick();
@@ -54,15 +56,15 @@ void Game::processEvents() {
         switch(eve.type) {
             case SDL_KEYDOWN:
                 switch(eve.key.keysym.sym) {
-                    case SDLK_SPACE:
-                        keys["space"] = true;
+                    case SDLK_UP:
+                        keys["up"] = true;
                         break;
                 }
                 break;
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
-                    case SDLK_SPACE:
-                        keys["space"] = false;
+                    case SDLK_UP:
+                        keys["up"] = false;
                         break;
                 }
                 break;

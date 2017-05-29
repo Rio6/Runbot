@@ -29,13 +29,23 @@ SDL_Rect Animation::getCurrentClip() {
     return spriteClips[frame];
 }
 
+void Animation::pause() {
+    paused = true;
+}
+
+void Animation::resume() {
+    paused = false;
+}
+
 void Animation::doTick() {
 
-    while(aniLength / (float) spriteClips.size() * frame < tick) {
-        frame++;
-    }
-    frame %= spriteClips.size();
+    if(!paused) {
+        while(aniLength / (float) spriteClips.size() * frame < tick) {
+            frame++;
+        }
+        frame %= spriteClips.size();
 
-    tick++;
-    tick %= aniLength;
+        tick++;
+        tick %= aniLength;
+    }
 }

@@ -34,7 +34,7 @@ Graphic::Graphic() {
 
     rend = SDL_CreateRenderer(win, -1,
             SDL_RENDERER_ACCELERATED |
-            SDL_RENDERER_PRESENTVSYNC |
+            //SDL_RENDERER_PRESENTVSYNC |
             SDL_RENDERER_TARGETTEXTURE);
     if(rend == NULL)
         throw std::runtime_error(SDL_GetError());

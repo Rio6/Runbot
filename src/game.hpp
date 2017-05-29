@@ -16,7 +16,7 @@ namespace runbot {
     const int GAME_W = 1024;
     const int GAME_H = 576;
     const char *const NAME = "Runbot";
-    const int FPS = 30;
+    const int FPS = 60;
     const int TPF = 1000 / FPS; // ticks per frame
 
     void logError(const char*, const char*);

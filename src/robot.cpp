@@ -16,7 +16,7 @@
 using runbot::Robot;
 
 Robot::Robot(Graphic &graphic) :
-    anim(0, 0, Robot::W, Robot::H, 15) {
+    anim(0, 0, Robot::W, Robot::H, 30) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -47,22 +47,27 @@ void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
     SDL_RenderCopy(rend, getSprite(), &src, &des);
 }
 
-void Robot::jump(int force) {
-    if(y + Robot::H == GAME_H) {
-        jumpForce = force;
-    }
-}
-
 void Robot::doTick() {
 
     if(y + Robot::H < GAME_H) {
-        jumpForce -= 1;
+        jumpForce -= 2;
     } else if(y + Robot::H > GAME_H) {
         jumpForce = 0;
         y = GAME_H - Robot::H;
+        anim.resume();
     }
 
     y -= jumpForce;
 
     anim.doTick();
+}
+
+// Jump with `force` force
+void Robot::jump(int force) {
+    if(force > 0 && y + Robot::H == GAME_H) {
+        jumpForce = force;
+        anim.pause();
+    } else if(force < jumpForce && y + Robot::H < GAME_H) {
+        jumpForce = force;
+    }
 }

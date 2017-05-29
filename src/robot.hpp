@@ -21,9 +21,9 @@ namespace runbot {
             ~Robot();
             SDL_Texture *getSprite();
             void draw(SDL_Renderer*, SDL_Texture*);
+            void doTick();
 
             void jump(int);
-            void doTick();
 
         private:
             SDL_Texture *sprite;
