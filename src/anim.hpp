@@ -13,12 +13,18 @@
 namespace runbot {
     class Animation {
         public:
-            Animation(int, int, int, int, int);
+            Animation(int, int, int, int, int, bool);
             ~Animation();
+
+            // Call this to create the clips
             void createClips(int);
+            // get current clip, return SDL_Rect{0, 0, 0, 0} if clip has size 0
             SDL_Rect getCurrentClip();
+            void setLength(int);
+            int getLength();
+
             void pause();
-            void resume();
+            void start();
             void doTick();
 
         private:
@@ -27,6 +33,7 @@ namespace runbot {
             unsigned int frame;
             unsigned int tick;
             bool paused;
+            bool repeat;
             std::vector<SDL_Rect> spriteClips;
     };
 };

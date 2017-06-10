@@ -16,7 +16,9 @@
 using runbot::Robot;
 
 Robot::Robot(Graphic &graphic) :
-    anim(0, 0, Robot::W, Robot::H, 30) {
+    bodyAnim(0, 0, Robot::W, Robot::H, 30, true),
+    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false),
+    y(0), jumpForce(0), shootCD(0) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -28,7 +30,8 @@ Robot::Robot(Graphic &graphic) :
         throw std::runtime_error(SDL_GetError());
     }
 
-    anim.createClips(loadSurface->w / Robot::W);
+    bodyAnim.createClips(loadSurface->w / Robot::W);
+    armAnim.createClips(loadSurface->w / Robot::W);
 
     SDL_FreeSurface(loadSurface);
 }
@@ -42,8 +45,16 @@ SDL_Texture *Robot::getSprite() {
 }
 
 void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
-    SDL_Rect src = anim.getCurrentClip();
-    SDL_Rect des = {10, y, Robot::W, Robot::H};
+    SDL_Rect src, des;
+
+    // Body animation
+    src = bodyAnim.getCurrentClip();
+    des = {10, y, Robot::W, Robot::H};
+    SDL_RenderCopy(rend, getSprite(), &src, &des);
+
+    // Arm animation
+    src = armAnim.getCurrentClip();
+    des = {10, y, Robot::W, Robot::H};
     SDL_RenderCopy(rend, getSprite(), &src, &des);
 }
 
@@ -54,20 +65,33 @@ void Robot::doTick() {
     } else if(y + Robot::H > GAME_H) {
         jumpForce = 0;
         y = GAME_H - Robot::H;
-        anim.resume();
+        bodyAnim.start();
     }
-
     y -= jumpForce;
 
-    anim.doTick();
+    if(shootCD > 0)
+        shootCD--;
+
+    bodyAnim.doTick();
+    armAnim.doTick();
 }
 
-// Jump with `force` force
 void Robot::jump(int force) {
     if(force > 0 && y + Robot::H == GAME_H) {
         jumpForce = force;
-        anim.pause();
-    } else if(force < jumpForce && y + Robot::H < GAME_H) {
-        jumpForce = force;
+        bodyAnim.pause();
+    }
+}
+
+void Robot::releaseJump() {
+    if(y + Robot::H < GAME_H) {
+        jumpForce -= 5;
+    }
+}
+
+void Robot::shoot() {
+    if(shootCD == 0) {
+        armAnim.start();
+        shootCD = armAnim.getLength();
     }
 }

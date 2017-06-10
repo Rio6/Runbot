@@ -35,7 +35,11 @@ void Game::loop() {
         if(keys["up"]) {
             robot.jump(30);
         } else {
-            robot.jump(-10);
+            robot.releaseJump();
+        }
+
+        if(keys["right"]) {
+            robot.shoot();
         }
 
         robot.doTick();
@@ -59,12 +63,18 @@ void Game::processEvents() {
                     case SDLK_UP:
                         keys["up"] = true;
                         break;
+                    case SDLK_RIGHT:
+                        keys["right"] = true;
+                        break;
                 }
                 break;
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
                     case SDLK_UP:
                         keys["up"] = false;
+                        break;
+                    case SDLK_RIGHT:
+                        keys["right"] = false;
                         break;
                 }
                 break;

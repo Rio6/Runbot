@@ -23,14 +23,19 @@ namespace runbot {
             void draw(SDL_Renderer*, SDL_Texture*);
             void doTick();
 
+            // Actions
             void jump(int);
+            void releaseJump();
+            void shoot();
 
         private:
             SDL_Texture *sprite;
-            Animation anim;
-            int y;
+            Animation bodyAnim;
+            Animation armAnim;
 
+            int y;
             int jumpForce;
+            int shootCD;
     };
 };
 
