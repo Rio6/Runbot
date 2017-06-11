@@ -1,12 +1,13 @@
 /*
  * Author: Rio
- * Date: 2017/05/22
+ * Date: 2017/06/10
  */
 
 #include <vector>
 
+#include "SDL2/SDL.h"
 #include "anim.hpp"
-#include "game.hpp"
+#include "main.hpp"
 
 using runbot::Animation;
 

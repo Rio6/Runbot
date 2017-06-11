@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/22
+ * Date: 2017/06/10
  */
 
 #ifndef _ANIM_H_
@@ -8,7 +8,6 @@
 
 #include <vector>
 #include "SDL2/SDL.h"
-#include "graphic.hpp"
 
 namespace runbot {
     class Animation {

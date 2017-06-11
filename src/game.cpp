@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/28
+ * Date: 2017/06/10
  */
 
 #include <stdexcept>
@@ -12,10 +12,11 @@
 #include "game.hpp"
 #include "graphic.hpp"
 #include "robot.hpp"
+#include "main.hpp"
 
 using runbot::Game;
 
-Game::Game() try : graphic(), robot(graphic) {
+Game::Game() try : graphic(), robot(graphic.getRenderer()) {
 } catch (std::runtime_error exc) {
     logError("Failed to initilize", exc.what());
 }
@@ -93,8 +94,4 @@ void Game::draw() {
 
     // Apply drawings to window
     graphic.drawToWindow();
-}
-
-void runbot::logError(const char *msg, const char* err) {
-    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "%s: %s", msg, err);
 }

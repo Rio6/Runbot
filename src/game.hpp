@@ -19,8 +19,6 @@ namespace runbot {
     const int FPS = 60;
     const int TPF = 1000 / FPS; // ticks per frame
 
-    void logError(const char*, const char*);
-
     class Game {
         public:
             Game();

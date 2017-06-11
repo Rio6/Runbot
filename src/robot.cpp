@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/28
+ * Date: 2017/06/10
  */
 
 #include <stdexcept>
@@ -10,12 +10,11 @@
 
 #include "robot.hpp"
 #include "game.hpp"
-#include "graphic.hpp"
 #include "anim.hpp"
 
 using runbot::Robot;
 
-Robot::Robot(Graphic &graphic) :
+Robot::Robot(SDL_Renderer *rend) :
     bodyAnim(0, 0, Robot::W, Robot::H, 30, true),
     armAnim(0, Robot::H, Robot::W, Robot::H, 30, false),
     y(0), jumpForce(0), shootCD(0) {
@@ -24,7 +23,7 @@ Robot::Robot(Graphic &graphic) :
     if(loadSurface == NULL)
         throw std::runtime_error(IMG_GetError());
 
-    sprite = SDL_CreateTextureFromSurface(graphic.getRenderer(), loadSurface);
+    sprite = SDL_CreateTextureFromSurface(rend, loadSurface);
     if(sprite == NULL) {
         SDL_FreeSurface(loadSurface);
         throw std::runtime_error(SDL_GetError());

@@ -9,10 +9,7 @@
 #include "SDL2/SDL_image.h"
 
 #include "graphic.hpp"
-#include "main.hpp"
 #include "game.hpp"
-#include "robot.hpp"
-#include "anim.hpp"
 
 using runbot::Graphic;
 
