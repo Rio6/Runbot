@@ -17,7 +17,7 @@ using runbot::Robot;
 Robot::Robot(SDL_Renderer *rend) :
     bodyAnim(0, 0, Robot::W, Robot::H, SPEED * 3, true),
     armAnim(0, Robot::H, Robot::W, Robot::H, 30, false), dir(RIGHT),
-    x(0), y(0), xSpeed(0), ySpeed(0), shootCD(0) {
+    pos(), xSpeed(0), ySpeed(0), shootCD(0) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -55,26 +55,26 @@ void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
 
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {x, y, Robot::W, Robot::H};
+    des = {pos.x, pos.y, Robot::W, Robot::H};
     SDL_RenderCopyEx(rend, sprite, &src, &des, 0, NULL, flip);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {x, y, Robot::W, Robot::H};
+    des = {pos.x, pos.y, Robot::W, Robot::H};
     SDL_RenderCopyEx(rend, sprite, &src, &des, 0, NULL, flip);
 }
 
 void Robot::doTick() {
 
-    if(y + Robot::H < GAME_H) {
+    if(pos.y + Robot::H < GAME_H) {
         ySpeed++;
-    } else if(y + Robot::H > GAME_H) {
+    } else if(pos.y + Robot::H > GAME_H) {
         ySpeed = 0;
-        y = GAME_H - Robot::H;
+        pos.y = GAME_H - Robot::H;
     }
-    y += ySpeed;
+    pos.y += ySpeed;
 
-    x += xSpeed;
+    pos.x += xSpeed;
 
     if(shootCD > 0)
         shootCD--;
@@ -106,13 +106,13 @@ void Robot::stop() {
 }
 
 void Robot::jump() {
-    if(y + Robot::H == GAME_H) {
+    if(pos.y + Robot::H == GAME_H) {
         ySpeed = -JUMP_FORCE;
     }
 }
 
 void Robot::releaseJump() {
-    if(y + Robot::H < GAME_H) {
+    if(pos.y + Robot::H < GAME_H) {
         ySpeed += JUMP_FORCE / 6;
     }
 }

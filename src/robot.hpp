@@ -8,6 +8,7 @@
 
 #include "SDL2/SDL.h"
 #include "anim.hpp"
+#include "physic.hpp"
 
 namespace runbot {
 
@@ -42,7 +43,7 @@ namespace runbot {
             Animation armAnim;
             Direction dir;
 
-            int x, y;
+            Vector pos;
             int xSpeed, ySpeed;
             int shootCD;
     };
