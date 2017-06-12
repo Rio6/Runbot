@@ -24,6 +24,7 @@ namespace runbot {
 
             void pause();
             void start();
+            void reset();
             void doTick();
 
         private:

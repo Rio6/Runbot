@@ -15,9 +15,9 @@
 using runbot::Robot;
 
 Robot::Robot(SDL_Renderer *rend) :
-    bodyAnim(0, 0, Robot::W, Robot::H, 30, true),
-    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false),
-    y(0), jumpForce(0), shootCD(0) {
+    bodyAnim(0, 0, Robot::W, Robot::H, SPEED * 3, true),
+    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false), dir(Direction::RIGHT),
+    x(0), y(0), xSpeed(0), ySpeed(0), shootCD(0) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -39,34 +39,42 @@ Robot::~Robot() {
     SDL_DestroyTexture(sprite);
 }
 
-SDL_Texture *Robot::getSprite() {
-    return sprite;
-}
-
 void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
     SDL_Rect src, des;
 
+    SDL_RendererFlip flip;
+    switch(dir) {
+        case LEFT:
+            flip = SDL_FLIP_HORIZONTAL;
+            break;
+        case RIGHT:
+        default:
+            flip = SDL_FLIP_NONE;
+            break;
+    }
+
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {10, y, Robot::W, Robot::H};
-    SDL_RenderCopy(rend, getSprite(), &src, &des);
+    des = {x, y, Robot::W, Robot::H};
+    SDL_RenderCopyEx(rend, sprite, &src, &des, 0, NULL, flip);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {10, y, Robot::W, Robot::H};
-    SDL_RenderCopy(rend, getSprite(), &src, &des);
+    des = {x, y, Robot::W, Robot::H};
+    SDL_RenderCopyEx(rend, sprite, &src, &des, 0, NULL, flip);
 }
 
 void Robot::doTick() {
 
     if(y + Robot::H < GAME_H) {
-        jumpForce -= 2;
+        ySpeed++;
     } else if(y + Robot::H > GAME_H) {
-        jumpForce = 0;
+        ySpeed = 0;
         y = GAME_H - Robot::H;
-        bodyAnim.start();
     }
-    y -= jumpForce;
+    y += ySpeed;
+
+    x += xSpeed;
 
     if(shootCD > 0)
         shootCD--;
@@ -75,16 +83,37 @@ void Robot::doTick() {
     armAnim.doTick();
 }
 
-void Robot::jump(int force) {
-    if(force > 0 && y + Robot::H == GAME_H) {
-        jumpForce = force;
-        bodyAnim.pause();
+void Robot::move(Direction dir) {
+    if(xSpeed == 0 || this->dir != dir) {
+        switch(dir) {
+            case LEFT:
+                xSpeed = -SPEED;
+                break;
+            case RIGHT:
+                xSpeed = SPEED;
+                break;
+        }
+
+        this->dir = dir;
+        bodyAnim.reset();
+    }
+    bodyAnim.start();
+}
+
+void Robot::stop() {
+    xSpeed = 0;
+    bodyAnim.reset();
+}
+
+void Robot::jump() {
+    if(y + Robot::H == GAME_H) {
+        ySpeed = -JUMP_FORCE;
     }
 }
 
 void Robot::releaseJump() {
     if(y + Robot::H < GAME_H) {
-        jumpForce -= 5;
+        ySpeed += JUMP_FORCE / 6;
     }
 }
 

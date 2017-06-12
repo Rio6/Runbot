@@ -10,6 +10,12 @@
 #include "anim.hpp"
 
 namespace runbot {
+
+    typedef enum {
+        LEFT,
+        RIGHT
+    } Direction;
+
     class Robot {
         public:
             static const int W = 200;
@@ -17,22 +23,27 @@ namespace runbot {
 
             Robot(SDL_Renderer*);
             ~Robot();
-            SDL_Texture *getSprite();
             void draw(SDL_Renderer*, SDL_Texture*);
             void doTick();
 
             // Actions
-            void jump(int);
+            void move(Direction);
+            void stop();
+            void jump();
             void releaseJump();
             void shoot();
 
         private:
+            static const int SPEED = 10;
+            static const int JUMP_FORCE = 20;
+
             SDL_Texture *sprite;
             Animation bodyAnim;
             Animation armAnim;
+            Direction dir;
 
-            int y;
-            int jumpForce;
+            int x, y;
+            int xSpeed, ySpeed;
             int shootCD;
     };
 };
