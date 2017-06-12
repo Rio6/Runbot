@@ -42,11 +42,11 @@ void Game::loop() {
         }
 
         if(keys["left"]) {
-            robot.move(Direction::LEFT);
+            robot.move(LEFT);
         }
 
         if(keys["right"] ) {
-            robot.move(Direction::RIGHT);
+            robot.move(RIGHT);
         }
 
         if(!keys["right"] && !keys["left"]) {

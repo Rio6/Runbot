@@ -16,7 +16,7 @@ using runbot::Robot;
 
 Robot::Robot(SDL_Renderer *rend) :
     bodyAnim(0, 0, Robot::W, Robot::H, SPEED * 3, true),
-    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false), dir(Direction::RIGHT),
+    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false), dir(RIGHT),
     x(0), y(0), xSpeed(0), ySpeed(0), shootCD(0) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");

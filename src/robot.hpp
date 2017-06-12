@@ -11,10 +11,10 @@
 
 namespace runbot {
 
-    typedef enum {
+    enum Direction {
         LEFT,
         RIGHT
-    } Direction;
+    };
 
     class Robot {
         public:
