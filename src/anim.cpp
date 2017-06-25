@@ -52,11 +52,6 @@ void Animation::start() {
     paused = false;
 }
 
-void Animation::reset() {
-    paused = true;
-    frame = 0;
-}
-
 void Animation::doTick() {
 
     if(!paused && spriteClips.size() > 0) {

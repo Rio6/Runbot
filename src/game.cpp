@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/06/11
+ * Date: 2017/06/10
  */
 
 #include <stdexcept>
@@ -34,26 +34,12 @@ void Game::loop() {
         processEvents();
 
         if(keys["up"]) {
-            robot.jump();
-        }
-
-        if(keys["down"]) {
+            robot.jump(30);
+        } else {
             robot.releaseJump();
         }
 
-        if(keys["left"]) {
-            robot.move(LEFT);
-        }
-
-        if(keys["right"] ) {
-            robot.move(RIGHT);
-        }
-
-        if(!keys["right"] && !keys["left"]) {
-            robot.stop();
-        }
-
-        if(keys["space"]) {
+        if(keys["right"]) {
             robot.shoot();
         }
 
@@ -78,17 +64,8 @@ void Game::processEvents() {
                     case SDLK_UP:
                         keys["up"] = true;
                         break;
-                    case SDLK_DOWN:
-                        keys["down"] = true;
-                        break;
-                    case SDLK_LEFT:
-                        keys["left"] = true;
-                        break;
                     case SDLK_RIGHT:
                         keys["right"] = true;
-                        break;
-                    case SDLK_SPACE:
-                        keys["space"] = true;
                         break;
                 }
                 break;
@@ -97,17 +74,8 @@ void Game::processEvents() {
                     case SDLK_UP:
                         keys["up"] = false;
                         break;
-                    case SDLK_DOWN:
-                        keys["down"] = false;
-                        break;
-                    case SDLK_LEFT:
-                        keys["left"] = false;
-                        break;
                     case SDLK_RIGHT:
                         keys["right"] = false;
-                        break;
-                    case SDLK_SPACE:
-                        keys["space"] = false;
                         break;
                 }
                 break;
