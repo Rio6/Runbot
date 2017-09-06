@@ -34,7 +34,7 @@ void Game::loop() {
         processEvents();
 
         if(keys["up"]) {
-            robot.jump(30);
+            robot.jump(25);
         } else {
             robot.releaseJump();
         }

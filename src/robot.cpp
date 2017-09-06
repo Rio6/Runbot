@@ -17,7 +17,7 @@ using runbot::Robot;
 Robot::Robot(SDL_Renderer *rend) :
     bodyAnim(0, 0, Robot::W, Robot::H, 30, true),
     armAnim(0, Robot::H, Robot::W, Robot::H, 30, false),
-    y(0), jumpForce(0), shootCD(0) {
+    y(0), jumpForce(0), shootCD(0), jumpReleased(false) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -60,7 +60,7 @@ void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
 void Robot::doTick() {
 
     if(y + Robot::H < GAME_H) {
-        jumpForce -= 2;
+        jumpForce -= 1;
     } else if(y + Robot::H > GAME_H) {
         jumpForce = 0;
         y = GAME_H - Robot::H;
@@ -76,16 +76,18 @@ void Robot::doTick() {
 }
 
 void Robot::jump(int force) {
-    if(force > 0 && y + Robot::H == GAME_H) {
+    if(jumpReleased && force > 0 && y + Robot::H == GAME_H) {
         jumpForce = force;
+        jumpReleased = false;
         bodyAnim.pause();
     }
 }
 
 void Robot::releaseJump() {
     if(y + Robot::H < GAME_H) {
-        jumpForce -= 5;
+        jumpForce -= 2;
     }
+    jumpReleased = true;
 }
 
 void Robot::shoot() {

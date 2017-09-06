@@ -34,6 +34,7 @@ namespace runbot {
             int y;
             int jumpForce;
             int shootCD;
+            bool jumpReleased;
     };
 };
 
