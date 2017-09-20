@@ -44,6 +44,8 @@ void Game::loop() {
         }
 
         robot.doTick();
+
+        distance++;
         
         int frameTicks = SDL_GetTicks() - frameStart;
         if(frameTicks > runbot::TPF) continue;

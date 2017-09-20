@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/06/10
+ * Date: 2017/09/20
  */
 
 #include <stdexcept>
@@ -16,8 +16,7 @@ using runbot::Robot;
 
 Robot::Robot(SDL_Renderer *rend) :
     bodyAnim(0, 0, Robot::W, Robot::H, 30, true),
-    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false),
-    y(0), jumpForce(0), shootCD(0), jumpReleased(false) {
+    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -39,33 +38,29 @@ Robot::~Robot() {
     SDL_DestroyTexture(sprite);
 }
 
-SDL_Texture *Robot::getSprite() {
-    return sprite;
-}
-
 void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
     SDL_Rect src, des;
 
     // Body animation
     src = bodyAnim.getCurrentClip();
     des = {10, y, Robot::W, Robot::H};
-    SDL_RenderCopy(rend, getSprite(), &src, &des);
+    SDL_RenderCopy(rend, sprite, &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
     des = {10, y, Robot::W, Robot::H};
-    SDL_RenderCopy(rend, getSprite(), &src, &des);
+    SDL_RenderCopy(rend, sprite, &src, &des);
 }
 
 void Robot::doTick() {
 
     y -= jumpForce;
-    if(y + Robot::H < GAME_H) {
-        jumpForce -= 1;
-    } else if(y + Robot::H > GAME_H) {
+    if(y + Robot::H > GAME_H) {
         jumpForce = 0;
         y = GAME_H - Robot::H;
         bodyAnim.start();
+    } else {
+        jumpForce -= 1;
     }
 
     if(shootCD > 0)
@@ -84,9 +79,7 @@ void Robot::jump(int force) {
 }
 
 void Robot::releaseJump() {
-    if(y + Robot::H < GAME_H) {
-        jumpForce -= 2;
-    }
+    jumpForce -= 2;
     jumpReleased = true;
 }
 

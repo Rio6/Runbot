@@ -17,7 +17,6 @@ namespace runbot {
 
             Robot(SDL_Renderer*);
             ~Robot();
-            SDL_Texture *getSprite();
             void draw(SDL_Renderer*, SDL_Texture*);
             void doTick();
 
@@ -31,10 +30,10 @@ namespace runbot {
             Animation bodyAnim;
             Animation armAnim;
 
-            int y;
-            int jumpForce;
-            int shootCD;
-            bool jumpReleased;
+            int y = 0;
+            int jumpForce = 0;
+            int shootCD = 0;
+            bool jumpReleased = false;
     };
 };
 

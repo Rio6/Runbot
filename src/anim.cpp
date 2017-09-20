@@ -12,9 +12,8 @@
 using runbot::Animation;
 
 Animation::Animation(int x, int y, int w, int h, int aniLength, bool repeat = true) :
-    x(x), y(y), w(w), h(h), aniLength(aniLength),
-    frame(0), tick(0), paused(true), repeat(repeat), spriteClips(0) {
-    }
+    x(x), y(y), w(w), h(h), aniLength(aniLength), repeat(repeat), spriteClips(0) {
+}
 
 Animation::~Animation() {
 }

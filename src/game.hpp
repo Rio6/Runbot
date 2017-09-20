@@ -26,10 +26,11 @@ namespace runbot {
             void loop();
 
         private:
-            bool running;
             std::map<std::string, bool> keys;
             Graphic graphic;
             Robot robot;
+            bool running = false;
+            int distance = 0; // aka robot's x
 
             void processEvents();
             void draw();

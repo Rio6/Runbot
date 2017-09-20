@@ -29,9 +29,9 @@ namespace runbot {
         private:
             int x, y, w, h; // Start pint, size
             int aniLength; // The length of the animation
-            unsigned int frame;
-            unsigned int tick;
-            bool paused;
+            unsigned int frame = 0;
+            unsigned int tick = 0;
+            bool paused = true;
             bool repeat;
             std::vector<SDL_Rect> spriteClips;
     };
