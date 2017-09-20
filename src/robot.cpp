@@ -59,6 +59,7 @@ void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
 
 void Robot::doTick() {
 
+    y -= jumpForce;
     if(y + Robot::H < GAME_H) {
         jumpForce -= 1;
     } else if(y + Robot::H > GAME_H) {
@@ -66,7 +67,6 @@ void Robot::doTick() {
         y = GAME_H - Robot::H;
         bodyAnim.start();
     }
-    y -= jumpForce;
 
     if(shootCD > 0)
         shootCD--;
