@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/06/10
+ * Date: 2017/09/21
  */
 
 #include <stdexcept>
@@ -12,6 +12,7 @@
 #include "game.hpp"
 #include "graphic.hpp"
 #include "robot.hpp"
+#include "tile.hpp"
 #include "main.hpp"
 
 using runbot::Game;
@@ -21,7 +22,9 @@ Game::Game() try : graphic(), robot(graphic.getRenderer()) {
     logError("Failed to initilize", exc.what());
 }
 
-Game::~Game() {}
+Game::~Game() {
+    Tile::freeSprite();
+}
 
 
 void Game::loop() {
@@ -43,9 +46,24 @@ void Game::loop() {
             robot.shoot();
         }
 
-        robot.doTick();
+        if(distance % 100 == 0) {
+            tiles.push_back(Tile(graphic.getRenderer(),
+                        distance + GAME_W, 476, Tile::TILE_GROUND));
+        }
 
-        distance++;
+        robot.doTick(tick, distance);
+
+        for(size_t i = 0; i < tiles.size(); i++) {
+            if(tiles[i].getX() < distance)
+                tiles.erase(tiles.begin() + i);
+            else
+                tiles[i].doTick(tick, distance);
+        }
+
+        tick++;
+        distance += speed;
+
+        //if(tick % 100 == 0) speed++;
         
         int frameTicks = SDL_GetTicks() - frameStart;
         if(frameTicks > runbot::TPF) continue;
@@ -93,6 +111,9 @@ void Game::draw() {
     SDL_Renderer *rend = graphic.getRenderer();
     SDL_Texture *texture = graphic.getGameTexture();
     robot.draw(rend, texture);
+
+        for(Tile tile : tiles)
+            tile.draw(rend, texture);
 
     // Apply drawings to window
     graphic.drawToWindow();

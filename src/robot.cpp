@@ -15,8 +15,8 @@
 using runbot::Robot;
 
 Robot::Robot(SDL_Renderer *rend) :
-    bodyAnim(0, 0, Robot::W, Robot::H, 30, true),
-    armAnim(0, Robot::H, Robot::W, Robot::H, 30, false) {
+    bodyAnim(0, 0, 200, 400, 30, true),
+    armAnim(0, 400, 200, 400, 30, false) {
 
     SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
     if(loadSurface == NULL)
@@ -28,8 +28,8 @@ Robot::Robot(SDL_Renderer *rend) :
         throw std::runtime_error(SDL_GetError());
     }
 
-    bodyAnim.createClips(loadSurface->w / Robot::W);
-    armAnim.createClips(loadSurface->w / Robot::W);
+    bodyAnim.createClips(loadSurface->w / 200);
+    armAnim.createClips(loadSurface->w / 200);
 
     SDL_FreeSurface(loadSurface);
 }
@@ -52,7 +52,7 @@ void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
     SDL_RenderCopy(rend, sprite, &src, &des);
 }
 
-void Robot::doTick() {
+void Robot::doTick(int tick, int distance) {
 
     y -= jumpForce;
     if(y + Robot::H > GAME_H) {
@@ -68,6 +68,14 @@ void Robot::doTick() {
 
     bodyAnim.doTick();
     armAnim.doTick();
+}
+
+int Robot::getX() {
+    return x;
+}
+
+int Robot::getY() {
+    return y;
 }
 
 void Robot::jump(int force) {

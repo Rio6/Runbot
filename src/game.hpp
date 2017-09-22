@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/05/28
+ * Date: 2017/09/21
  */
 
 #ifndef _GAME_H_
@@ -8,9 +8,11 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 #include "graphic.hpp"
 #include "robot.hpp"
+#include "tile.hpp"
 
 namespace runbot {
     const int GAME_W = 1024;
@@ -29,8 +31,11 @@ namespace runbot {
             std::map<std::string, bool> keys;
             Graphic graphic;
             Robot robot;
+            std::vector<Tile> tiles;
             bool running = false;
             int distance = 0; // aka robot's x
+            int tick = 0;
+            int speed = 5;
 
             void processEvents();
             void draw();
