@@ -1,21 +1,27 @@
 /*
  * Author: Rio
- * Date: 2017/09/22
+ * Date: 2017/09/26
  */
 
 #ifndef _OBJECT_H_
 #define _OBJECT_H_
 
 #include "SDL2/SDL.h"
+#include "util.hpp"
 
 namespace runbot {
     class Object {
         public:
-            virtual ~Object() {};
-            virtual void draw(SDL_Renderer*, SDL_Texture*) = 0;
-            virtual void doTick(int, int) = 0;
-            virtual int getX() = 0;
-            virtual int getY() = 0;
+            Object(Vector);
+            virtual ~Object() = default;
+            virtual void draw(SDL_Renderer*, SDL_Texture*, int) = 0;
+            virtual void doTick(int);
+            virtual Vector getPos();
+            virtual Vector getSpeed();
+            virtual bool isOut(int);
+        protected:
+            Vector pos;
+            Vector speed = {0, 0};
     };
 };
 

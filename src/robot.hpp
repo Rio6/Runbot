@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/06/10
+ * Date: 2017/09/26
  */
 
 #ifndef _ROBOT_H_
@@ -18,10 +18,8 @@ namespace runbot {
 
             Robot(SDL_Renderer*);
             ~Robot();
-            void draw(SDL_Renderer*, SDL_Texture*);
-            void doTick(int, int);
-            int getX();
-            int getY();
+            void draw(SDL_Renderer*, SDL_Texture*, int);
+            void doTick(int);
 
             // Actions
             void jump(int);
@@ -33,8 +31,6 @@ namespace runbot {
             Animation bodyAnim;
             Animation armAnim;
 
-            int x, y;
-            int jumpForce = 0;
             int shootCD = 0;
             bool jumpReleased = false;
     };

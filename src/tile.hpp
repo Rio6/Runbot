@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/20
+ * Date: 2017/09/26
  */
 
 #ifndef _TILE_H_
@@ -23,10 +23,7 @@ namespace runbot {
 
             Tile(SDL_Renderer*, int, int, TileType);
             ~Tile();
-            void draw(SDL_Renderer*, SDL_Texture*);
-            void doTick(int, int);
-            int getX();
-            int getY();
+            void draw(SDL_Renderer*, SDL_Texture*, int);
             static void freeSprite();
 
         private:
@@ -34,8 +31,6 @@ namespace runbot {
 
             Animation anim;
             TileType type;
-            int x, y;
-            int distance = 0;
     };
 };
 

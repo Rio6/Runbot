@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/20
+ * Date: 2017/09/26
  */
 
 #include <stdexcept>
@@ -16,7 +16,7 @@ using runbot::Tile;
 SDL_Texture *Tile::sprite;
 
 Tile::Tile(SDL_Renderer *rend, int x, int y, TileType type) :
-    anim(0, 0, 100, 100, 1, false), type(type), x(x), y(y) {
+    Object({x, y}), anim(0, 0, 100, 100, 1, false), type(type) {
 
         if(sprite == NULL) {
             SDL_Surface *loadSurface = IMG_Load("assets/tiles.png");
@@ -37,24 +37,12 @@ Tile::Tile(SDL_Renderer *rend, int x, int y, TileType type) :
 Tile::~Tile() {
 }
 
-void Tile::draw(SDL_Renderer *rend, SDL_Texture *text) {
+void Tile::draw(SDL_Renderer *rend, SDL_Texture *text, int distance) {
     SDL_Rect src, des;
 
     src = anim.getCurrentClip();
-    des = {x - distance, y, Tile::W, Tile::H};
+    des = {pos.x - distance, pos.y, Tile::W, Tile::H};
     SDL_RenderCopy(rend, sprite, &src, &des);
-}
-
-void Tile::doTick(int tick, int distance) {
-    this->distance = distance;
-}
-
-int Tile::getX() {
-    return x;
-}
-
-int Tile::getY() {
-    return y;
 }
 
 void Tile::freeSprite() {

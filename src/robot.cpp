@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/20
+ * Date: 2017/09/26
  */
 
 #include <stdexcept>
@@ -15,6 +15,7 @@
 using runbot::Robot;
 
 Robot::Robot(SDL_Renderer *rend) :
+    Object({0, 0}),
     bodyAnim(0, 0, 200, 400, 30, true),
     armAnim(0, 400, 200, 400, 30, false) {
 
@@ -38,29 +39,29 @@ Robot::~Robot() {
     SDL_DestroyTexture(sprite);
 }
 
-void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
+void Robot::draw(SDL_Renderer *rend, SDL_Texture *text, int distance) {
     SDL_Rect src, des;
 
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {10, y, Robot::W, Robot::H};
+    des = {10, pos.y, Robot::W, Robot::H};
     SDL_RenderCopy(rend, sprite, &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {10, y, Robot::W, Robot::H};
+    des = {10, pos.y, Robot::W, Robot::H};
     SDL_RenderCopy(rend, sprite, &src, &des);
 }
 
-void Robot::doTick(int tick, int distance) {
+void Robot::doTick(int tick) {
 
-    y -= jumpForce;
-    if(y + Robot::H > GAME_H) {
-        jumpForce = 0;
-        y = GAME_H - Robot::H;
+    pos.y -= speed.y;
+    if(pos.y + Robot::H > GAME_H) {
+        speed.y = 0;
+        pos.y = GAME_H - Robot::H;
         bodyAnim.start();
     } else {
-        jumpForce -= 1;
+        speed.y -= 1;
     }
 
     if(shootCD > 0)
@@ -70,24 +71,16 @@ void Robot::doTick(int tick, int distance) {
     armAnim.doTick();
 }
 
-int Robot::getX() {
-    return x;
-}
-
-int Robot::getY() {
-    return y;
-}
-
 void Robot::jump(int force) {
-    if(jumpReleased && force > 0 && y + Robot::H == GAME_H) {
-        jumpForce = force;
+    if(jumpReleased && force > 0 && pos.y + Robot::H == GAME_H) {
+        speed.y = force;
         jumpReleased = false;
         bodyAnim.pause();
     }
 }
 
 void Robot::releaseJump() {
-    jumpForce -= 2;
+    speed.y -= 2;
     jumpReleased = true;
 }
 

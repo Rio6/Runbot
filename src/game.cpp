@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/21
+ * Date: 2017/09/26
  */
 
 #include <stdexcept>
@@ -51,13 +51,13 @@ void Game::loop() {
                         distance + GAME_W, 476, Tile::TILE_GROUND));
         }
 
-        robot.doTick(tick, distance);
+        robot.doTick(tick);
 
         for(size_t i = 0; i < tiles.size(); i++) {
-            if(tiles[i].getX() < distance)
+            if(tiles[i].isOut(distance))
                 tiles.erase(tiles.begin() + i);
             else
-                tiles[i].doTick(tick, distance);
+                tiles[i].doTick(tick);
         }
 
         tick++;
@@ -110,10 +110,10 @@ void Game::draw() {
 
     SDL_Renderer *rend = graphic.getRenderer();
     SDL_Texture *texture = graphic.getGameTexture();
-    robot.draw(rend, texture);
+    robot.draw(rend, texture, distance);
 
         for(Tile tile : tiles)
-            tile.draw(rend, texture);
+            tile.draw(rend, texture, distance);
 
     // Apply drawings to window
     graphic.drawToWindow();
