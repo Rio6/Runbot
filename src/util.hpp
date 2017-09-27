@@ -4,7 +4,12 @@
 namespace runbot {
 
     struct Vector {
-        int x, y;
+        int x = 0, y = 0;
+    };
+    struct Hitbox {
+        Vector pos;
+        Vector oldPos;
+        Vector size;
     };
 };
 

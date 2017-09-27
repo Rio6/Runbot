@@ -18,10 +18,12 @@ namespace runbot {
             virtual void doTick(int);
             virtual Vector getPos();
             virtual Vector getSpeed();
+            virtual Hitbox getHitbox();
             virtual bool isOut(int);
         protected:
             Vector pos;
             Vector speed = {0, 0};
+            Hitbox hitbox;
     };
 };
 
