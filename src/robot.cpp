@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/26
+ * Date: 2017/10/03
  */
 
 #include <stdexcept>
@@ -15,7 +15,7 @@
 using runbot::Robot;
 
 Robot::Robot(SDL_Renderer *rend) :
-    Object({0, 0}),
+    Object({0, 0}, {{}, {Robot::W, Robot::H}}),
     bodyAnim(0, 0, 200, 400, 30, true),
     armAnim(0, 400, 200, 400, 30, false) {
 
@@ -53,7 +53,9 @@ void Robot::draw(SDL_Renderer *rend, SDL_Texture *text, int distance) {
     SDL_RenderCopy(rend, sprite, &src, &des);
 }
 
-void Robot::doTick(int tick) {
+void Robot::doTick(int tick, int distance) {
+
+    pos.x = distance;
 
     pos.y -= speed.y;
     if(pos.y + Robot::H > GAME_H) {
@@ -63,6 +65,8 @@ void Robot::doTick(int tick) {
     } else {
         speed.y -= 1;
     }
+
+    hitbox.pos = pos;
 
     if(shootCD > 0)
         shootCD--;

@@ -1,3 +1,8 @@
+/*
+ * Author: Rio
+ * Date: 2017/10/03
+ */
+
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
@@ -8,8 +13,9 @@ namespace runbot {
     };
     struct Hitbox {
         Vector pos;
-        Vector oldPos;
         Vector size;
+
+        bool collide(const Hitbox&);
     };
 };
 

@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/26
+ * Date: 2017/10/03
  */
 
 #ifndef _OBJECT_H_
@@ -13,9 +13,10 @@ namespace runbot {
     class Object {
         public:
             Object(Vector);
+            Object(Vector, Hitbox);
             virtual ~Object() = default;
             virtual void draw(SDL_Renderer*, SDL_Texture*, int) = 0;
-            virtual void doTick(int);
+            virtual void doTick(int, int);
             virtual Vector getPos();
             virtual Vector getSpeed();
             virtual Hitbox getHitbox();

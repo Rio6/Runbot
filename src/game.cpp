@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/26
+ * Date: 2017/10/03
  */
 
 #include <stdexcept>
@@ -51,13 +51,19 @@ void Game::loop() {
                         distance + GAME_W, 476, Tile::TILE_GROUND));
         }
 
-        robot.doTick(tick);
+        robot.doTick(tick, distance);
 
         for(size_t i = 0; i < tiles.size(); i++) {
             if(tiles[i].isOut(distance))
                 tiles.erase(tiles.begin() + i);
             else
-                tiles[i].doTick(tick);
+                tiles[i].doTick(tick, distance);
+        }
+
+        for(Tile tile : tiles) {
+            //Collision coll(robot.getHitbox(), tiles.getHitbox());
+            if(robot.getHitbox().collide(tile.getHitbox()))
+                SDL_Log("C");
         }
 
         tick++;

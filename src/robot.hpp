@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/09/26
+ * Date: 2017/10/03
  */
 
 #ifndef _ROBOT_H_
@@ -19,7 +19,7 @@ namespace runbot {
             Robot(SDL_Renderer*);
             ~Robot();
             void draw(SDL_Renderer*, SDL_Texture*, int);
-            void doTick(int);
+            void doTick(int, int);
 
             // Actions
             void jump(int);
