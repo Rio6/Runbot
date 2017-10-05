@@ -13,6 +13,7 @@
 #include "graphic.hpp"
 #include "robot.hpp"
 #include "tile.hpp"
+#include "collision.hpp"
 #include "main.hpp"
 
 using runbot::Game;

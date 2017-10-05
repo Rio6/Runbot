@@ -7,7 +7,8 @@
 #define _OBJECT_H_
 
 #include "SDL2/SDL.h"
-#include "util.hpp"
+#include "vector.hpp"
+#include "collision.hpp"
 
 namespace runbot {
     class Object {

@@ -4,7 +4,8 @@
  */
 
 #include "object.hpp"
-#include "util.hpp"
+#include "vector.hpp"
+#include "collision.hpp"
 
 using runbot::Object;
 
