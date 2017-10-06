@@ -10,14 +10,14 @@ namespace runbot {
     struct Vector {
         int x = 0, y = 0;
 
-        Vector operator+(const Vector &lhs);
-        Vector operator-(const Vector &lhs);
-        Vector operator*(const Vector &lhs);
-        Vector operator/(const Vector &lhs);
-        Vector operator+(int lhs);
-        Vector operator-(int lhs);
-        Vector operator*(int lhs);
-        Vector operator/(int lhs);
+        Vector operator+(const Vector&);
+        Vector operator-(const Vector&);
+        Vector operator*(const Vector&);
+        Vector operator/(const Vector&);
+        Vector operator+(int);
+        Vector operator-(int);
+        Vector operator*(int);
+        Vector operator/(int);
     };
 };
 

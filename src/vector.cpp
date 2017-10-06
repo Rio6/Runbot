@@ -7,34 +7,34 @@
 
 using runbot::Vector;
 
-Vector Vector::operator+(const Vector &lhs) {
-    return Vector{x + lhs.x, y + lhs.y};
+Vector Vector::operator+(const Vector &rhs) {
+    return Vector{x + rhs.x, y + rhs.y};
 }
 
-Vector Vector::operator-(const Vector &lhs) {
-    return Vector{x - lhs.x, y - lhs.y};
+Vector Vector::operator-(const Vector &rhs) {
+    return Vector{x - rhs.x, y - rhs.y};
 }
 
-Vector Vector::operator*(const Vector &lhs) {
-    return Vector{x * lhs.x, y * lhs.y};
+Vector Vector::operator*(const Vector &rhs) {
+    return Vector{x * rhs.x, y * rhs.y};
 }
 
-Vector Vector::operator/(const Vector &lhs) {
-    return Vector{x / lhs.x, y / lhs.y};
+Vector Vector::operator/(const Vector &rhs) {
+    return Vector{x / rhs.x, y / rhs.y};
 }
 
-Vector Vector::operator+(int lhs) {
-    return Vector{x + lhs, y + lhs};
+Vector Vector::operator+(int rhs) {
+    return Vector{x + rhs, y + rhs};
 }
 
-Vector Vector::operator-(int lhs) {
-    return Vector{x - lhs, y - lhs};
+Vector Vector::operator-(int rhs) {
+    return Vector{x - rhs, y - rhs};
 }
 
-Vector Vector::operator*(int lhs) {
-    return Vector{x * lhs, y * lhs};
+Vector Vector::operator*(int rhs) {
+    return Vector{x * rhs, y * rhs};
 }
 
-Vector Vector::operator/(int lhs) {
-    return Vector{x / lhs, y / lhs};
+Vector Vector::operator/(int rhs) {
+    return Vector{x / rhs, y / rhs};
 }
