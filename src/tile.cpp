@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/03
+ * Date: 2017/10/09
  */
 
 #include <stdexcept>
@@ -42,6 +42,10 @@ void Tile::draw(SDL_Renderer *rend, SDL_Texture *text, int distance) {
     src = anim.getCurrentClip();
     des = {pos.x - distance, pos.y, Tile::W, Tile::H};
     SDL_RenderCopy(rend, sprite, &src, &des);
+}
+
+bool Tile::isOut(int distance) {
+    return pos.x + Tile::W - distance < 0;
 }
 
 void Tile::freeSprite() {
