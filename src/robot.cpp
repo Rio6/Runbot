@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/03
+ * Date: 2017/10/09
  */
 
 #include <stdexcept>
@@ -10,6 +10,7 @@
 
 #include "robot.hpp"
 #include "game.hpp"
+#include "collision.hpp"
 #include "anim.hpp"
 
 using runbot::Robot;
@@ -55,6 +56,7 @@ void Robot::draw(SDL_Renderer *rend, SDL_Texture *text, int distance) {
 
 void Robot::doTick(int tick, int distance) {
 
+    speed.x = pos.x - distance;
     pos.x = distance;
 
     pos.y -= speed.y;
@@ -62,11 +64,13 @@ void Robot::doTick(int tick, int distance) {
         speed.y = 0;
         pos.y = GAME_H - Robot::H;
         bodyAnim.start();
+        onGround = true;
     } else {
         speed.y -= 1;
     }
 
-    hitbox.pos = pos;
+    hitbox.minPos = pos;
+    hitbox.maxPos = pos + Vector{Robot::W, Robot::H};
 
     if(shootCD > 0)
         shootCD--;
@@ -75,17 +79,27 @@ void Robot::doTick(int tick, int distance) {
     armAnim.doTick();
 }
 
+void Robot::onCollide(Direction dir) {
+    if(dir == DOWN) {
+        bodyAnim.start();
+        onGround = true;
+    }
+}
+
 void Robot::jump(int force) {
-    if(jumpReleased && force > 0 && pos.y + Robot::H == GAME_H) {
+    if(jumpReleased && force > 0 && onGround) {
         speed.y = force;
         jumpReleased = false;
+        onGround = false;
         bodyAnim.pause();
     }
 }
 
 void Robot::releaseJump() {
-    speed.y -= 2;
-    jumpReleased = true;
+    if(onGround)
+        jumpReleased = true;
+    else
+        speed.y -= 2;
 }
 
 void Robot::shoot() {

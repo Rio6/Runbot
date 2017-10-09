@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/03
+ * Date: 2017/10/09
  */
 
 #include <stdexcept>
@@ -34,7 +34,7 @@ void Game::loop() {
     while(running) {
         int frameStart = SDL_GetTicks();
 
-        // Stuff here
+        // Control robot
         processEvents();
 
         if(keys["up"]) {
@@ -47,11 +47,13 @@ void Game::loop() {
             robot.shoot();
         }
 
+        // Add a tile
         if(distance % 100 == 0) {
             tiles.push_back(Tile(graphic.getRenderer(),
                         distance + GAME_W, 476, Tile::TILE_GROUND));
         }
 
+        // Tick everything
         robot.doTick(tick, distance);
 
         for(size_t i = 0; i < tiles.size(); i++) {
@@ -61,10 +63,15 @@ void Game::loop() {
                 tiles[i].doTick(tick, distance);
         }
 
+        // Resolve collision
         for(Tile tile : tiles) {
-            //Collision coll(robot.getHitbox(), tiles.getHitbox());
-            if(robot.getHitbox().collide(tile.getHitbox()))
-                SDL_Log("C");
+            Collision coll(robot.getHitbox(), tile.getHitbox());
+            Direction dir = coll.getDirection();
+            if(dir != NONE) {
+                robot.onCollide(dir);
+                tile.onCollide(dir);
+            }
+            coll.solve(robot, tile);
         }
 
         tick++;

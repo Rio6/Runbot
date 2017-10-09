@@ -18,8 +18,19 @@ runbot::Vector Object::getPos() {
     return pos;
 }
 
+void Object::onCollide(Direction dir) {
+}
+
 runbot::Vector Object::getSpeed() {
     return speed;
+}
+
+void Object::setPos(Vector pos) {
+    this->pos = pos;
+}
+
+void Object::setSpeed(Vector speed) {
+    this->speed = speed;
 }
 
 runbot::Hitbox Object::getHitbox() {

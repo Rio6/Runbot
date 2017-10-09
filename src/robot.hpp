@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/03
+ * Date: 2017/10/09
  */
 
 #ifndef _ROBOT_H_
@@ -8,6 +8,7 @@
 
 #include "SDL2/SDL.h"
 #include "object.hpp"
+#include "collision.hpp"
 #include "anim.hpp"
 
 namespace runbot {
@@ -20,6 +21,7 @@ namespace runbot {
             ~Robot();
             void draw(SDL_Renderer*, SDL_Texture*, int);
             void doTick(int, int);
+            void onCollide(Direction dir);
 
             // Actions
             void jump(int);
@@ -33,6 +35,7 @@ namespace runbot {
 
             int shootCD = 0;
             bool jumpReleased = false;
+            bool onGround = false;
     };
 };
 

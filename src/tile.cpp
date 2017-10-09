@@ -15,7 +15,7 @@ using runbot::Tile;
 SDL_Texture *Tile::sprite;
 
 Tile::Tile(SDL_Renderer *rend, int x, int y, TileType type) :
-    Object({x, y}, {{x, y}, {Tile::W, Tile::H}}), anim(0, 0, 100, 100, 1, false), type(type) {
+    Object({x, y}, {{x, y}, {x + Tile::W, y + Tile::H}}), anim(0, 0, 100, 100, 1, false), type(type) {
 
         if(sprite == NULL) {
             SDL_Surface *loadSurface = IMG_Load("assets/tiles.png");

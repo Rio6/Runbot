@@ -18,8 +18,11 @@ namespace runbot {
             virtual ~Object() = default;
             virtual void draw(SDL_Renderer*, SDL_Texture*, int) = 0;
             virtual void doTick(int, int);
+            virtual void onCollide(Direction);
             virtual Vector getPos();
             virtual Vector getSpeed();
+            virtual void setPos(Vector);
+            virtual void setSpeed(Vector);
             virtual Hitbox getHitbox();
             virtual bool isOut(int);
         protected:

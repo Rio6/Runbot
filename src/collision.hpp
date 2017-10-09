@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/05
+ * Date: 2017/10/09
  */
 
 #ifndef _COLLISION_H_
@@ -9,20 +9,28 @@
 #include "vector.hpp"
 
 namespace runbot {
-    struct Hitbox {
-        Vector pos;
-        Vector size;
+    class Object; // Forward declare
 
-        bool collide(const Hitbox&);
+    struct Hitbox {
+        Vector minPos;
+        Vector maxPos;
     };
+
+    enum Direction {
+        NONE,
+        LEFT,
+        RIGHT,
+        UP,
+        DOWN
+    };
+
     class Collision {
         public:
-            Collision(Hitbox, Hitbox);
-            bool isColliding();
-            void solve();
+            Collision(const Hitbox&, const Hitbox&);
+            Direction getDirection();
+            void solve(Object&, Object&);
         private:
-            Hitbox a, b;
-            bool collide;
+            Vector overlap;
     };
 };
 
