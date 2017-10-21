@@ -27,15 +27,16 @@ namespace runbot {
             ~Game();
             void loop();
 
+            int distance = 0;
+            int tick = 0;
+            int speed = 5;
+
         private:
             std::map<std::string, bool> keys;
             Graphic graphic;
             Robot robot;
             std::vector<Tile> tiles;
             bool running = false;
-            int distance = 0; // aka robot's x
-            int tick = 0;
-            int speed = 5;
 
             void processEvents();
             void draw();

@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/03
+ * Date: 2017/10/20
  */
 
 #include "object.hpp"
@@ -12,7 +12,7 @@ using runbot::Object;
 Object::Object(Vector pos) : pos(pos) {}
 Object::Object(Vector pos, Hitbox hitbox) : pos(pos), hitbox(hitbox) {}
 
-void Object::doTick(int tick, int distance) {}
+void Object::doTick(int tick) {}
 
 runbot::Vector Object::getPos() {
     return pos;

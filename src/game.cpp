@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/09
+ * Date: 2017/10/20
  */
 
 #include <stdexcept>
@@ -18,7 +18,7 @@
 
 using runbot::Game;
 
-Game::Game() try : graphic(), robot(graphic.getRenderer()) {
+Game::Game() try : graphic(), robot(this, graphic.getRenderer()) {
 } catch (std::runtime_error exc) {
     logError("Failed to initilize", exc.what());
 }
@@ -27,11 +27,10 @@ Game::~Game() {
     Tile::freeSprite();
 }
 
-
 void Game::loop() {
 
     for(int i = 0; i < GAME_W; i += Tile::W) {
-        tiles.push_back(Tile(graphic.getRenderer(),
+        tiles.push_back(Tile(this, graphic.getRenderer(),
                     distance + i, 485 - (i % 11), Tile::TILE_GROUND));
     }
 
@@ -54,18 +53,18 @@ void Game::loop() {
 
         // Add a tile
         if(distance % 100 == 0) {
-            tiles.push_back(Tile(graphic.getRenderer(),
+            tiles.push_back(Tile(this, graphic.getRenderer(),
                         distance + GAME_W, 480 - (tick % 11), Tile::TILE_GROUND));
         }
 
         // Tick everything
-        robot.doTick(tick, distance);
+        robot.doTick(tick);
 
         for(size_t i = 0; i < tiles.size(); i++) {
             if(tiles[i].isOut(distance))
                 tiles.erase(tiles.begin() + i);
             else
-                tiles[i].doTick(tick, distance);
+                tiles[i].doTick(tick);
         }
 
         // Resolve collision
@@ -129,10 +128,10 @@ void Game::draw() {
 
     SDL_Renderer *rend = graphic.getRenderer();
     SDL_Texture *texture = graphic.getGameTexture();
-    robot.draw(rend, texture, distance);
+    robot.draw(rend, texture);
 
         for(Tile tile : tiles)
-            tile.draw(rend, texture, distance);
+            tile.draw(rend, texture);
 
     // Apply drawings to window
     graphic.drawToWindow();

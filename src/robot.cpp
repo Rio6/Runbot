@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/10
+ * Date: 2017/10/20
  */
 
 #include <stdexcept>
@@ -15,8 +15,9 @@
 
 using runbot::Robot;
 
-Robot::Robot(SDL_Renderer *rend) :
+Robot::Robot(Game *game, SDL_Renderer *rend) :
     Object({0, 0}, {{20, 0}, {Robot::W - 40, Robot::H}}),
+    game(game),
     bodyAnim(0, 0, 200, 400, 30, true),
     armAnim(0, 400, 200, 400, 30, false) {
 

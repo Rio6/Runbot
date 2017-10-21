@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/09
+ * Date: 2017/10/20
  */
 
 #include <stdexcept>
@@ -9,13 +9,16 @@
 #include "SDL2/SDL_image.h"
 
 #include "tile.hpp"
+#include "game.hpp"
 
 using runbot::Tile;
 
 SDL_Texture *Tile::sprite;
 
-Tile::Tile(SDL_Renderer *rend, int x, int y, TileType type) :
-    Object({x, y}, {{x, y}, {x + Tile::W, y + Tile::H}}), anim(0, 0, 100, 100, 1, false), type(type) {
+Tile::Tile(Game *game, SDL_Renderer *rend, int x, int y, TileType type) :
+    Object({x, y}, {{x, y}, {x + Tile::W, y + Tile::H}}),
+    game(game),
+    anim(0, 0, 100, 100, 1, false), type(type) {
 
         if(sprite == NULL) {
             SDL_Surface *loadSurface = IMG_Load("assets/tiles.png");
@@ -36,11 +39,11 @@ Tile::Tile(SDL_Renderer *rend, int x, int y, TileType type) :
 Tile::~Tile() {
 }
 
-void Tile::draw(SDL_Renderer *rend, SDL_Texture *text, int distance) {
+void Tile::draw(SDL_Renderer *rend, SDL_Texture *text) {
     SDL_Rect src, des;
 
     src = anim.getCurrentClip();
-    des = {pos.x - distance, pos.y, Tile::W, Tile::H};
+    des = {pos.x - game->distance, pos.y, Tile::W, Tile::H};
     SDL_RenderCopy(rend, sprite, &src, &des);
 }
 
