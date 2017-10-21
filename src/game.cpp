@@ -29,9 +29,9 @@ Game::~Game() {
 
 void Game::loop() {
 
-    for(int i = 0; i < GAME_W; i += Tile::W) {
+    for(int i = 0; i < GAME_W - Tile::W; i += Tile::W) {
         tiles.push_back(Tile(this, graphic.getRenderer(),
-                    distance + i, 485 - (i % 11), Tile::TILE_GROUND));
+                    i, 485 - i / 15, Tile::TILE_GROUND));
     }
 
     running = true;
@@ -54,7 +54,7 @@ void Game::loop() {
         // Add a tile
         if(distance % 100 == 0) {
             tiles.push_back(Tile(this, graphic.getRenderer(),
-                        distance + GAME_W, 480 - (tick % 11), Tile::TILE_GROUND));
+                        distance + GAME_W, 485 - (distance % 111), Tile::TILE_GROUND));
         }
 
         // Tick everything
@@ -77,6 +77,9 @@ void Game::loop() {
             }
             coll.solve(robot, tile);
         }
+
+        if(robot.isOut(distance))
+            robot.setPos({distance, 0});
 
         tick++;
         distance += speed;
@@ -128,10 +131,11 @@ void Game::draw() {
 
     SDL_Renderer *rend = graphic.getRenderer();
     SDL_Texture *texture = graphic.getGameTexture();
-    robot.draw(rend, texture);
 
         for(Tile tile : tiles)
             tile.draw(rend, texture);
+
+    robot.draw(rend, texture);
 
     // Apply drawings to window
     graphic.drawToWindow();

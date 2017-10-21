@@ -41,28 +41,31 @@ Robot::~Robot() {
     SDL_DestroyTexture(sprite);
 }
 
-void Robot::draw(SDL_Renderer *rend, SDL_Texture *text, int distance) {
+void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
     SDL_Rect src, des;
 
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {10, pos.y, Robot::W, Robot::H};
+    des = {pos.x - game->distance, pos.y, Robot::W, Robot::H};
     SDL_RenderCopy(rend, sprite, &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {10, pos.y, Robot::W, Robot::H};
+    des = {pos.x - game->distance, pos.y, Robot::W, Robot::H};
     SDL_RenderCopy(rend, sprite, &src, &des);
 }
 
-void Robot::doTick(int tick, int distance) {
+void Robot::doTick(int tick) {
 
-    speed.x = pos.x - distance;
-    pos.x = distance;
+    if(pos.x < game->distance)
+        speed.x++;
+    else
+        speed.x = game->speed;
 
-    pos.y -= speed.y;
+    pos.x += speed.x;
+    pos.y += speed.y;
 
-    speed.y -= 1;
+    speed.y += 1;
 
     hitbox.minPos = pos + 20;
     hitbox.maxPos = pos + Vector{Robot::W - 40, Robot::H};
@@ -81,9 +84,13 @@ void Robot::onCollide(Direction dir) {
     }
 }
 
+bool Robot::isOut(int distance) {
+    return pos.x + Robot::W * 2 < distance || pos.y > GAME_H;
+}
+
 void Robot::jump(int force) {
     if(jumpReleased && force > 0 && onGround) {
-        speed.y = force;
+        speed.y = -force;
         jumpReleased = false;
         onGround = false;
         bodyAnim.pause();
@@ -94,7 +101,7 @@ void Robot::releaseJump() {
     if(onGround)
         jumpReleased = true;
     else
-        speed.y -= 2;
+        speed.y += 2;
 }
 
 void Robot::shoot() {

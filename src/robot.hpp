@@ -24,6 +24,7 @@ namespace runbot {
             void draw(SDL_Renderer*, SDL_Texture*);
             void doTick(int);
             void onCollide(Direction dir);
+            bool isOut(int);
 
             // Actions
             void jump(int);

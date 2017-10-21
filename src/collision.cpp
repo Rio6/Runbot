@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/09
+ * Date: 2017/10/20
  */
 
 #include <cmath>
@@ -32,6 +32,7 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
 runbot::Direction Collision::getDirection() {
     if(overlap.x * overlap.y == 0)
         return NONE;
+
     if(std::abs(overlap.x) < std::abs(overlap.y)) {
         if(overlap.x > 0)
             return RIGHT;
@@ -48,17 +49,35 @@ runbot::Direction Collision::getDirection() {
 // a is the object to be moved
 void Collision::solve(Object &a, Object &b) {
     Direction dir = getDirection();
+    Vector aSpeed = a.getSpeed();
+    Vector relSpeed = aSpeed - b.getSpeed();
     switch(dir) {
         case RIGHT:
+            if(relSpeed.x > 0 && (overlap.y < 0 || overlap.y > 20)) {
+                a.setPos(a.getPos() - Vector{overlap.x, 0});
+                aSpeed.x = 0;
+            }
+            break;
         case LEFT:
-            a.setPos(a.getPos() - Vector{overlap.x, 0});
+            if(relSpeed.x < 0 && (overlap.y < 0 || overlap.y > 20)) {
+                a.setPos(a.getPos() - Vector{overlap.x, 0});
+                aSpeed.x = 0;
+            }
             break;
         case UP:
+            if(relSpeed.y < 0) {
+                a.setPos(a.getPos() - Vector{0, overlap.y});
+                aSpeed.y = 0;
+            }
+            break;
         case DOWN:
-            a.setPos(a.getPos() - Vector{0, overlap.y});
+            if(relSpeed.y > 0) {
+                a.setPos(a.getPos() - Vector{0, overlap.y});
+                aSpeed.y = 0;
+            }
             break;
         case NONE:
             return;
     }
-    a.setSpeed({0, 0});
+    a.setSpeed(aSpeed);
 }
