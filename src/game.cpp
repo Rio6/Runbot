@@ -30,6 +30,11 @@ Game::~Game() {
 
 void Game::loop() {
 
+    for(int i = 0; i < GAME_W; i += Tile::W) {
+        tiles.push_back(Tile(graphic.getRenderer(),
+                    distance + i, 485 - (i % 11), Tile::TILE_GROUND));
+    }
+
     running = true;
     while(running) {
         int frameStart = SDL_GetTicks();
@@ -50,7 +55,7 @@ void Game::loop() {
         // Add a tile
         if(distance % 100 == 0) {
             tiles.push_back(Tile(graphic.getRenderer(),
-                        distance + GAME_W, 476, Tile::TILE_GROUND));
+                        distance + GAME_W, 480 - (tick % 11), Tile::TILE_GROUND));
         }
 
         // Tick everything
