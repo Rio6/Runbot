@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/20
+ * Date: 2017/10/23
  */
 
 #include <stdexcept>
@@ -41,7 +41,7 @@ Robot::~Robot() {
     SDL_DestroyTexture(sprite);
 }
 
-void Robot::draw(SDL_Renderer *rend, SDL_Texture *text) {
+void Robot::draw(SDL_Renderer *rend) {
     SDL_Rect src, des;
 
     // Body animation
@@ -85,7 +85,7 @@ void Robot::onCollide(Direction dir) {
 }
 
 bool Robot::isOut(int distance) {
-    return pos.x + Robot::W * 2 < distance || pos.y > GAME_H;
+    return pos.x + Robot::W * 2 < distance || pos.y > Game::H;
 }
 
 void Robot::jump(int force) {

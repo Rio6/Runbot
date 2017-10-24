@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/20
+ * Date: 2017/10/23
  */
 
 #include <stdexcept>
@@ -29,14 +29,17 @@ Game::~Game() {
 
 void Game::loop() {
 
-    for(int i = 0; i < GAME_W - Tile::W; i += Tile::W) {
+    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
         tiles.push_back(Tile(this, graphic.getRenderer(),
-                    i, 485 - i / 15, Tile::TILE_GROUND));
+                    i, Game::H, Tile::TILE_GROUND));
     }
 
     running = true;
     while(running) {
+
+#ifndef USE_VSYNC
         int frameStart = SDL_GetTicks();
+#endif
 
         // Control robot
         processEvents();
@@ -54,7 +57,9 @@ void Game::loop() {
         // Add a tile
         if(distance % 100 == 0) {
             tiles.push_back(Tile(this, graphic.getRenderer(),
-                        distance + GAME_W, 485 - (distance % 111), Tile::TILE_GROUND));
+                        distance + Game::W, Game::H, Tile::TILE_GROUND));
+            tiles.push_back(Tile(this, graphic.getRenderer(),
+                        distance + Game::W, std::rand() % Game::H, Tile::TILE_GROUND));
         }
 
         // Tick everything
@@ -86,9 +91,11 @@ void Game::loop() {
 
         //if(tick % 100 == 0) speed++;
         
+#ifndef USE_VSYNC
         int frameTicks = SDL_GetTicks() - frameStart;
         if(frameTicks > runbot::TPF) continue;
         SDL_Delay(runbot::TPF - frameTicks);
+#endif
 
         // Render
         draw();
@@ -130,13 +137,14 @@ void Game::processEvents() {
 void Game::draw() {
 
     SDL_Renderer *rend = graphic.getRenderer();
-    SDL_Texture *texture = graphic.getGameTexture();
 
-        for(Tile tile : tiles)
-            tile.draw(rend, texture);
+    SDL_RenderClear(rend);
 
-    robot.draw(rend, texture);
+    for(Tile tile : tiles)
+        tile.draw(rend);
+
+    robot.draw(rend);
 
     // Apply drawings to window
-    graphic.drawToWindow();
+    SDL_RenderPresent(rend);
 }

@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/20
+ * Date: 2017/10/23
  */
 
 #ifndef _ROBOT_H_
@@ -21,7 +21,7 @@ namespace runbot {
 
             Robot(Game*, SDL_Renderer*);
             ~Robot();
-            void draw(SDL_Renderer*, SDL_Texture*);
+            void draw(SDL_Renderer*);
             void doTick(int);
             void onCollide(Direction dir);
             bool isOut(int);

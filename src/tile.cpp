@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/20
+ * Date: 2017/10/23
  */
 
 #include <stdexcept>
@@ -39,7 +39,7 @@ Tile::Tile(Game *game, SDL_Renderer *rend, int x, int y, TileType type) :
 Tile::~Tile() {
 }
 
-void Tile::draw(SDL_Renderer *rend, SDL_Texture *text) {
+void Tile::draw(SDL_Renderer *rend) {
     SDL_Rect src, des;
 
     src = anim.getCurrentClip();

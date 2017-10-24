@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/20
+ * Date: 2017/10/23
  */
 
 #ifndef _TILE_H_
@@ -25,7 +25,7 @@ namespace runbot {
 
             Tile(Game*, SDL_Renderer*, int, int, TileType);
             ~Tile();
-            void draw(SDL_Renderer*, SDL_Texture*);
+            void draw(SDL_Renderer*);
             bool isOut(int);
             static void freeSprite();
 
