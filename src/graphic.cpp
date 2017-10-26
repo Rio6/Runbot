@@ -30,11 +30,11 @@ Graphic::Graphic() {
         throw std::runtime_error(SDL_GetError());
 
     rend = SDL_CreateRenderer(win, -1,
-            SDL_RENDERER_ACCELERATED |
+            SDL_RENDERER_ACCELERATED
 #ifdef USE_VSYNC
-            SDL_RENDERER_PRESENTVSYNC |
+            | SDL_RENDERER_PRESENTVSYNC
 #endif
-            SDL_RENDERER_TARGETTEXTURE);
+            );
     if(rend == NULL)
         throw std::runtime_error(SDL_GetError());
 
