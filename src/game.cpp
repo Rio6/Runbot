@@ -55,11 +55,11 @@ void Game::loop() {
         }
 
         // Add a tile
-        if(distance % 100 == 0) {
+        if(distance % Tile::W == 0) {
             tiles.push_back(Tile(this, graphic.getRenderer(),
                         distance + Game::W, Game::H, Tile::TILE_GROUND));
             tiles.push_back(Tile(this, graphic.getRenderer(),
-                        distance + Game::W, std::rand() % Game::H, Tile::TILE_GROUND));
+                        distance + Game::W, Game::H - tick % Game::H, Tile::TILE_GROUND));
         }
 
         // Tick everything
