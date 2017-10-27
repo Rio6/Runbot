@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/10/27
  */
 
 #include <stdexcept>
@@ -16,7 +16,7 @@ using runbot::Tile;
 SDL_Texture *Tile::sprite;
 
 Tile::Tile(Game *game, SDL_Renderer *rend, int x, int y, TileType type) :
-    Object({x, y}, {{x, y}, {x + Tile::W, y + Tile::H}}),
+    Object({x, y}, {.minPos={x, y}, .maxPos={x + Tile::W, y + Tile::H}}),
     game(game),
     anim(0, 0, 100, 100, 1, false), type(type) {
 
@@ -34,6 +34,8 @@ Tile::Tile(Game *game, SDL_Renderer *rend, int x, int y, TileType type) :
         }
 
     anim.createClips(1);
+
+    hitbox.updateOldPos();
 }
 
 Tile::~Tile() {

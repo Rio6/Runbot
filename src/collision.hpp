@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/09
+ * Date: 2017/10/27
  */
 
 #ifndef _COLLISION_H_
@@ -14,6 +14,10 @@ namespace runbot {
     struct Hitbox {
         Vector minPos;
         Vector maxPos;
+        Vector oldMinPos;
+        Vector oldMaxPos;
+
+        void updateOldPos();
     };
 
     enum Direction {
