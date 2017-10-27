@@ -62,10 +62,10 @@ void Robot::doTick(int tick) {
     else
         speed.x = game->speed;
 
+    speed.y += 1;
+
     pos.x += speed.x;
     pos.y += speed.y;
-
-    speed.y += 1;
 
     hitbox.minPos = pos + 20;
     hitbox.maxPos = pos + Vector{Robot::W - 40, Robot::H};
@@ -73,8 +73,13 @@ void Robot::doTick(int tick) {
     if(shootCD > 0)
         shootCD--;
 
+    if(!onGround)
+        bodyAnim.pause();
+
     bodyAnim.doTick();
     armAnim.doTick();
+
+    onGround = false;
 }
 
 void Robot::onCollide(Direction dir) {
