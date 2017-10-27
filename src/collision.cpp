@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/20
+ * Date: 2017/10/27
  */
 
 #include <cmath>
@@ -12,6 +12,11 @@
 using runbot::Hitbox;
 using runbot::Direction;
 using runbot::Collision;
+
+void Hitbox::updateOldPos() {
+    oldMinPos = minPos;
+    oldMaxPos = maxPos;
+}
 
 Direction runbot::getOpposite(Direction d) {
     switch(d) {

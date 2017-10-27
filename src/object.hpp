@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/10/27
  */
 
 #ifndef _OBJECT_H_
@@ -23,7 +23,7 @@ namespace runbot {
             virtual Vector getSpeed();
             virtual void setPos(Vector);
             virtual void setSpeed(Vector);
-            virtual Hitbox getHitbox();
+            virtual Hitbox &getHitbox();
             virtual bool isOut(int);
         protected:
             Vector pos;
