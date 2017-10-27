@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/20
+ * Date: 2017/10/27
  */
 
 #include "object.hpp"
@@ -33,7 +33,7 @@ void Object::setSpeed(Vector speed) {
     this->speed = speed;
 }
 
-runbot::Hitbox Object::getHitbox() {
+runbot::Hitbox &Object::getHitbox() {
     return hitbox;
 }
 

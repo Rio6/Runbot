@@ -67,6 +67,7 @@ void Robot::doTick(int tick) {
     pos.x += speed.x;
     pos.y += speed.y;
 
+    hitbox.updateOldPos();
     hitbox.minPos = pos + 20;
     hitbox.maxPos = pos + Vector{Robot::W - 40, Robot::H};
 
