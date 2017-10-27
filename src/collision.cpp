@@ -10,7 +10,23 @@
 #include "object.hpp"
 
 using runbot::Hitbox;
+using runbot::Direction;
 using runbot::Collision;
+
+Direction runbot::getOpposite(Direction d) {
+    switch(d) {
+        case LEFT:
+            return RIGHT;
+        case RIGHT:
+            return LEFT;
+        case UP:
+            return DOWN;
+        case DOWN:
+            return UP;
+        default:
+            return NONE;
+    }
+}
 
 Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
@@ -29,7 +45,7 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
     }
 }
 
-runbot::Direction Collision::getDirection() {
+Direction Collision::getDirection() {
     if(overlap.x * overlap.y == 0)
         return NONE;
 

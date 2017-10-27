@@ -24,6 +24,8 @@ namespace runbot {
         DOWN
     };
 
+    Direction getOpposite(Direction);
+
     class Collision {
         public:
             Collision(const Hitbox&, const Hitbox&);

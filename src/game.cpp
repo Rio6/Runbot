@@ -78,7 +78,7 @@ void Game::loop() {
             Direction dir = coll.getDirection();
             if(dir != NONE) {
                 robot.onCollide(dir);
-                tile.onCollide(dir);
+                tile.onCollide(getOpposite(dir));
             }
             coll.solve(robot, tile);
         }
