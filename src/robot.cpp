@@ -57,8 +57,8 @@ void Robot::draw(SDL_Renderer *rend) {
 
 void Robot::doTick(int tick) {
 
-    if(pos.x < game->distance)
-        speed.x++;
+    if(pos.x < game->distance + Robot::W)
+        speed.x = game->speed * 2;
     else
         speed.x = game->speed;
 
