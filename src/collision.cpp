@@ -54,6 +54,9 @@ Direction Collision::getDirection() {
     if(overlap.x * overlap.y == 0)
         return NONE;
 
+    if(overlap.y > 0 && overlap.y < 20) // Stepping on small rise
+        return DOWN;
+
     if(std::abs(overlap.x) < std::abs(overlap.y)) {
         if(overlap.x > 0)
             return RIGHT;
@@ -74,13 +77,13 @@ void Collision::solve(Object &a, Object &b) {
     Vector relSpeed = aSpeed - b.getSpeed();
     switch(dir) {
         case RIGHT:
-            if(relSpeed.x > 0 && (overlap.y < 0 || overlap.y > 20)) {
+            if(relSpeed.x > 0) {
                 a.setPos(a.getPos() - Vector{overlap.x, 0});
                 aSpeed.x = 0;
             }
             break;
         case LEFT:
-            if(relSpeed.x < 0 && (overlap.y < 0 || overlap.y > 20)) {
+            if(relSpeed.x < 0) {
                 a.setPos(a.getPos() - Vector{overlap.x, 0});
                 aSpeed.x = 0;
             }
