@@ -54,12 +54,16 @@ void Game::loop() {
             robot.shoot();
         }
 
+        if(keys["down"]) {
+            robot.setSpeed({speed, 100});
+        }
+
         // Add a tile
         if(distance % Tile::W == 0) {
+//            tiles.push_back(Tile(this, graphic.getRenderer(),
+//                        distance + Game::W, Game::H, Tile::TILE_GROUND));
             tiles.push_back(Tile(this, graphic.getRenderer(),
-                        distance + Game::W, Game::H, Tile::TILE_GROUND));
-            tiles.push_back(Tile(this, graphic.getRenderer(),
-                        distance + Game::W, Game::H - tick % Game::H, Tile::TILE_GROUND));
+                        distance + Game::W, Game::H - tick / 2 % Game::H, Tile::TILE_GROUND));
         }
 
         // Tick everything
@@ -83,8 +87,10 @@ void Game::loop() {
             coll.solve(robot, tile);
         }
 
-        if(robot.isOut(distance))
+        if(robot.isOut(distance)) {
+            robot.setSpeed({speed, 0});
             robot.setPos({distance, 0});
+        }
 
         tick++;
         distance += speed;
@@ -115,6 +121,9 @@ void Game::processEvents() {
                     case SDLK_RIGHT:
                         keys["right"] = true;
                         break;
+                    case SDLK_DOWN:
+                        keys["down"] = true;
+                        break;
                 }
                 break;
             case SDL_KEYUP:
@@ -124,6 +133,9 @@ void Game::processEvents() {
                         break;
                     case SDLK_RIGHT:
                         keys["right"] = false;
+                        break;
+                    case SDLK_DOWN:
+                        keys["down"] = false;
                         break;
                 }
                 break;
