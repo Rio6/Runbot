@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/27
+ * Date: 2017/10/31
  */
 
 #include <cmath>
@@ -54,7 +54,7 @@ Direction Collision::getDirection() {
     if(overlap.x * overlap.y == 0)
         return NONE;
 
-    if(overlap.y > 0 && overlap.y < 20) // Stepping on small rise
+    if(overlap.y > 0 && overlap.y < Collision::STEP_HEIGHT) // Stepping on small rise
         return DOWN;
 
     if(std::abs(overlap.x) < std::abs(overlap.y)) {

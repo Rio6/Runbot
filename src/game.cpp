@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/10/31
  */
 
 #include <stdexcept>
@@ -45,7 +45,7 @@ void Game::loop() {
         processEvents();
 
         if(keys["up"]) {
-            robot.jump(25);
+            robot.jump();
         } else {
             robot.releaseJump();
         }
@@ -83,8 +83,10 @@ void Game::loop() {
             coll.solve(robot, tile);
         }
 
-        if(robot.isOut(distance))
+        if(robot.isOut(distance)) {
+            robot.setSpeed({speed, 0});
             robot.setPos({distance, 0});
+        }
 
         tick++;
         distance += speed;
