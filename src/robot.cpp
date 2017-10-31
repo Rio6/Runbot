@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/10/31
  */
 
 #include <stdexcept>
@@ -94,9 +94,9 @@ bool Robot::isOut(int distance) {
     return pos.x + Robot::W * 2 < distance || pos.y > Game::H;
 }
 
-void Robot::jump(int force) {
-    if(jumpReleased && force > 0 && onGround) {
-        speed.y = -force;
+void Robot::jump() {
+    if(jumpReleased && onGround) {
+        speed.y = -Robot::JUMP_FORCE;
         jumpReleased = false;
         onGround = false;
         bodyAnim.pause();
