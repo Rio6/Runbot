@@ -52,7 +52,8 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
     }*/
 
     float entryX, entryY, exitX, exitY;
-    Vector<float> speed = (a.minPos - a.oldMinPos) + (b.minPos - b.oldMinPos);
+    Vector<float> speed;
+    speed = (a.minPos - a.oldMinPos) + (b.minPos - b.oldMinPos);
 
     if(speed.x > 0) {
         entryX = b.minPos.x - a.maxPos.x;

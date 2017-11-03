@@ -1,80 +1,99 @@
 /*
  * Author: Rio
- * Date: 2017/10/27
+ * Date: 2017/11/02
  */
 
 #include "vector.hpp"
 
 using runbot::Vector;
 
-Vector Vector::operator+(const Vector &rhs) const {
-    return Vector{x + rhs.x, y + rhs.y};
+template<typename T>
+Vector<T> Vector<T>::operator+(const Vector<T> &rhs) const {
+    return Vector<T>{x + rhs.x, y + rhs.y};
 }
 
-Vector Vector::operator-(const Vector &rhs) const {
-    return Vector{x - rhs.x, y - rhs.y};
+template<typename T>
+Vector<T> Vector<T>::operator-(const Vector<T> &rhs) const {
+    return Vector<T>{x - rhs.x, y - rhs.y};
 }
 
-Vector Vector::operator*(const Vector &rhs) const {
-    return Vector{x * rhs.x, y * rhs.y};
+template<typename T>
+Vector<T> Vector<T>::operator*(const Vector<T> &rhs) const {
+    return Vector<T>{x * rhs.x, y * rhs.y};
 }
 
-Vector Vector::operator/(const Vector &rhs) const {
-    return Vector{x / rhs.x, y / rhs.y};
+template<typename T>
+Vector<T> Vector<T>::operator/(const Vector<T> &rhs) const {
+    return Vector<T>{x / rhs.x, y / rhs.y};
 }
 
-Vector Vector::operator+(T rhs) const {
-    return Vector{x + rhs, y + rhs};
+template<typename T>
+Vector<T> Vector<T>::operator+(T rhs) const {
+    return Vector<T>{x + rhs, y + rhs};
 }
 
-Vector Vector::operator-(T rhs) const {
-    return Vector{x - rhs, y - rhs};
+template<typename T>
+Vector<T> Vector<T>::operator-(T rhs) const {
+    return Vector<T>{x - rhs, y - rhs};
 }
 
-Vector Vector::operator*(T rhs) const {
-    return Vector{x * rhs, y * rhs};
+template<typename T>
+Vector<T> Vector<T>::operator*(T rhs) const {
+    return Vector<T>{x * rhs, y * rhs};
 }
 
-Vector Vector::operator/(T rhs) const {
-    return Vector{x / rhs, y / rhs};
+template<typename T>
+Vector<T> Vector<T>::operator/(T rhs) const {
+    return Vector<T>{x / rhs, y / rhs};
 }
 
-void Vector::operator+=(const Vector &rhs) {
+template<typename T>
+void Vector<T>::operator+=(const Vector<T> &rhs) {
     x += rhs.x;
     y += rhs.y;
 }
 
-void Vector::operator-=(const Vector &rhs) {
+template<typename T>
+void Vector<T>::operator-=(const Vector<T> &rhs) {
     x -= rhs.x;
     y -= rhs.y;
 }
 
-void Vector::operator*=(const Vector &rhs) {
+template<typename T>
+void Vector<T>::operator*=(const Vector<T> &rhs) {
     x *= rhs.x;
     y *= rhs.y;
 }
 
-void Vector::operator/=(const Vector &rhs) {
+template<typename T>
+void Vector<T>::operator/=(const Vector<T> &rhs) {
     x /= rhs.x;
     y /= rhs.y;
 }
 
-void Vector::operator+=(T rhs) {
+template<typename T>
+void Vector<T>::operator+=(T rhs) {
     x += rhs;
     y += rhs;
 }
 
-void Vector::operator-=(T rhs) {
+template<typename T>
+void Vector<T>::operator-=(T rhs) {
     x -= rhs;
     y -= rhs;
 }
 
-void Vector::operator*=(T rhs) {
+template<typename T>
+void Vector<T>::operator*=(T rhs) {
     x *= rhs;
     y *= rhs;
 }
 
-void Vector::operator/=(T rhs) {
+template<typename T>
+void Vector<T>::operator/=(T rhs) {
     x /= rhs;
     y /= rhs;
 }
+
+template class Vector<int>;
+template class Vector<float>;

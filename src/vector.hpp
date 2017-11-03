@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/27
+ * Date: 2017/11/02
  */
 
 #ifndef _VECTOR_H_
@@ -11,6 +11,15 @@ namespace runbot {
     template <typename T>
     struct Vector {
         T x = 0, y = 0;
+
+        template<typename F>
+        Vector &operator=(Vector<F> rhs) {
+            x = rhs.x;
+            y = rhs.y;
+
+            return *this;
+        }
+
 
         Vector operator+(const Vector&) const;
         Vector operator-(const Vector&) const;
