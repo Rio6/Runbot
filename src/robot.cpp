@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/10/31
  */
 
 #include <stdexcept>
@@ -69,7 +69,7 @@ void Robot::doTick(int tick) {
 
     hitbox.updateOldPos();
     hitbox.minPos = pos + 20;
-    hitbox.maxPos = pos + Vector{Robot::W - 40, Robot::H};
+    hitbox.maxPos = pos + Vector<int>{Robot::W - 40, Robot::H};
 
     if(shootCD > 0)
         shootCD--;
@@ -94,9 +94,9 @@ bool Robot::isOut(int distance) {
     return pos.x + Robot::W * 2 < distance || pos.y > Game::H;
 }
 
-void Robot::jump(int force) {
-    if(jumpReleased && force > 0 && onGround) {
-        speed.y = -force;
+void Robot::jump() {
+    if(jumpReleased && onGround) {
+        speed.y = -Robot::JUMP_FORCE;
         jumpReleased = false;
         onGround = false;
         bodyAnim.pause();

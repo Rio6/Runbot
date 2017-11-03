@@ -13,21 +13,21 @@
 namespace runbot {
     class Object {
         public:
-            Object(Vector);
-            Object(Vector, Hitbox);
+            Object(Vector<int>);
+            Object(Vector<int>, Hitbox);
             virtual ~Object() = default;
             virtual void draw(SDL_Renderer*) = 0;
             virtual void doTick(int);
             virtual void onCollide(Direction);
-            virtual Vector getPos();
-            virtual Vector getSpeed();
-            virtual void setPos(Vector);
-            virtual void setSpeed(Vector);
+            virtual Vector<int> getPos();
+            virtual Vector<float> getSpeed();
+            virtual void setPos(Vector<int>);
+            virtual void setSpeed(Vector<float>);
             virtual Hitbox &getHitbox();
             virtual bool isOut(int);
         protected:
-            Vector pos;
-            Vector speed = {0, 0};
+            Vector<int> pos;
+            Vector<float> speed;
             Hitbox hitbox;
     };
 };

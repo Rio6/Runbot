@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/27
+ * Date: 2017/10/31
  */
 
 #ifndef _COLLISION_H_
@@ -12,10 +12,10 @@ namespace runbot {
     class Object; // Forward declare
 
     struct Hitbox {
-        Vector minPos;
-        Vector maxPos;
-        Vector oldMinPos;
-        Vector oldMaxPos;
+        Vector<int> minPos;
+        Vector<int> maxPos;
+        Vector<int> oldMinPos;
+        Vector<int> oldMaxPos;
 
         void updateOldPos();
     };
@@ -32,11 +32,15 @@ namespace runbot {
 
     class Collision {
         public:
+            static const int STEP_HEIGHT = 20;
+
             Collision(const Hitbox&, const Hitbox&);
             Direction getDirection();
             void solve(Object&, Object&);
         private:
-            Vector overlap;
+            Vector<int> overlap;
+            Direction dir;
+            Vector<int> fixPos;
     };
 };
 

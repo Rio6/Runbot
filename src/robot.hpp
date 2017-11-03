@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/10/31
  */
 
 #ifndef _ROBOT_H_
@@ -18,6 +18,7 @@ namespace runbot {
         public:
             static const int W = 100;
             static const int H = 200;
+            static const int JUMP_FORCE = 25;
 
             Robot(Game*, SDL_Renderer*);
             ~Robot();
@@ -27,7 +28,7 @@ namespace runbot {
             bool isOut(int);
 
             // Actions
-            void jump(int);
+            void jump();
             void releaseJump();
             void shoot();
 
