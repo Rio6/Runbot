@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/31
+ * Date: 2017/11/02
  */
 
 #ifndef _COLLISION_H_
@@ -38,9 +38,8 @@ namespace runbot {
             Direction getDirection();
             void solve(Object&, Object&);
         private:
-            Vector<int> overlap;
             Direction dir;
-            Vector<int> fixPos;
+            float time;
     };
 };
 
