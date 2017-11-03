@@ -23,19 +23,19 @@ Vector Vector::operator/(const Vector &rhs) const {
     return Vector{x / rhs.x, y / rhs.y};
 }
 
-Vector Vector::operator+(int rhs) const {
+Vector Vector::operator+(T rhs) const {
     return Vector{x + rhs, y + rhs};
 }
 
-Vector Vector::operator-(int rhs) const {
+Vector Vector::operator-(T rhs) const {
     return Vector{x - rhs, y - rhs};
 }
 
-Vector Vector::operator*(int rhs) const {
+Vector Vector::operator*(T rhs) const {
     return Vector{x * rhs, y * rhs};
 }
 
-Vector Vector::operator/(int rhs) const {
+Vector Vector::operator/(T rhs) const {
     return Vector{x / rhs, y / rhs};
 }
 
@@ -59,22 +59,22 @@ void Vector::operator/=(const Vector &rhs) {
     y /= rhs.y;
 }
 
-void Vector::operator+=(int rhs) {
+void Vector::operator+=(T rhs) {
     x += rhs;
     y += rhs;
 }
 
-void Vector::operator-=(int rhs) {
+void Vector::operator-=(T rhs) {
     x -= rhs;
     y -= rhs;
 }
 
-void Vector::operator*=(int rhs) {
+void Vector::operator*=(T rhs) {
     x *= rhs;
     y *= rhs;
 }
 
-void Vector::operator/=(int rhs) {
+void Vector::operator/=(T rhs) {
     x /= rhs;
     y /= rhs;
 }

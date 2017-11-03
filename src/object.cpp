@@ -9,27 +9,27 @@
 
 using runbot::Object;
 
-Object::Object(Vector pos) : pos(pos) {}
-Object::Object(Vector pos, Hitbox hitbox) : pos(pos), hitbox(hitbox) {}
+Object::Object(Vector<int> pos) : pos(pos) {}
+Object::Object(Vector<int> pos, Hitbox hitbox) : pos(pos), hitbox(hitbox) {}
 
 void Object::doTick(int tick) {}
 
-runbot::Vector Object::getPos() {
+runbot::Vector<int> Object::getPos() {
     return pos;
 }
 
 void Object::onCollide(Direction dir) {
 }
 
-runbot::Vector Object::getSpeed() {
+runbot::Vector<float> Object::getSpeed() {
     return speed;
 }
 
-void Object::setPos(Vector pos) {
+void Object::setPos(Vector<int> pos) {
     this->pos = pos;
 }
 
-void Object::setSpeed(Vector speed) {
+void Object::setSpeed(Vector<float> speed) {
     this->speed = speed;
 }
 

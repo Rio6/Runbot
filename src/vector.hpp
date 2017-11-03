@@ -7,28 +7,30 @@
 #define _VECTOR_H_
 
 namespace runbot {
+
+    template <typename T>
     struct Vector {
-        int x = 0, y = 0;
+        T x = 0, y = 0;
 
         Vector operator+(const Vector&) const;
         Vector operator-(const Vector&) const;
         Vector operator*(const Vector&) const;
         Vector operator/(const Vector&) const;
 
-        Vector operator+(int) const;
-        Vector operator-(int) const;
-        Vector operator*(int) const;
-        Vector operator/(int) const;
+        Vector operator+(T) const;
+        Vector operator-(T) const;
+        Vector operator*(T) const;
+        Vector operator/(T) const;
 
         void operator+=(const Vector&);
         void operator-=(const Vector&);
         void operator*=(const Vector&);
         void operator/=(const Vector&);
 
-        void operator+=(int);
-        void operator-=(int);
-        void operator*=(int);
-        void operator/=(int);
+        void operator+=(T);
+        void operator-=(T);
+        void operator*=(T);
+        void operator/=(T);
     };
 };
 

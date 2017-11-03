@@ -12,10 +12,10 @@ namespace runbot {
     class Object; // Forward declare
 
     struct Hitbox {
-        Vector minPos;
-        Vector maxPos;
-        Vector oldMinPos;
-        Vector oldMaxPos;
+        Vector<int> minPos;
+        Vector<int> maxPos;
+        Vector<int> oldMinPos;
+        Vector<int> oldMaxPos;
 
         void updateOldPos();
     };
@@ -38,7 +38,9 @@ namespace runbot {
             Direction getDirection();
             void solve(Object&, Object&);
         private:
-            Vector overlap;
+            Vector<int> overlap;
+            Direction dir;
+            Vector<int> fixPos;
     };
 };
 

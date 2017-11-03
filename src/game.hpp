@@ -26,7 +26,7 @@ namespace runbot {
 
             int distance = 0;
             int tick = 0;
-            int speed = 5;
+            float speed = 5;
 
             Game();
             ~Game();

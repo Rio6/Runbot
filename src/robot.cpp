@@ -69,7 +69,7 @@ void Robot::doTick(int tick) {
 
     hitbox.updateOldPos();
     hitbox.minPos = pos + 20;
-    hitbox.maxPos = pos + Vector{Robot::W - 40, Robot::H};
+    hitbox.maxPos = pos + Vector<int>{Robot::W - 40, Robot::H};
 
     if(shootCD > 0)
         shootCD--;

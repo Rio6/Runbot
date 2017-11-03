@@ -1,9 +1,10 @@
 /*
  * Author: Rio
- * Date: 2017/10/31
+ * Date: 2017/11/02
  */
 
-#include <cmath>
+#include <algorithm>
+#include <limits>
 
 #include "collision.hpp"
 #include "vector.hpp"
@@ -35,6 +36,7 @@ Direction runbot::getOpposite(Direction d) {
 
 Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
+    /*
     // Calculate overlaps
     if(a.minPos.x < b.maxPos.x && a.maxPos.x > b.minPos.x) {
         if((a.minPos.x + a.maxPos.x) / 2 < (b.minPos.x + b.maxPos.x) / 2)
@@ -47,10 +49,59 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
             overlap.y = a.maxPos.y - b.minPos.y;
         else
             overlap.y = a.minPos.y - b.maxPos.y;
+    }*/
+
+    float entryX, entryY, exitX, exitY;
+    Vector<float> speed = (a.minPos - a.oldMinPos) + (b.minPos - b.oldMinPos);
+
+    if(speed.x > 0) {
+        entryX = b.minPos.x - a.maxPos.x;
+        exitX = b.maxPos.x - a.minPos.x;
+    } else {
+        entryX = a.minPos.x - b.maxPos.x;
+        exitX = a.maxPos.x - b.minPos.x;
     }
+    if(speed.y > 0) {
+        entryY = b.minPos.y - a.maxPos.y;
+        exitY = b.maxPos.y - a.minPos.y;
+    } else {
+        entryY = a.minPos.y - b.maxPos.y;
+        exitY = a.maxPos.y - b.minPos.y;
+    }
+
+    if(speed.x == 0) {
+        entryX = -std::numeric_limits<int>::infinity();
+        exitX = std::numeric_limits<int>::infinity();
+    } else {
+        entryX /= speed.x;
+        exitX /= speed.x;
+    }
+
+    if(speed.y == 0) {
+        entryY = -std::numeric_limits<int>::infinity();
+        exitY = std::numeric_limits<int>::infinity();
+    } else {
+        entryY /= speed.y;
+        exitY /= speed.y;
+    }
+
+    float entry = std::max(entryX, entryY);
+    float exit = std::min(exitX, exitY);
+
+    if(entry > exit || (entryX < 0 && entryY < 0) || (exitX > 1 && exitY > 1)) {
+        dir = NONE;
+    } else {
+        if(entryX > entryY) {
+            dir = entryX < 0 ? LEFT : RIGHT;
+        } else {
+            dir = entryY < 0 ? UP : DOWN;
+        }
+    }
+
 }
 
 Direction Collision::getDirection() {
+    /*
     if(overlap.x * overlap.y == 0)
         return NONE;
 
@@ -67,13 +118,15 @@ Direction Collision::getDirection() {
             return DOWN;
         else
             return UP;
-    }
+    }*/
+    return dir;
 }
 
 // a is the object to be moved
 void Collision::solve(Object &a, Object &b) {
     Direction dir = getDirection();
-    Vector aSpeed = a.getSpeed();
+    Vector<float> aSpeed = a.getSpeed();
+    /*
     Vector relSpeed = aSpeed - b.getSpeed();
     switch(dir) {
         case RIGHT:
@@ -103,5 +156,6 @@ void Collision::solve(Object &a, Object &b) {
         case NONE:
             return;
     }
+    */
     a.setSpeed(aSpeed);
 }
