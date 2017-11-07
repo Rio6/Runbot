@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/31
+ * Date: 2017/11/07
  */
 
 #include <stdexcept>
@@ -67,7 +67,7 @@ void Robot::doTick(int tick) {
     pos.x += speed.x;
     pos.y += speed.y;
 
-    hitbox.updateOldPos();
+    hitbox.speed = speed;
     hitbox.minPos = pos + 20;
     hitbox.maxPos = pos + Vector<int>{Robot::W - 40, Robot::H};
 
@@ -88,6 +88,17 @@ void Robot::onCollide(Direction dir) {
         bodyAnim.start();
         onGround = true;
     }
+}
+
+void Robot::setPos(Vector<int> pos) {
+    this->pos = pos;
+    hitbox.minPos = pos + 20;
+    hitbox.maxPos = pos + Vector<int>{Robot::W - 40, Robot::H};
+}
+
+void Robot::setSpeed(Vector<float> speed) {
+    this->speed = speed;
+    hitbox.speed = speed;
 }
 
 bool Robot::isOut(int distance) {

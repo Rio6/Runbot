@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/02
+ * Date: 2017/11/07
  */
 
 #include <algorithm>
@@ -10,14 +10,8 @@
 #include "vector.hpp"
 #include "object.hpp"
 
-using runbot::Hitbox;
 using runbot::Direction;
 using runbot::Collision;
-
-void Hitbox::updateOldPos() {
-    oldMinPos = minPos;
-    oldMaxPos = maxPos;
-}
 
 Direction runbot::getOpposite(Direction d) {
     switch(d) {
@@ -36,54 +30,45 @@ Direction runbot::getOpposite(Direction d) {
 
 Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
-    float entryX, entryY, exitX, exitY;
-    Vector<float> speed;
-    speed = (a.minPos - a.oldMinPos) + (b.minPos - b.oldMinPos);
+    Vector<float> distance, speed, relSpeed, entry;
+    speed = a.speed - b.speed;
 
     if(speed.x > 0) {
-        entryX = b.minPos.x - a.maxPos.x;
-        exitX = b.maxPos.x - a.minPos.x;
+        distance.x = b.minPos.x - a.maxPos.x;
     } else {
-        entryX = a.minPos.x - b.maxPos.x;
-        exitX = a.maxPos.x - b.minPos.x;
+        distance.x = b.maxPos.x - a.minPos.x;
     }
+
     if(speed.y > 0) {
-        entryY = b.minPos.y - a.maxPos.y;
-        exitY = b.maxPos.y - a.minPos.y;
+        distance.y = b.minPos.y - a.maxPos.y;
     } else {
-        entryY = a.minPos.y - b.maxPos.y;
-        exitY = a.maxPos.y - b.minPos.y;
+        distance.y = b.maxPos.y - a.minPos.y;
     }
 
     if(speed.x == 0) {
-        entryX = -std::numeric_limits<int>::infinity();
-        exitX = std::numeric_limits<int>::infinity();
+        entry.x = -std::numeric_limits<float>::infinity();
     } else {
-        entryX /= speed.x;
-        exitX /= speed.x;
+        entry.x = distance.x / speed.x;
     }
 
     if(speed.y == 0) {
-        entryY = -std::numeric_limits<int>::infinity();
-        exitY = std::numeric_limits<int>::infinity();
+        entry.y = -std::numeric_limits<float>::infinity();
     } else {
-        entryY /= speed.y;
-        exitY /= speed.y;
+        entry.y = distance.y / speed.y;
     }
 
-    float entry = std::max(entryX, entryY);
-    float exit = std::min(exitX, exitY);
+    float entryTime = std::max(entry.x, entry.y);
 
-    if(entry > exit || (entryX < 0 && entryY < 0) || (exitX > 1 && exitY > 1)) {
+    if(entryTime < -1 || entryTime > 0) {
         dir = NONE;
-        time = 0;
+        time = 1;
     } else {
-        if(entryX > entryY) {
-            dir = entryX < 0 ? LEFT : RIGHT;
+        if(entry.x > entry.y) {
+            dir = distance.x < 0 ? LEFT : RIGHT;
         } else {
-            dir = entryY < 0 ? UP : DOWN;
+            dir = distance.y < 0 ? UP : DOWN;
         }
-        time = entry;
+        time = entryTime;
     }
 }
 
@@ -109,22 +94,23 @@ Direction Collision::getDirection() {
     return dir;
 }
 
-// a is the object to be moved
 void Collision::solve(Object &a, Object &b) {
-    Direction dir = getDirection();
 
-    Vector<int> posA = a.getPos();
-    Vector<int> posB = b.getPos();
+    if(time >= -1 && time <= 0) {
 
-    Vector<float> speedA = a.getSpeed();
-    Vector<float> speedB = b.getSpeed();
+        Vector<int> posA = a.getPos();
+        Vector<int> posB = b.getPos();
 
-    posA -= speedA * (1 - time);
-    posB -= speedB * (1 - time);
+        Vector<float> speedA = a.getSpeed();
+        Vector<float> speedB = b.getSpeed();
 
-    a.setPos(posA);
-    b.setPos(posB);
+        posA += speedA * time;
+        posB += speedB * time;
 
-    a.setSpeed(speedA);
-    b.setSpeed(speedB);
+        a.setPos(posA);
+        b.setPos(posB);
+
+        //a.setSpeed({0, 0});
+        //b.setSpeed({0, 0});
+    }
 }

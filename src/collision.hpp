@@ -14,10 +14,7 @@ namespace runbot {
     struct Hitbox {
         Vector<int> minPos;
         Vector<int> maxPos;
-        Vector<int> oldMinPos;
-        Vector<int> oldMaxPos;
-
-        void updateOldPos();
+        Vector<float> speed;
     };
 
     enum Direction {
@@ -39,6 +36,7 @@ namespace runbot {
             void solve(Object&, Object&);
         private:
             Direction dir;
+            Vector<int> normal;
             float time;
     };
 };
