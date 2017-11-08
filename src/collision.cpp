@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/07
+ * Date: 2017/11/08
  */
 
 #include <algorithm>
@@ -30,43 +30,54 @@ Direction runbot::getOpposite(Direction d) {
 
 Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
-    Vector<float> distance, speed, relSpeed, entry;
+    Vector<float> entryDist, exitDist, speed, relSpeed, entry, exit;
     speed = a.speed - b.speed;
 
     if(speed.x > 0) {
-        distance.x = b.minPos.x - a.maxPos.x;
+        entryDist.x = b.minPos.x - a.maxPos.x;
+        exitDist.x = b.maxPos.x - a.minPos.x;
     } else {
-        distance.x = b.maxPos.x - a.minPos.x;
+        entryDist.x = a.minPos.x - b.maxPos.x;
+        exitDist.x = a.maxPos.x - b.minPos.x;
     }
 
     if(speed.y > 0) {
-        distance.y = b.minPos.y - a.maxPos.y;
+        entryDist.y = b.minPos.y - a.maxPos.y;
+        exitDist.y = b.maxPos.y - a.minPos.y;
     } else {
-        distance.y = b.maxPos.y - a.minPos.y;
+        entryDist.y = a.minPos.y - b.maxPos.y;
+        exitDist.y = a.maxPos.y - b.minPos.y;
     }
 
     if(speed.x == 0) {
         entry.x = -std::numeric_limits<float>::infinity();
+        exit.x = -std::numeric_limits<float>::infinity();
     } else {
-        entry.x = distance.x / speed.x;
+        entry.x = entryDist.x / speed.x;
+        exit.x = exitDist.x / speed.x;
     }
 
     if(speed.y == 0) {
         entry.y = -std::numeric_limits<float>::infinity();
+        exit.y = -std::numeric_limits<float>::infinity();
     } else {
-        entry.y = distance.y / speed.y;
+        entry.y = entryDist.y / speed.y;
+        exit.y = exitDist.y / speed.y;
     }
 
     float entryTime = std::max(entry.x, entry.y);
+    float exitTime = std::min(exit.x, exit.y);
 
-    if(entryTime < -1 || entryTime > 0) {
+    if(exitTime <= 0 || entryTime < -1 || entryTime > 0) {
         dir = NONE;
         time = 1;
     } else {
+        SDL_Log("entry %d: x: %f\ty: %f\ttime: %f", SDL_GetTicks(), entry.x, entry.y, entryTime);
+        SDL_Log("exit  %d: x: %f\ty: %f\ttime: %f", SDL_GetTicks(), exit.x, exit.y, exitTime);
         if(entry.x > entry.y) {
-            dir = distance.x < 0 ? LEFT : RIGHT;
+            dir = speed.x < 0 ? LEFT : RIGHT;
         } else {
-            dir = distance.y < 0 ? UP : DOWN;
+            dir = speed.y < 0 ? UP : DOWN;
         }
         time = entryTime;
     }
