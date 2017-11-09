@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/27
+ * Date: 2017/11/07
  */
 
 #include <stdexcept>
@@ -34,8 +34,6 @@ Tile::Tile(Game *game, SDL_Renderer *rend, int x, int y, TileType type) :
         }
 
     anim.createClips(1);
-
-    hitbox.updateOldPos();
 }
 
 Tile::~Tile() {

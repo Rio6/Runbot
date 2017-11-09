@@ -1,35 +1,58 @@
 /*
  * Author: Rio
- * Date: 2017/10/27
+ * Date: 2017/11/02
  */
 
 #ifndef _VECTOR_H_
 #define _VECTOR_H_
 
 namespace runbot {
+
+    template <typename T>
     struct Vector {
-        int x = 0, y = 0;
+        T x = 0, y = 0;
 
-        Vector operator+(const Vector&) const;
-        Vector operator-(const Vector&) const;
-        Vector operator*(const Vector&) const;
-        Vector operator/(const Vector&) const;
+        template<typename F>
+        Vector &operator=(Vector<F>);
 
-        Vector operator+(int) const;
-        Vector operator-(int) const;
-        Vector operator*(int) const;
-        Vector operator/(int) const;
+        template<typename F>
+        Vector operator+(const Vector<F>&) const;
+        template<typename F>
+        Vector operator-(const Vector<F>&) const;
+        template<typename F>
+        Vector operator*(const Vector<F>&) const;
+        template<typename F>
+        Vector operator/(const Vector<F>&) const;
 
-        void operator+=(const Vector&);
-        void operator-=(const Vector&);
-        void operator*=(const Vector&);
-        void operator/=(const Vector&);
+        template<typename F>
+        Vector operator+(F) const;
+        template<typename F>
+        Vector operator-(F) const;
+        template<typename F>
+        Vector operator*(F) const;
+        template<typename F>
+        Vector operator/(F) const;
 
-        void operator+=(int);
-        void operator-=(int);
-        void operator*=(int);
-        void operator/=(int);
+        template<typename F>
+        void operator+=(const Vector<F>&);
+        template<typename F>
+        void operator-=(const Vector<F>&);
+        template<typename F>
+        void operator*=(const Vector<F>&);
+        template<typename F>
+        void operator/=(const Vector<F>&);
+
+        template<typename F>
+        void operator+=(F);
+        template<typename F>
+        void operator-=(F);
+        template<typename F>
+        void operator*=(F);
+        template<typename F>
+        void operator/=(F);
     };
 };
+
+#include "vector.tpp"
 
 #endif

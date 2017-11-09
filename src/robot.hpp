@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/31
+ * Date: 2017/11/07
  */
 
 #ifndef _ROBOT_H_
@@ -25,6 +25,8 @@ namespace runbot {
             void draw(SDL_Renderer*);
             void doTick(int);
             void onCollide(Direction dir);
+            void setPos(Vector<int>);
+            void setSpeed(Vector<float>);
             bool isOut(int);
 
             // Actions

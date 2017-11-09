@@ -1,22 +1,17 @@
 /*
  * Author: Rio
- * Date: 2017/10/31
+ * Date: 2017/11/09
  */
 
-#include <cmath>
+#include <algorithm>
+#include <limits>
 
 #include "collision.hpp"
 #include "vector.hpp"
 #include "object.hpp"
 
-using runbot::Hitbox;
 using runbot::Direction;
 using runbot::Collision;
-
-void Hitbox::updateOldPos() {
-    oldMinPos = minPos;
-    oldMaxPos = maxPos;
-}
 
 Direction runbot::getOpposite(Direction d) {
     switch(d) {
@@ -35,22 +30,61 @@ Direction runbot::getOpposite(Direction d) {
 
 Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
-    // Calculate overlaps
-    if(a.minPos.x < b.maxPos.x && a.maxPos.x > b.minPos.x) {
-        if((a.minPos.x + a.maxPos.x) / 2 < (b.minPos.x + b.maxPos.x) / 2)
-            overlap.x = a.maxPos.x - b.minPos.x;
-        else
-            overlap.x = a.minPos.x - b.maxPos.x;
+    Vector<float> entryDist, exitDist, speed, relSpeed, entry, exit;
+    speed = a.speed - b.speed;
+
+    if(speed.x > 0) {
+        entryDist.x = b.minPos.x - a.maxPos.x;
+        exitDist.x = b.maxPos.x - a.minPos.x;
+    } else {
+        entryDist.x = b.maxPos.x - a.minPos.x;
+        exitDist.x = b.minPos.x - a.maxPos.x;
     }
-    if(a.minPos.y < b.maxPos.y && a.maxPos.y > b.minPos.y) {
-        if((a.minPos.y + a.maxPos.y) / 2 < (b.minPos.y + b.maxPos.y) / 2)
-            overlap.y = a.maxPos.y - b.minPos.y;
-        else
-            overlap.y = a.minPos.y - b.maxPos.y;
+
+    if(speed.y > 0) {
+        entryDist.y = b.minPos.y - a.maxPos.y;
+        exitDist.y = b.maxPos.y - a.minPos.y;
+    } else {
+        entryDist.y = b.maxPos.y - a.minPos.y;
+        exitDist.y = b.minPos.y - a.maxPos.y;
+    }
+
+    if(speed.x == 0) {
+        entry.x = -std::numeric_limits<float>::infinity();
+        exit.x = -std::numeric_limits<float>::infinity();
+    } else {
+        entry.x = entryDist.x / speed.x;
+        exit.x = exitDist.x / speed.x;
+    }
+
+    if(speed.y == 0) {
+        entry.y = -std::numeric_limits<float>::infinity();
+        exit.y = -std::numeric_limits<float>::infinity();
+    } else {
+        entry.y = entryDist.y / speed.y;
+        exit.y = exitDist.y / speed.y;
+    }
+
+    float entryTime = std::max(entry.x, entry.y);
+    float exitTime = std::min(exit.x, exit.y);
+
+    if(exitTime <= 0 || entryTime < -1 || entryTime > 0) {
+        dir = NONE;
+        time = 1;
+    } else {
+        SDL_Log("entry %d: x: %f\ty: %f\ttime: %f", SDL_GetTicks(), entry.x, entry.y, entryTime);
+        SDL_Log("exit  %d: x: %f\ty: %f\ttime: %f", SDL_GetTicks(), exit.x, exit.y, exitTime);
+        if(entry.x > entry.y) {
+            dir = speed.x < 0 ? LEFT : RIGHT;
+        } else {
+            dir = speed.y < 0 ? UP : DOWN;
+        }
+        time = entryTime;
     }
 }
 
 Direction Collision::getDirection() {
+    /*
     if(overlap.x * overlap.y == 0)
         return NONE;
 
@@ -67,41 +101,48 @@ Direction Collision::getDirection() {
             return DOWN;
         else
             return UP;
-    }
+    }*/
+    return dir;
 }
 
-// a is the object to be moved
 void Collision::solve(Object &a, Object &b) {
-    Direction dir = getDirection();
-    Vector aSpeed = a.getSpeed();
-    Vector relSpeed = aSpeed - b.getSpeed();
-    switch(dir) {
-        case RIGHT:
-            if(relSpeed.x > 0) {
-                a.setPos(a.getPos() - Vector{overlap.x, 0});
-                aSpeed.x = 0;
-            }
-            break;
-        case LEFT:
-            if(relSpeed.x < 0) {
-                a.setPos(a.getPos() - Vector{overlap.x, 0});
-                aSpeed.x = 0;
-            }
-            break;
-        case UP:
-            if(relSpeed.y < 0) {
-                a.setPos(a.getPos() - Vector{0, overlap.y});
-                aSpeed.y = 0;
-            }
-            break;
-        case DOWN:
-            if(relSpeed.y > 0) {
-                a.setPos(a.getPos() - Vector{0, overlap.y});
-                aSpeed.y = 0;
-            }
-            break;
-        case NONE:
-            return;
+
+    if(time >= -1 && time <= 0) {
+
+        Vector<float> speedA = a.getSpeed();
+        Vector<float> speedB = b.getSpeed();
+        Vector<float> fixA = speedA;
+        Vector<float> fixB = speedB;
+
+        switch(dir) {
+            case LEFT:
+            case RIGHT:
+                fixA = {fixA.x * time, 0};
+                fixB = {fixA.x * time, 0};
+                speedA = {0, speedA.y};
+                speedB = {0, speedB.y};
+                break;
+            case UP:
+            case DOWN:
+                fixA = {0, fixA.y * time};
+                fixB = {0, fixA.y * time};
+                speedA = {speedA.x, 0};
+                speedB = {speedB.x, 0};
+                break;
+            default:
+                return;
+        }
+
+        Vector<int> posA = a.getPos();
+        Vector<int> posB = b.getPos();
+
+        posA += fixA;
+        posB += fixB;
+
+        a.setPos(posA);
+        b.setPos(posB);
+
+        a.setSpeed(speedA);
+        b.setSpeed(speedB);
     }
-    a.setSpeed(aSpeed);
 }
