@@ -64,6 +64,8 @@ void Game::loop() {
 //                        distance + Game::W, Game::H, Tile::TILE_GROUND));
             tiles.push_back(Tile(this, graphic.getRenderer(),
                         distance + Game::W, Game::H - tick / 2 % Game::H, Tile::TILE_GROUND));
+            tiles.push_back(Tile(this, graphic.getRenderer(),
+                        distance + Game::W, Game::H - std::rand() % Game::H, Tile::TILE_GROUND));
         }
 
         // Tick everything
