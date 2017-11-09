@@ -72,8 +72,6 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
         dir = NONE;
         time = 1;
     } else {
-        SDL_Log("entry %d: x: %f\ty: %f\ttime: %f", SDL_GetTicks(), entry.x, entry.y, entryTime);
-        SDL_Log("exit  %d: x: %f\ty: %f\ttime: %f", SDL_GetTicks(), exit.x, exit.y, exitTime);
         if(entry.x > entry.y) {
             dir = speed.x < 0 ? LEFT : RIGHT;
         } else {
@@ -84,24 +82,6 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
 }
 
 Direction Collision::getDirection() {
-    /*
-    if(overlap.x * overlap.y == 0)
-        return NONE;
-
-    if(overlap.y > 0 && overlap.y < Collision::STEP_HEIGHT) // Stepping on small rise
-        return DOWN;
-
-    if(std::abs(overlap.x) < std::abs(overlap.y)) {
-        if(overlap.x > 0)
-            return RIGHT;
-        else
-            return LEFT;
-    } else {
-        if(overlap.y > 0)
-            return DOWN;
-        else
-            return UP;
-    }*/
     return dir;
 }
 
