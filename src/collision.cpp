@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/08
+ * Date: 2017/11/09
  */
 
 #include <algorithm>
@@ -37,16 +37,16 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
         entryDist.x = b.minPos.x - a.maxPos.x;
         exitDist.x = b.maxPos.x - a.minPos.x;
     } else {
-        entryDist.x = a.minPos.x - b.maxPos.x;
-        exitDist.x = a.maxPos.x - b.minPos.x;
+        entryDist.x = b.maxPos.x - a.minPos.x;
+        exitDist.x = b.minPos.x - a.maxPos.x;
     }
 
     if(speed.y > 0) {
         entryDist.y = b.minPos.y - a.maxPos.y;
         exitDist.y = b.maxPos.y - a.minPos.y;
     } else {
-        entryDist.y = a.minPos.y - b.maxPos.y;
-        exitDist.y = a.maxPos.y - b.minPos.y;
+        entryDist.y = b.maxPos.y - a.minPos.y;
+        exitDist.y = b.minPos.y - a.maxPos.y;
     }
 
     if(speed.x == 0) {
@@ -109,19 +109,40 @@ void Collision::solve(Object &a, Object &b) {
 
     if(time >= -1 && time <= 0) {
 
+        Vector<float> speedA = a.getSpeed();
+        Vector<float> speedB = b.getSpeed();
+        Vector<float> fixA = speedA;
+        Vector<float> fixB = speedB;
+
+        switch(dir) {
+            case LEFT:
+            case RIGHT:
+                fixA = {fixA.x * time, 0};
+                fixB = {fixA.x * time, 0};
+                speedA = {0, speedA.y};
+                speedB = {0, speedB.y};
+                break;
+            case UP:
+            case DOWN:
+                fixA = {0, fixA.y * time};
+                fixB = {0, fixA.y * time};
+                speedA = {speedA.x, 0};
+                speedB = {speedB.x, 0};
+                break;
+            default:
+                return;
+        }
+
         Vector<int> posA = a.getPos();
         Vector<int> posB = b.getPos();
 
-        Vector<float> speedA = a.getSpeed();
-        Vector<float> speedB = b.getSpeed();
-
-        posA += speedA * time;
-        posB += speedB * time;
+        posA += fixA;
+        posB += fixB;
 
         a.setPos(posA);
         b.setPos(posB);
 
-        //a.setSpeed({0, 0});
-        //b.setSpeed({0, 0});
+        a.setSpeed(speedA);
+        b.setSpeed(speedB);
     }
 }
