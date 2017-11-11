@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/09
+ * Date: 2017/11/10
  */
 
 #include <algorithm>
@@ -51,7 +51,7 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
     if(speed.x == 0) {
         entry.x = -std::numeric_limits<float>::infinity();
-        exit.x = -std::numeric_limits<float>::infinity();
+        exit.x = std::numeric_limits<float>::infinity();
     } else {
         entry.x = entryDist.x / speed.x;
         exit.x = exitDist.x / speed.x;
@@ -59,7 +59,7 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
     if(speed.y == 0) {
         entry.y = -std::numeric_limits<float>::infinity();
-        exit.y = -std::numeric_limits<float>::infinity();
+        exit.y = std::numeric_limits<float>::infinity();
     } else {
         entry.y = entryDist.y / speed.y;
         exit.y = exitDist.y / speed.y;
@@ -73,9 +73,9 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
         time = 1;
     } else {
         if(entry.x > entry.y) {
-            dir = speed.x < 0 ? LEFT : RIGHT;
+            dir = entryDist.x > 0 ? LEFT : RIGHT;
         } else {
-            dir = speed.y < 0 ? UP : DOWN;
+            dir = entryDist.y > 0 ? UP : DOWN;
         }
         time = entryTime;
     }
@@ -92,8 +92,6 @@ void Collision::solve(Object &a, Object &b) {
         Vector<float> speedA = a.getSpeed();
         Vector<float> speedB = b.getSpeed();
         Vector<float> fixA, fixB;
-
-        SDL_Log("%d", dir);
 
         switch(dir) {
             case LEFT:
