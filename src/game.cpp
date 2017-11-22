@@ -98,7 +98,7 @@ void Game::loop() {
         distance += speed;
 
         //if(tick % 100 == 0) speed++;
-        
+
 #ifndef USE_VSYNC
         int frameTicks = SDL_GetTicks() - frameStart;
         if(frameTicks > runbot::TPF) continue;
