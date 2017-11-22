@@ -28,9 +28,8 @@ Tile::Tile(Game *game, SDL_Renderer *rend, int x, int y, TileType type) :
             sprite = SDL_CreateTextureFromSurface(rend, loadSurface);
             SDL_FreeSurface(loadSurface);
 
-            if(sprite == NULL) {
+            if(sprite == NULL)
                 throw std::runtime_error(SDL_GetError());
-            }
         }
 
     anim.createClips(1);
@@ -52,6 +51,5 @@ bool Tile::isOut(int distance) {
 }
 
 void Tile::freeSprite() {
-    // Sprite is static, so free it from Game
     SDL_DestroyTexture(sprite);
 }
