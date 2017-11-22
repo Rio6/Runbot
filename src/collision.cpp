@@ -1,10 +1,9 @@
 /*
  * Author: Rio
- * Date: 2017/11/09
+ * Date: 2017/11/22
  */
 
 #include <algorithm>
-#include <limits>
 
 #include "collision.hpp"
 #include "vector.hpp"
@@ -30,40 +29,31 @@ Direction runbot::getOpposite(Direction d) {
 
 Collision::Collision(const Hitbox &a, const Hitbox &b) {
 
-    Vector<float> entryDist, exitDist, speed, relSpeed, entry, exit;
+    Vector<int> entryDist, exitDist;
+    Vector<float> speed, entry, exit;
     speed = a.speed - b.speed;
 
-    if(speed.x > 0) {
-        entryDist.x = b.minPos.x - a.maxPos.x;
-        exitDist.x = b.maxPos.x - a.minPos.x;
-    } else {
+    if(speed.x < 0) {
         entryDist.x = b.maxPos.x - a.minPos.x;
         exitDist.x = b.minPos.x - a.maxPos.x;
+    } else {
+        entryDist.x = b.minPos.x - a.maxPos.x;
+        exitDist.x = b.maxPos.x - a.minPos.x;
     }
 
-    if(speed.y > 0) {
-        entryDist.y = b.minPos.y - a.maxPos.y;
-        exitDist.y = b.maxPos.y - a.minPos.y;
-    } else {
+    if(speed.y < 0) {
         entryDist.y = b.maxPos.y - a.minPos.y;
         exitDist.y = b.minPos.y - a.maxPos.y;
+    } else {
+        entryDist.y = b.minPos.y - a.maxPos.y;
+        exitDist.y = b.maxPos.y - a.minPos.y;
     }
 
-    if(speed.x == 0) {
-        entry.x = -std::numeric_limits<float>::infinity();
-        exit.x = -std::numeric_limits<float>::infinity();
-    } else {
-        entry.x = entryDist.x / speed.x;
-        exit.x = exitDist.x / speed.x;
-    }
+    entry.x = entryDist.x / speed.x;
+    exit.x = exitDist.x / speed.x;
 
-    if(speed.y == 0) {
-        entry.y = -std::numeric_limits<float>::infinity();
-        exit.y = -std::numeric_limits<float>::infinity();
-    } else {
-        entry.y = entryDist.y / speed.y;
-        exit.y = exitDist.y / speed.y;
-    }
+    entry.y = entryDist.y / speed.y;
+    exit.y = exitDist.y / speed.y;
 
     float entryTime = std::max(entry.x, entry.y);
     float exitTime = std::min(exit.x, exit.y);
@@ -73,9 +63,9 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
         time = 1;
     } else {
         if(entry.x > entry.y) {
-            dir = speed.x < 0 ? LEFT : RIGHT;
+            dir = entryDist.x > 0 ? LEFT : RIGHT;
         } else {
-            dir = speed.y < 0 ? UP : DOWN;
+            dir = entryDist.y > 0 ? UP : DOWN;
         }
         time = entryTime;
     }
@@ -91,21 +81,20 @@ void Collision::solve(Object &a, Object &b) {
 
         Vector<float> speedA = a.getSpeed();
         Vector<float> speedB = b.getSpeed();
-        Vector<float> fixA = speedA;
-        Vector<float> fixB = speedB;
+        Vector<float> fixA, fixB;
 
         switch(dir) {
             case LEFT:
             case RIGHT:
-                fixA = {fixA.x * time, 0};
-                fixB = {fixA.x * time, 0};
+                fixA = {speedA.x * time, 0};
+                fixB = {speedB.x * time, 0};
                 speedA = {0, speedA.y};
                 speedB = {0, speedB.y};
                 break;
             case UP:
             case DOWN:
-                fixA = {0, fixA.y * time};
-                fixB = {0, fixA.y * time};
+                fixA = {0, speedA.y * time};
+                fixB = {0, speedB.y * time};
                 speedA = {speedA.x, 0};
                 speedB = {speedB.x, 0};
                 break;
