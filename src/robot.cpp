@@ -16,7 +16,7 @@
 using runbot::Robot;
 
 Robot::Robot(Game *game, SDL_Renderer *rend) :
-    Object({0, 0}, {{20, 0}, {Robot::W - 40, Robot::H}}),
+    Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 40, Robot::H}}),
     game(game),
     bodyAnim(0, 0, 200, 400, 30, true),
     armAnim(0, 400, 200, 400, 30, false) {

@@ -27,7 +27,7 @@ namespace runbot {
             ~Tile();
             void draw(SDL_Renderer*);
             bool isOut(int);
-            static void freeSprite();
+            static void freeSprite(); // Sprite is static, so free it from Game
 
         private:
             static SDL_Texture *sprite;
