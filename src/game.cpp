@@ -17,9 +17,12 @@
 
 using runbot::Game;
 
-Game::Game() try : graphic(), robot(this, graphic.getRenderer()) {
-} catch(std::runtime_error e) {
-    SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Failed to initilize: %s", e.what());
+Game::Game() : robot(this) {
+    try {
+        Graphic::instance(); // Create an instance of singleton
+    } catch(std::runtime_error e) {
+        SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Failed to initilize: %s", e.what());
+    }
 }
 
 Game::~Game() {
@@ -29,8 +32,7 @@ Game::~Game() {
 void Game::loop() {
 
     for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
-        tiles.push_back(Tile(this, graphic.getRenderer(),
-                    i, Game::H, Tile::TILE_GROUND));
+        tiles.push_back(Tile(this, i, Game::H, Tile::TILE_GROUND));
     }
 
     running = true;
@@ -59,12 +61,9 @@ void Game::loop() {
 
         // Add a tile
         if(distance % Tile::W == 0) {
-//            tiles.push_back(Tile(this, graphic.getRenderer(),
-//                        distance + Game::W, Game::H, Tile::TILE_GROUND));
-            tiles.push_back(Tile(this, graphic.getRenderer(),
-                        distance + Game::W, Game::H - tick / 2 % Game::H, Tile::TILE_GROUND));
-            tiles.push_back(Tile(this, graphic.getRenderer(),
-                        distance + Game::W, Game::H - std::rand() % Game::H, Tile::TILE_GROUND));
+            tiles.push_back(Tile(this, distance + Game::W, Game::H, Tile::TILE_GROUND));
+            tiles.push_back(Tile(this, distance + Game::W, Game::H - tick / 2 % Game::H, Tile::TILE_GROUND));
+            tiles.push_back(Tile(this, distance + Game::W, Game::H - std::rand() % Game::H, Tile::TILE_GROUND));
         }
 
         // Tick everything
@@ -149,15 +148,15 @@ void Game::processEvents() {
 
 void Game::draw() {
 
-    SDL_Renderer *rend = graphic.getRenderer();
+    Graphic &graphic = Graphic::instance();
 
-    SDL_RenderClear(rend);
+    graphic.clear();
 
     for(Tile tile : tiles)
-        tile.draw(rend);
+        tile.draw();
 
-    robot.draw(rend);
+    robot.draw();
 
     // Apply drawings to window
-    SDL_RenderPresent(rend);
+    graphic.update();
 }

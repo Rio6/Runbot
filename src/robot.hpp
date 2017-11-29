@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/07
+ * Date: 2017/11/29
  */
 
 #ifndef _ROBOT_H_
@@ -20,9 +20,9 @@ namespace runbot {
             static const int H = 200;
             static const int JUMP_FORCE = 25;
 
-            Robot(Game*, SDL_Renderer*);
+            Robot(Game*);
             ~Robot();
-            void draw(SDL_Renderer*);
+            void draw();
             void doTick(int);
             void onCollide(Direction dir);
             void setPos(Vector<int>);

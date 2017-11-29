@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/11/29
  */
 
 #ifndef _TILE_H_
@@ -23,9 +23,9 @@ namespace runbot {
             static const int W = 100;
             static const int H = 100;
 
-            Tile(Game*, SDL_Renderer*, int, int, TileType);
+            Tile(Game*, int, int, TileType);
             ~Tile();
-            void draw(SDL_Renderer*);
+            void draw();
             bool isOut(int);
             static void freeSprite(); // Sprite is static, so free it from Game
 

@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/11/29
  */
 
 #ifndef _GAME_H_
@@ -34,7 +34,6 @@ namespace runbot {
 
         private:
             std::map<std::string, bool> keys;
-            Graphic graphic;
             Robot robot;
             std::vector<Tile> tiles;
             bool running = false;
