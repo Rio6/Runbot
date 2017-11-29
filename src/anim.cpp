@@ -1,13 +1,12 @@
 /*
  * Author: Rio
- * Date: 2017/10/23
+ * Date: 2017/11/29
  */
 
 #include <vector>
 
 #include "SDL2/SDL.h"
 #include "anim.hpp"
-#include "main.hpp"
 
 using runbot::Animation;
 
@@ -31,7 +30,7 @@ SDL_Rect Animation::getCurrentClip() {
     if(spriteClips.size() > 0)
         return spriteClips[frame];
 
-    logError("getCurrentClip", "sprite might not be initialized");
+    SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Sprite might not be initialized");
     return SDL_Rect();
 }
 

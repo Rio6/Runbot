@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/10/31
+ * Date: 2017/11/29
  */
 
 #include <stdexcept>
@@ -14,13 +14,12 @@
 #include "robot.hpp"
 #include "tile.hpp"
 #include "collision.hpp"
-#include "main.hpp"
 
 using runbot::Game;
 
 Game::Game() try : graphic(), robot(this, graphic.getRenderer()) {
-} catch (std::runtime_error exc) {
-    logError("Failed to initilize", exc.what());
+} catch(std::runtime_error e) {
+    SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Failed to initilize: %s", e.what());
 }
 
 Game::~Game() {
