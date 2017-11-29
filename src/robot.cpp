@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/07
+ * Date: 2017/11/29
  */
 
 #include <stdexcept>
@@ -10,49 +10,38 @@
 
 #include "robot.hpp"
 #include "game.hpp"
+#include "graphic.hpp"
 #include "collision.hpp"
 #include "anim.hpp"
 
 using runbot::Robot;
 
-Robot::Robot(Game *game, SDL_Renderer *rend) :
+Robot::Robot(Game *game) :
     Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 40, Robot::H}}),
     game(game),
     bodyAnim(0, 0, 200, 400, 30, true),
     armAnim(0, 400, 200, 400, 30, false) {
 
-    SDL_Surface *loadSurface = IMG_Load("assets/robot.png");
-    if(loadSurface == NULL)
-        throw std::runtime_error(IMG_GetError());
-
-    sprite = SDL_CreateTextureFromSurface(rend, loadSurface);
-    if(sprite == NULL) {
-        SDL_FreeSurface(loadSurface);
-        throw std::runtime_error(SDL_GetError());
-    }
-
-    bodyAnim.createClips(loadSurface->w / 200);
-    armAnim.createClips(loadSurface->w / 200);
-
-    SDL_FreeSurface(loadSurface);
+    bodyAnim.createClips(20);
+    armAnim.createClips(20);
 }
 
 Robot::~Robot() {
-    SDL_DestroyTexture(sprite);
 }
 
-void Robot::draw(SDL_Renderer *rend) {
+void Robot::draw() {
+    Graphic &graphic = Graphic::instance();
     SDL_Rect src, des;
 
     // Body animation
     src = bodyAnim.getCurrentClip();
     des = {pos.x - game->distance, pos.y, Robot::W, Robot::H};
-    SDL_RenderCopy(rend, sprite, &src, &des);
+    graphic.renderImage(ROBOT_IMG, &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
     des = {pos.x - game->distance, pos.y, Robot::W, Robot::H};
-    SDL_RenderCopy(rend, sprite, &src, &des);
+    graphic.renderImage(ROBOT_IMG, &src, &des);
 }
 
 void Robot::doTick(int tick) {
