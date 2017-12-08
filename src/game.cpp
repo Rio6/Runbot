@@ -13,6 +13,7 @@
 #include "graphic.hpp"
 #include "robot.hpp"
 #include "tile.hpp"
+#include "background.hpp"
 #include "collision.hpp"
 
 using runbot::Game;
@@ -92,6 +93,8 @@ void Game::loop() {
             robot.setPos({distance, 0});
         }
 
+        bg.doTick();
+
         tick++;
         distance += speed;
 
@@ -151,6 +154,8 @@ void Game::draw() {
     Graphic &graphic = Graphic::instance();
 
     graphic.clear();
+
+    bg.draw();
 
     for(Tile tile : tiles)
         tile.draw();

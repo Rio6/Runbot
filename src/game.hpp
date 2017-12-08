@@ -13,6 +13,7 @@
 #include "graphic.hpp"
 #include "robot.hpp"
 #include "tile.hpp"
+#include "background.hpp"
 
 namespace runbot {
     const char *const NAME = "Runbot";
@@ -36,6 +37,7 @@ namespace runbot {
             std::map<std::string, bool> keys;
             Robot robot;
             std::vector<Tile> tiles;
+            Background bg;
             bool running = false;
 
             void processEvents();
