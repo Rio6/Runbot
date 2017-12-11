@@ -48,8 +48,6 @@ Graphic::Graphic() {
 
 Graphic::~Graphic() {
 
-    SDL_Log("Destruct");
-
     for(auto &img : imgs) {
         SDL_DestroyTexture(img.second);
         img.second = nullptr;
