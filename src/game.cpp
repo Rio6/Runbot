@@ -27,7 +27,6 @@ Game::Game() : robot(this) {
 }
 
 Game::~Game() {
-    Tile::freeSprite();
 }
 
 void Game::loop() {

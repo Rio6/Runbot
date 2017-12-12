@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2017/12/12
  */
 
 #ifndef _TILE_H_
@@ -27,11 +27,8 @@ namespace runbot {
             ~Tile();
             void draw();
             bool isOut(int);
-            static void freeSprite(); // Sprite is static, so free it from Game
 
         private:
-            static SDL_Texture *sprite;
-
             Game *game;
             Animation anim;
             TileType type;
