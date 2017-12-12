@@ -62,8 +62,6 @@ void Game::loop() {
         // Add a tile
         if(distance % Tile::W == 0) {
             tiles.push_back(Tile(this, distance + Game::W, Game::H, Tile::TILE_GROUND));
-            tiles.push_back(Tile(this, distance + Game::W, Game::H - tick / 2 % Game::H, Tile::TILE_GROUND));
-            tiles.push_back(Tile(this, distance + Game::W, Game::H - std::rand() % Game::H, Tile::TILE_GROUND));
         }
 
         // Tick everything
@@ -139,6 +137,14 @@ void Game::processEvents() {
                     case SDLK_DOWN:
                         keys["down"] = false;
                         break;
+                }
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if(eve.button.button == 1) {
+                    tiles.push_back(Tile(this,
+                                eve.button.x + distance - Tile::W / 2,
+                                eve.button.y - Tile::H / 2,
+                                Tile::TILE_GROUND));
                 }
                 break;
             case SDL_QUIT:
