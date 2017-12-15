@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2017/12/12
  */
 
 #ifndef _ROBOT_H_
@@ -24,10 +24,11 @@ namespace runbot {
             ~Robot();
             void draw();
             void doTick(int);
-            void onCollide(Direction dir);
+            void onCollide(Object&, Direction dir);
             void setPos(Vector<int>);
             void setSpeed(Vector<float>);
             bool isOut(int);
+            Type getType();
 
             // Actions
             void jump();

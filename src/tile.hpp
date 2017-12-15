@@ -27,6 +27,7 @@ namespace runbot {
             ~Tile();
             void draw();
             bool isOut(int);
+            Type getType();
 
         private:
             Game *game;

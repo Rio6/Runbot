@@ -1,18 +1,19 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2017/12/15
  */
 
 #ifndef _GAME_H_
 #define _GAME_H_
 
+#include <memory>
 #include <map>
 #include <string>
 #include <vector>
 
 #include "graphic.hpp"
 #include "robot.hpp"
-#include "tile.hpp"
+#include "object.hpp"
 #include "background.hpp"
 
 namespace runbot {
@@ -36,7 +37,7 @@ namespace runbot {
         private:
             std::map<std::string, bool> keys;
             Robot robot;
-            std::vector<Tile> tiles;
+            std::vector<std::shared_ptr<Object>> objects;
             Background bg;
             bool running = false;
 

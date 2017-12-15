@@ -18,7 +18,7 @@ runbot::Vector<int> Object::getPos() {
     return pos;
 }
 
-void Object::onCollide(Direction dir) {
+void Object::onCollide(Object &other, Direction dir) {
 }
 
 runbot::Vector<float> Object::getSpeed() {

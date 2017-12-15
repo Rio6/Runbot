@@ -37,3 +37,6 @@ bool Tile::isOut(int distance) {
     return pos.x + Tile::W - distance < 0;
 }
 
+runbot::Object::Type Tile::getType() {
+    return TILE;
+}
