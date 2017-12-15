@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2017/12/12
  */
 
 #include <stdexcept>
@@ -72,8 +72,8 @@ void Robot::doTick(int tick) {
     onGround = false;
 }
 
-void Robot::onCollide(Direction dir) {
-    if(dir == DOWN) {
+void Robot::onCollide(Object &other, Direction dir) {
+    if(other.getType() == TILE && dir == DOWN) {
         bodyAnim.start();
         onGround = true;
     }
@@ -92,6 +92,10 @@ void Robot::setSpeed(Vector<float> speed) {
 
 bool Robot::isOut(int distance) {
     return pos.x + Robot::W * 2 < distance || pos.y > Game::H;
+}
+
+runbot::Object::Type Robot::getType() {
+    return ROBOT;
 }
 
 void Robot::jump() {

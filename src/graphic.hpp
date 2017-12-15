@@ -6,7 +6,7 @@
 #ifndef _GRAPHIC_H_
 #define _GRAPHIC_H_
 
-#define USE_VSYNC
+//#define USE_VSYNC
 
 #include <string>
 #include <map>
@@ -17,6 +17,7 @@ namespace runbot {
 
     const std::string ROBOT_IMG = "robot.png";
     const std::string TILE_IMG = "tiles.png";
+    const std::string BG_IMG = "bg.png";
 
     class Graphic {
         public:
@@ -30,7 +31,11 @@ namespace runbot {
         private:
             SDL_Renderer *rend;
             SDL_Window *win;
-            std::map<std::string, SDL_Texture*> imgs;
+            std::map<std::string, SDL_Texture*> imgs = {
+                {ROBOT_IMG, nullptr},
+                {TILE_IMG, nullptr},
+                {BG_IMG, nullptr}
+            };;
 
             Graphic();
             ~Graphic();

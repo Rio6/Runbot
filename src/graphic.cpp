@@ -88,10 +88,6 @@ void Graphic::update() {
 
 void Graphic::loadImages() {
 
-    // Files to be loaded
-    imgs[ROBOT_IMG] = nullptr;
-    imgs[TILE_IMG] = nullptr;
-
     for(auto &img : imgs) {
         SDL_Surface *loadSurface = IMG_Load(("assets/" + img.first).c_str());
         if(loadSurface == nullptr) {
