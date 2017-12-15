@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/22
+ * Date: 2017/12/15
  */
 
 #include <algorithm>
@@ -27,26 +27,29 @@ Direction runbot::getOpposite(Direction d) {
     }
 }
 
-Collision::Collision(const Hitbox &a, const Hitbox &b) {
+Collision::Collision(Object *a, Object *b) : a(a), b(b) {
+
+    Hitbox ha = a->getHitbox();
+    Hitbox hb = b->getHitbox();
 
     Vector<int> entryDist, exitDist;
     Vector<float> speed, entry, exit;
-    speed = a.speed - b.speed;
+    speed = ha.speed - hb.speed;
 
     if(speed.x < 0) {
-        entryDist.x = b.maxPos.x - a.minPos.x;
-        exitDist.x = b.minPos.x - a.maxPos.x;
+        entryDist.x = hb.maxPos.x - ha.minPos.x;
+        exitDist.x = hb.minPos.x - ha.maxPos.x;
     } else {
-        entryDist.x = b.minPos.x - a.maxPos.x;
-        exitDist.x = b.maxPos.x - a.minPos.x;
+        entryDist.x = hb.minPos.x - ha.maxPos.x;
+        exitDist.x = hb.maxPos.x - ha.minPos.x;
     }
 
     if(speed.y < 0) {
-        entryDist.y = b.maxPos.y - a.minPos.y;
-        exitDist.y = b.minPos.y - a.maxPos.y;
+        entryDist.y = hb.maxPos.y - ha.minPos.y;
+        exitDist.y = hb.minPos.y - ha.maxPos.y;
     } else {
-        entryDist.y = b.minPos.y - a.maxPos.y;
-        exitDist.y = b.maxPos.y - a.minPos.y;
+        entryDist.y = hb.minPos.y - ha.maxPos.y;
+        exitDist.y = hb.maxPos.y - ha.minPos.y;
     }
 
     entry.x = entryDist.x / speed.x;
@@ -71,16 +74,12 @@ Collision::Collision(const Hitbox &a, const Hitbox &b) {
     }
 }
 
-Direction Collision::getDirection() {
-    return dir;
-}
-
-void Collision::solve(Object &a, Object &b) {
+void Collision::solve() {
 
     if(time >= -1 && time <= 0) {
 
-        Vector<float> speedA = a.getSpeed();
-        Vector<float> speedB = b.getSpeed();
+        Vector<float> speedA = a->getSpeed();
+        Vector<float> speedB = b->getSpeed();
         Vector<float> fixA, fixB;
 
         switch(dir) {
@@ -102,16 +101,23 @@ void Collision::solve(Object &a, Object &b) {
                 return;
         }
 
-        Vector<int> posA = a.getPos();
-        Vector<int> posB = b.getPos();
+        Vector<int> posA = a->getPos();
+        Vector<int> posB = b->getPos();
 
         posA += fixA;
         posB += fixB;
 
-        a.setPos(posA);
-        b.setPos(posB);
+        a->setPos(posA);
+        b->setPos(posB);
 
-        a.setSpeed(speedA);
-        b.setSpeed(speedB);
+        a->setSpeed(speedA);
+        b->setSpeed(speedB);
+
+        a->onCollide(*b, dir);
+        b->onCollide(*a, getOpposite(dir));
     }
+}
+
+bool Collision::operator<(const Collision &rhs) {
+    return this->time < rhs.time;
 }

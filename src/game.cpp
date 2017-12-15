@@ -5,6 +5,7 @@
 
 #include <memory>
 #include <stdexcept>
+#include <algorithm>
 #include <map>
 #include <string>
 
@@ -72,23 +73,24 @@ void Game::loop() {
                 objects[i]->doTick(tick);
         }
 
+        bg.doTick();
+
         // Resolve collision
+        std::vector<Collision> colls;
         for(std::shared_ptr<Object> object : objects) {
-            Collision coll(robot.getHitbox(), object->getHitbox());
-            Direction dir = coll.getDirection();
-            if(dir != NONE) {
-                robot.onCollide(*object, dir);
-                object->onCollide(robot, getOpposite(dir));
-            }
-            coll.solve(robot, *object);
+            colls.emplace_back(&robot, object.get());
+        }
+
+        std::sort(colls.begin(), colls.end());
+
+        for(Collision coll : colls) {
+            coll.solve();
         }
 
         if(robot.isOut(distance)) {
             robot.setSpeed({speed, 0});
             robot.setPos({distance, 0});
         }
-
-        bg.doTick();
 
         tick++;
         distance += speed;
@@ -129,14 +131,6 @@ void Game::processEvents() {
                     case SDLK_RIGHT:
                         keys["right"] = false;
                         break;
-                }
-                break;
-            case SDL_MOUSEBUTTONDOWN:
-                if(eve.button.button == 1) {
-                    objects.emplace_back(new Tile(this,
-                                eve.button.x + distance - Tile::W / 2,
-                                eve.button.y - Tile::H / 2,
-                                Tile::TILE_GROUND));
                 }
                 break;
             case SDL_QUIT:
