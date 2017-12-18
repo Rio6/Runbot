@@ -63,7 +63,7 @@ Graphic::~Graphic() {
     SDL_Quit();
 }
 
-runbot::Graphic &Graphic::instance() {
+Graphic &Graphic::instance() {
     static Graphic graphic;
     return graphic;
 }
