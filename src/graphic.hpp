@@ -15,9 +15,9 @@
 
 namespace runbot {
 
-    const std::string ROBOT_IMG = "robot.png";
-    const std::string TILE_IMG = "tiles.png";
-    const std::string BG_IMG = "bg.png";
+    static const std::string ROBOT_IMG = "robot.png";
+    static const std::string TILE_IMG = "tiles.png";
+    static const std::string BG_IMG = "bg.png";
 
     class Graphic {
         public:
