@@ -29,8 +29,6 @@ namespace runbot {
 
     class Collision {
         public:
-            static const int STEP_HEIGHT = 20;
-
             Collision(Object*, Object*);
             void solve();
             bool operator<(const Collision&); // For std::sort
