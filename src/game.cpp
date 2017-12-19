@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/15
+ * Date: 2017/12/19
  */
 
 #include <memory>
@@ -17,6 +17,7 @@
 #include "tile.hpp"
 #include "background.hpp"
 #include "collision.hpp"
+#include "level.hpp"
 
 using runbot::Game;
 
@@ -33,8 +34,10 @@ Game::~Game() {
 
 void Game::loop() {
 
-    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
-        objects.emplace_back(new Tile(this, i, Game::H, Tile::TILE_GROUND));
+    // Some tiles at the beginning
+    for(int i = Game::W - Tile::W; i >= 0; i -= Tile::W) {
+        objects.emplace_back(new Tile(this, i,
+                    Game::H - Tile::H, Tile::TILE_GROUND));
     }
 
     running = true;
@@ -62,8 +65,14 @@ void Game::loop() {
         }
 
         // Add a tile
-        if(distance % Tile::W == 0) {
+/*        if(distance % Tile::W == 0) {
             objects.emplace_back(new Tile(this, distance + Game::W, Game::H, Tile::TILE_GROUND));
+        }
+*/
+
+        if(distance % level::LENGTH == 0) {
+            std::vector<std::shared_ptr<Object>> level = level::genLevel(this);
+            objects.insert(objects.end(), level.begin(), level.end());
         }
 
         // Tick everything
