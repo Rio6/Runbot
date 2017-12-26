@@ -43,9 +43,7 @@ void Game::loop() {
     running = true;
     while(running) {
 
-#ifndef USE_VSYNC
         int frameStart = SDL_GetTicks();
-#endif
 
         // Control robot
         processEvents();
@@ -109,11 +107,9 @@ void Game::loop() {
 
         //if(tick % 100 == 0) speed++;
 
-#ifndef USE_VSYNC
         int frameTicks = SDL_GetTicks() - frameStart;
         if(frameTicks > runbot::TPF) continue;
         SDL_Delay(runbot::TPF - frameTicks);
-#endif
 
         // Render
         draw();
