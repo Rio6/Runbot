@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2017/12/31
  */
 
 #include <stdexcept>
@@ -37,6 +37,9 @@ Graphic::Graphic() {
             );
     if(rend == nullptr)
         throw std::runtime_error(SDL_GetError());
+
+    // Configure SDL
+    SDL_ShowCursor(false);
 
     // Configure the renderer
     SDL_RenderSetLogicalSize(rend, Game::W, Game::H);
