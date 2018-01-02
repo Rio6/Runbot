@@ -1,13 +1,18 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2017/12/20
  */
 
+#include <cstdlib>
+#include <ctime>
 #include <SDL2/SDL.h>
 
 #include "game.hpp"
 
 int main(int argc, char *argv[]) {
+
+    // Seed random
+    std::srand(std::time(0));
 
     runbot::Game game;
     game.loop();

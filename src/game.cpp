@@ -35,7 +35,7 @@ Game::~Game() {
 void Game::loop() {
 
     // Some tiles at the beginning
-    for(int i = Game::W - Tile::W; i >= 0; i -= Tile::W) {
+    for(int i = Game::W - Tile::W; i > -Tile::W; i -= Tile::W) {
         objects.emplace_back(new Tile(this, i,
                     Game::H - Tile::H, Tile::TILE_GROUND));
     }
