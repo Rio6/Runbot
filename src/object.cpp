@@ -8,20 +8,22 @@
 #include "collision.hpp"
 
 using runbot::Object;
+using runbot::Hitbox;
+using runbot::Vector;
 
 Object::Object(Vector<int> pos) : pos(pos) {}
 Object::Object(Vector<int> pos, Hitbox hitbox) : pos(pos), hitbox(hitbox) {}
 
 void Object::doTick(int tick) {}
 
-runbot::Vector<int> Object::getPos() {
+Vector<int> Object::getPos() {
     return pos;
 }
 
 void Object::onCollide(Object &other, Direction dir) {
 }
 
-runbot::Vector<float> Object::getSpeed() {
+Vector<float> Object::getSpeed() {
     return speed;
 }
 
@@ -33,7 +35,7 @@ void Object::setSpeed(Vector<float> speed) {
     this->speed = speed;
 }
 
-runbot::Hitbox &Object::getHitbox() {
+Hitbox &Object::getHitbox() {
     return hitbox;
 }
 

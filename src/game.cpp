@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/15
+ * Date: 2018/1/1
  */
 
 #include <memory>
@@ -17,6 +17,7 @@
 #include "tile.hpp"
 #include "background.hpp"
 #include "collision.hpp"
+#include "level.hpp"
 
 using runbot::Game;
 
@@ -33,16 +34,16 @@ Game::~Game() {
 
 void Game::loop() {
 
-    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
-        objects.emplace_back(new Tile(this, i, Game::H, Tile::TILE_GROUND));
+    // Some tiles at the beginning
+    for(int i = Game::W - Tile::W; i > -Tile::W; i -= Tile::W) {
+        objects.emplace_back(new Tile(this, i,
+                    Game::H - Tile::H, Tile::TILE_GROUND));
     }
 
     running = true;
     while(running) {
 
-#ifndef USE_VSYNC
-        int frameStart = SDL_GetTicks();
-#endif
+        int start = SDL_GetTicks();
 
         // Control robot
         processEvents();
@@ -58,9 +59,15 @@ void Game::loop() {
         }
 
         // Add a tile
-        if(distance % Tile::W == 0) {
+/*        if(distance % Tile::W == 0) {
             objects.emplace_back(new Tile(this, distance + Game::W, Game::H, Tile::TILE_GROUND));
             objects.emplace_back(new Tile(this, distance + Game::W, Game::H - tick % Game::H, Tile::TILE_GROUND));
+        }
+*/
+
+        if(distance % level::LENGTH == 0) {
+            std::vector<std::shared_ptr<Object>> level = level::genLevel(this);
+            objects.insert(objects.end(), level.begin(), level.end());
         }
 
         // Tick everything
@@ -97,11 +104,9 @@ void Game::loop() {
 
         //if(tick % 100 == 0) speed++;
 
-#ifndef USE_VSYNC
-        int frameTicks = SDL_GetTicks() - frameStart;
-        if(frameTicks > runbot::TPF) continue;
-        SDL_Delay(runbot::TPF - frameTicks);
-#endif
+        int ticked = SDL_GetTicks() - start;
+        if(SDL_TICKS_PASSED(ticked, runbot::MPF)) continue;
+        SDL_Delay(runbot::MPF - ticked);
 
         // Render
         draw();
@@ -133,6 +138,10 @@ void Game::processEvents() {
                         break;
                 }
                 break;
+            case SDL_MOUSEMOTION:
+                cursor.x = eve.motion.x;
+                cursor.y = eve.motion.y;
+                break;
             case SDL_QUIT:
                 running = false;
                 break;
@@ -152,6 +161,10 @@ void Game::draw() {
         object->draw();
 
     robot.draw();
+
+    SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
+    SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
+    graphic.renderImage(CURSOR_IMG, &src, &des);
 
     // Apply drawings to window
     graphic.update();

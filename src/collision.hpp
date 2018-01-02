@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/15
+ * Date: 2018/1/1
  */
 
 #ifndef _COLLISION_H_
@@ -29,8 +29,6 @@ namespace runbot {
 
     class Collision {
         public:
-            static const int STEP_HEIGHT = 20;
-
             Collision(Object*, Object*);
             void solve();
             bool operator<(const Collision&); // For std::sort
@@ -39,6 +37,8 @@ namespace runbot {
             Direction dir;
             Vector<int> normal;
             float time;
+
+            void calculate();
     };
 };
 

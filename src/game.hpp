@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/15
+ * Date: 2018/1/1
  */
 
 #ifndef _GAME_H_
@@ -19,7 +19,7 @@
 namespace runbot {
     const char *const NAME = "Runbot";
     const int FPS = 60;
-    const int TPF = 1000 / FPS; // ticks per frame
+    const int MPF = 1000 / FPS; // ms per frame
 
     class Game {
         public:
@@ -35,10 +35,15 @@ namespace runbot {
             void loop();
 
         private:
+            const int CURSOR_SIZE = 20;
+            Vector<int> cursor = {0, -CURSOR_SIZE};
+
             std::map<std::string, bool> keys;
+
             Robot robot;
             std::vector<std::shared_ptr<Object>> objects;
             Background bg;
+
             bool running = false;
 
             void processEvents();
