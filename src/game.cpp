@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/19
+ * Date: 2018/1/1
  */
 
 #include <memory>
@@ -155,6 +155,10 @@ void Game::processEvents() {
                                 Tile::TILE_GROUND));
                 }
                 break;
+            case SDL_MOUSEMOTION:
+                cursor.x = eve.motion.x;
+                cursor.y = eve.motion.y;
+                break;
             case SDL_QUIT:
                 running = false;
                 break;
@@ -174,6 +178,10 @@ void Game::draw() {
         object->draw();
 
     robot.draw();
+
+    SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
+    SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
+    graphic.renderImage(CURSOR_IMG, &src, &des);
 
     // Apply drawings to window
     graphic.update();

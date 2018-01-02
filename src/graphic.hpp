@@ -18,6 +18,7 @@ namespace runbot {
     static const std::string ROBOT_IMG = "robot.png";
     static const std::string TILE_IMG = "tiles.png";
     static const std::string BG_IMG = "bg.png";
+    static const std::string CURSOR_IMG = "cursor.png";
 
     class Graphic {
         public:
@@ -34,7 +35,8 @@ namespace runbot {
             std::map<std::string, SDL_Texture*> imgs = {
                 {ROBOT_IMG, nullptr},
                 {TILE_IMG, nullptr},
-                {BG_IMG, nullptr}
+                {BG_IMG, nullptr},
+                {CURSOR_IMG, nullptr}
             };;
 
             Graphic();
