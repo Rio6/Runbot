@@ -19,7 +19,7 @@
 namespace runbot {
     const char *const NAME = "Runbot";
     const int FPS = 60;
-    const int TPF = 1000 / FPS; // ticks per frame
+    const int MPF = 1000 / FPS; // ms per frame
 
     class Game {
         public:

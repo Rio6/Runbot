@@ -43,7 +43,7 @@ void Game::loop() {
     running = true;
     while(running) {
 
-        int frameStart = SDL_GetTicks();
+        int start = SDL_GetTicks();
 
         // Control robot
         processEvents();
@@ -107,9 +107,9 @@ void Game::loop() {
 
         //if(tick % 100 == 0) speed++;
 
-        int frameTicks = SDL_GetTicks() - frameStart;
-        if(frameTicks > runbot::TPF) continue;
-        SDL_Delay(runbot::TPF - frameTicks);
+        int ticked = SDL_GetTicks() - start;
+        if(SDL_TICKS_PASSED(ticked, runbot::MPF)) continue;
+        SDL_Delay(runbot::MPF - ticked);
 
         // Render
         draw();
