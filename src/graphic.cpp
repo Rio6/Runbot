@@ -18,6 +18,9 @@ Graphic::Graphic() {
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
         throw std::runtime_error(SDL_GetError());
 
+    // Configure SDL
+    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_INFO);
+
     int imgFlags = IMG_INIT_PNG;
     if((IMG_Init(imgFlags) & imgFlags) != imgFlags)
         throw std::runtime_error(IMG_GetError());
@@ -43,8 +46,7 @@ Graphic::Graphic() {
 
     // Configure the renderer
     SDL_RenderSetLogicalSize(rend, Game::W, Game::H);
-    SDL_SetRenderDrawColor(rend, 0xff, 0xff, 0xff, 0xff);
-    SDL_RenderClear(rend);
+    SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xff);
 
     loadImages();
 }
@@ -73,11 +75,11 @@ Graphic &Graphic::instance() {
 
 void Graphic::renderImage(const std::string &name,
         const SDL_Rect *src, const SDL_Rect *des) {
-    try {
+    if(imgs.count(name) > 0) {
         SDL_Texture *text = imgs.at(name);
         SDL_RenderCopy(rend, text, src, des);
-    } catch(std::out_of_range e) {
-        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Cannot render %s: %s", name.c_str(), e.what());
+    } else {
+        SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Cannot render %s", name.c_str());
     }
 }
 
