@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/15
+ * Date: 2018/1/1
  */
 
 #include <algorithm>
@@ -28,6 +28,10 @@ Direction runbot::getOpposite(Direction d) {
 }
 
 Collision::Collision(Object *a, Object *b) : a(a), b(b) {
+    calculate();
+};
+
+void Collision::calculate() {
 
     Hitbox ha = a->getHitbox();
     Hitbox hb = b->getHitbox();
@@ -75,6 +79,9 @@ Collision::Collision(Object *a, Object *b) : a(a), b(b) {
 }
 
 void Collision::solve() {
+
+    // Recalculate before solving
+    calculate();
 
     if(time >= -1 && time <= 0) {
 

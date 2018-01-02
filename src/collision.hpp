@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/15
+ * Date: 2018/1/1
  */
 
 #ifndef _COLLISION_H_
@@ -37,6 +37,8 @@ namespace runbot {
             Direction dir;
             Vector<int> normal;
             float time;
+
+            void calculate();
     };
 };
 
