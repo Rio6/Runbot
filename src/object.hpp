@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2018/1/3
  */
 
 #ifndef _OBJECT_H_
@@ -17,7 +17,8 @@ namespace runbot {
             enum Type {
                 UNKNOWN,
                 ROBOT,
-                TILE
+                TILE,
+                MISSILE
             };
 
             Object(Vector<int>);
