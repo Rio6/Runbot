@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/11/29
+ * Date: 2018/1/3
  */
 
 #ifndef _GRAPHIC_H_
@@ -17,6 +17,7 @@ namespace runbot {
 
     static const std::string ROBOT_IMG = "robot.png";
     static const std::string TILE_IMG = "tiles.png";
+    static const std::string MISSILE_IMG = "missile.png";
     static const std::string BG_IMG = "bg.png";
     static const std::string CURSOR_IMG = "cursor.png";
 
@@ -35,6 +36,7 @@ namespace runbot {
             std::map<std::string, SDL_Texture*> imgs = {
                 {ROBOT_IMG, nullptr},
                 {TILE_IMG, nullptr},
+                {MISSILE_IMG, nullptr},
                 {BG_IMG, nullptr},
                 {CURSOR_IMG, nullptr}
             };;

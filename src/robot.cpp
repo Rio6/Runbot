@@ -6,9 +6,9 @@
 #include <stdexcept>
 
 #include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
 
 #include "robot.hpp"
+#include "object.hpp"
 #include "game.hpp"
 #include "graphic.hpp"
 #include "collision.hpp"
@@ -53,8 +53,7 @@ void Robot::doTick(int tick) {
 
     speed.y += 1;
 
-    pos.x += speed.x;
-    pos.y += speed.y;
+    pos += speed;
 
     hitbox.speed = speed;
     hitbox.minPos = pos + 20;

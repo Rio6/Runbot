@@ -6,9 +6,9 @@
 #include <stdexcept>
 
 #include "SDL2/SDL.h"
-#include "SDL2/SDL_image.h"
 
 #include "tile.hpp"
+#include "object.hpp"
 #include "game.hpp"
 #include "graphic.hpp"
 
