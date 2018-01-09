@@ -72,25 +72,15 @@ void Robot::doTick(int tick) {
     onGround = false;
 }
 
-void Robot::onCollide(Object &other, Direction dir) {
+bool Robot::onCollide(Object &other, Direction dir) {
     if(other.getType() == TILE && dir == DOWN) {
         bodyAnim.start();
         onGround = true;
     }
+    return true;
 }
 
-void Robot::setPos(Vector<int> pos) {
-    this->pos = pos;
-    hitbox.minPos = pos + 20;
-    hitbox.maxPos = pos + Vector<int>{Robot::W - 40, Robot::H};
-}
-
-void Robot::setSpeed(Vector<float> speed) {
-    this->speed = speed;
-    hitbox.speed = speed;
-}
-
-bool Robot::isOut(int distance) {
+bool Robot::isDead(int distance) {
     return pos.x + Robot::W * 2 < distance || pos.y > Game::H;
 }
 

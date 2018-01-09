@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/1
+ * Date: 2018/1/8
  */
 
 #include <algorithm>
@@ -83,7 +83,8 @@ void Collision::solve() {
     // Recalculate before solving
     calculate();
 
-    if(time >= -1 && time <= 0) {
+    if(time >= -1 && time <= 0 &&
+        a->onCollide(*b, dir) && b->onCollide(*a, getOpposite(dir))) {
 
         Vector<float> speedA = a->getSpeed();
         Vector<float> speedB = b->getSpeed();
@@ -119,9 +120,6 @@ void Collision::solve() {
 
         a->setSpeed(speedA);
         b->setSpeed(speedB);
-
-        a->onCollide(*b, dir);
-        b->onCollide(*a, getOpposite(dir));
     }
 }
 

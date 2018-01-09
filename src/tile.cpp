@@ -34,7 +34,7 @@ void Tile::draw() {
     Graphic::instance().renderImage(TILE_IMG, &src, &des);
 }
 
-bool Tile::isOut(int distance) {
+bool Tile::isDead(int distance) {
     return pos.x + Tile::W - distance < 0;
 }
 

@@ -28,13 +28,13 @@ namespace runbot {
             virtual ~Object() = default;
             virtual void draw() = 0;
             virtual void doTick(int);
-            virtual void onCollide(Object&, Direction);
+            virtual bool onCollide(Object&, Direction);
             virtual Vector<int> getPos();
             virtual Vector<float> getSpeed();
             virtual void setPos(Vector<int>);
             virtual void setSpeed(Vector<float>);
             virtual Hitbox &getHitbox();
-            virtual bool isOut(int);
+            virtual bool isDead(int);
             virtual Type getType() = 0;
         protected:
             Vector<int> pos;

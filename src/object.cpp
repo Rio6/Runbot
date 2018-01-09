@@ -21,7 +21,8 @@ Vector<int> Object::getPos() {
     return pos;
 }
 
-void Object::onCollide(Object &other, Direction dir) {
+bool Object::onCollide(Object &other, Direction dir) {
+    return true;
 }
 
 Vector<float> Object::getSpeed() {
@@ -29,17 +30,21 @@ Vector<float> Object::getSpeed() {
 }
 
 void Object::setPos(Vector<int> pos) {
+    Vector<int> diff = pos - this->pos;
     this->pos = pos;
+    hitbox.minPos += diff;
+    hitbox.maxPos += diff;
 }
 
 void Object::setSpeed(Vector<float> speed) {
     this->speed = speed;
+    hitbox.speed = speed;
 }
 
 Hitbox &Object::getHitbox() {
     return hitbox;
 }
 
-bool Object::isOut(int distance) {
+bool Object::isDead(int distance) {
     return pos.x - distance < 0;
 }

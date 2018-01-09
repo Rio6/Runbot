@@ -73,7 +73,7 @@ void Game::loop() {
         robot.doTick(tick);
 
         for(size_t i = 0; i < objects.size(); i++) {
-            if(objects[i]->isOut(distance))
+            if(objects[i]->isDead(distance))
                 objects.erase(objects.begin() + i);
             else
                 objects[i]->doTick(tick);
@@ -93,7 +93,7 @@ void Game::loop() {
             coll.solve();
         }
 
-        if(robot.isOut(distance)) {
+        if(robot.isDead(distance)) {
             robot.setSpeed({speed, 0});
             robot.setPos({distance, 0});
         }

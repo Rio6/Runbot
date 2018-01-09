@@ -27,7 +27,7 @@ namespace runbot {
             Tile(Game*, Vector<int> pos, TileType);
             ~Tile();
             void draw();
-            bool isOut(int);
+            bool isDead(int);
             Type getType();
 
         private:

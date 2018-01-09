@@ -39,7 +39,7 @@ void Missile::doTick(int tick) {
     anim.doTick();
 }
 
-bool Missile::isOut(int distance) {
+bool Missile::isDead(int distance) {
     return pos.x + Missile::W - distance < 0;
 }
 

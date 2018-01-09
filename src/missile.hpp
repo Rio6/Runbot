@@ -24,7 +24,7 @@ namespace runbot {
             ~Missile();
             void draw();
             void doTick(int);
-            bool isOut(int);
+            bool isDead(int);
             Type getType();
 
         private:
