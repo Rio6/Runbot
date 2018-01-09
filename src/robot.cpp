@@ -9,6 +9,7 @@
 
 #include "robot.hpp"
 #include "object.hpp"
+#include "bullet.hpp"
 #include "game.hpp"
 #include "graphic.hpp"
 #include "collision.hpp"
@@ -115,6 +116,8 @@ void Robot::releaseJump() {
 
 void Robot::shoot() {
     if(shootCD == 0) {
+        game->spawn(new Bullet(game, pos +
+                    Vector<int>{Robot::W / 2, 102}));
         armAnim.start();
         shootCD = armAnim.getLength();
     }

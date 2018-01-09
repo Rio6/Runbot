@@ -18,7 +18,8 @@ namespace runbot {
                 UNKNOWN,
                 ROBOT,
                 TILE,
-                MISSILE
+                MISSILE,
+                BULLET
             };
 
             Object(Vector<int>);
