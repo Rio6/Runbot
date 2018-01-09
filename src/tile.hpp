@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/12
+ * Date: 2018/1/8
  */
 
 #ifndef _TILE_H_
@@ -9,6 +9,7 @@
 #include "SDL2/SDL.h"
 #include "object.hpp"
 #include "anim.hpp"
+#include "vector.hpp"
 
 namespace runbot {
     class Game; //Forward declare
@@ -23,7 +24,7 @@ namespace runbot {
             static const int W = 100;
             static const int H = 100;
 
-            Tile(Game*, int, int, TileType);
+            Tile(Game*, Vector<int> pos, TileType);
             ~Tile();
             void draw();
             bool isOut(int);

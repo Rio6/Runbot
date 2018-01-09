@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2017/12/12
+ * Date: 2018/1/8
  */
 
 #include <stdexcept>
@@ -11,11 +11,12 @@
 #include "object.hpp"
 #include "game.hpp"
 #include "graphic.hpp"
+#include "vector.hpp"
 
 using runbot::Tile;
 
-Tile::Tile(Game *game, int x, int y, TileType type) :
-    Object({x, y}, {.minPos={x, y}, .maxPos={x + Tile::W, y + Tile::H}}),
+Tile::Tile(Game *game, Vector<int> pos, TileType type) :
+    Object(pos, {.minPos=pos, .maxPos=pos + Vector<int>{Tile::W, Tile::H}}),
     game(game),
     anim(0, 0, 100, 100, 1, false), type(type) {
 

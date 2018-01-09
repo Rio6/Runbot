@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/3
+ * Date: 2018/1/8
  */
 
 #ifndef _MISSILE_H_
@@ -9,6 +9,7 @@
 #include "SDL2/SDL.h"
 #include "object.hpp"
 #include "anim.hpp"
+#include "vector.hpp"
 
 namespace runbot {
     class Game; //Forward declare
@@ -19,7 +20,7 @@ namespace runbot {
             static const int W = 120;
             static const int H = 60;
 
-            Missile(Game*, int, int);
+            Missile(Game*, Vector<int>);
             ~Missile();
             void draw();
             void doTick(int);

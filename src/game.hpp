@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/1
+ * Date: 2018/1/8
  */
 
 #ifndef _GAME_H_
@@ -33,6 +33,7 @@ namespace runbot {
             Game();
             ~Game();
             void loop();
+            void spawn(Object*);
 
         private:
             const int CURSOR_SIZE = 20;

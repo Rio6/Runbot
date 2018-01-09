@@ -1,9 +1,8 @@
 /*
  * Author: Rio
- * Date: 2018/1/3
+ * Date: 2018/1/8
  */
 
-#include <memory>
 #include <vector>
 #include <cstdlib>
 
@@ -12,6 +11,7 @@
 #include "object.hpp"
 #include "tile.hpp"
 #include "missile.hpp"
+#include "vector.hpp"
 
 using namespace runbot;
 
@@ -27,7 +27,7 @@ const std::vector<std::vector<level::ObjectInfo>> level::PATTERNS = {
         {{Tile::W * 7, Game::H - Tile::H}, Object::TILE},
         {{Tile::W * 8, Game::H - Tile::H}, Object::TILE},
         {{Tile::W * 9, Game::H - Tile::H}, Object::TILE},
-        {{0, 0}, Object::MISSILE}
+        {{0, Game::H - 370}, Object::MISSILE}
     },
     {
         {{Tile::W * 0, Game::H - Tile::H}, Object::TILE},
@@ -46,26 +46,24 @@ const std::vector<std::vector<level::ObjectInfo>> level::PATTERNS = {
     }
 };
 
-std::shared_ptr<runbot::Object> level::ObjectInfo::create(Game *game) {
+runbot::Object *level::ObjectInfo::create(Game *game) {
     switch(type) {
         case Object::TILE:
-            return std::shared_ptr<Object>(new Tile(game,
-                        pos.x + game->distance + Game::W, pos.y,
-                        Tile::TILE_GROUND));
+            return new Tile(game,
+                    {pos.x + game->distance + Game::W, pos.y},
+                    Tile::TILE_GROUND);
         case Object::MISSILE:
-            return std::shared_ptr<Object>(new Missile(game,
-                        pos.x + game->distance + Game::W, pos.y));
+            return new Missile(game,
+                    {pos.x + game->distance + Game::W, pos.y});
         default:
             return nullptr;
     }
 }
 
-std::vector<std::shared_ptr<Object>> level::genLevel(Game *game) {
-    std::vector<std::shared_ptr<Object>> objects;
+void level::genLevel(Game *game) {
     if(game->distance % 1000 == 0) {
         for(ObjectInfo info : PATTERNS[std::rand() % PATTERNS.size()]) {
-            objects.push_back(info.create(game));
+            game->spawn(info.create(game));
         }
     }
-    return objects;
 }

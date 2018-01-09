@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/3
+ * Date: 2018/1/8
  */
 
 #include "SDL2/SDL.h"
@@ -8,11 +8,12 @@
 #include "missile.hpp"
 #include "object.hpp"
 #include "game.hpp"
+#include "vector.hpp"
 
 using runbot::Missile;
 
-Missile::Missile(Game *game, int x, int y) :
-    Object({x, y}, {.minPos={10, 5}, .maxPos={Missile::W - 10, Missile::H - 5}}),
+Missile::Missile(Game *game, Vector<int> pos) :
+    Object(pos, {.minPos={10, 5}, .maxPos={Missile::W - 10, Missile::H - 5}}),
     game(game), anim(0, 0, 120, 60, 10, true) {
 
     anim.createClips(2);

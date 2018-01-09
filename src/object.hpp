@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/3
+ * Date: 2018/1/8
  */
 
 #ifndef _OBJECT_H_
@@ -23,6 +23,7 @@ namespace runbot {
 
             Object(Vector<int>);
             Object(Vector<int>, Hitbox);
+            Object(Vector<int>, Vector<float>, Hitbox);
             virtual ~Object() = default;
             virtual void draw() = 0;
             virtual void doTick(int);

@@ -1,12 +1,11 @@
 /*
  * Author: Rio
- * Date: 2017/12/19
+ * Date: 2018/1/8
  */
 
 #ifndef _LEVEL_H_
 #define _LEVEL_H_
 
-#include <memory>
 #include <vector>
 
 #include "object.hpp"
@@ -24,11 +23,11 @@ namespace runbot {
                 Vector<int> pos;
                 Object::Type type;
 
-                std::shared_ptr<Object> create(Game*);
+                Object *create(Game*);
         };
 
         extern const std::vector<std::vector<ObjectInfo>> PATTERNS;
-        std::vector<std::shared_ptr<runbot::Object>> genLevel(Game*);
+        void genLevel(Game*);
     };
 };
 

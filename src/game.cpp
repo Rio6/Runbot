@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/1
+ * Date: 2018/1/8
  */
 
 #include <memory>
@@ -36,8 +36,8 @@ void Game::loop() {
 
     // Some tiles at the beginning
     for(int i = Game::W - Tile::W; i > -Tile::W; i -= Tile::W) {
-        objects.emplace_back(new Tile(this, i,
-                    Game::H - Tile::H, Tile::TILE_GROUND));
+        objects.emplace_back(new Tile(this,
+                    {i, Game::H - Tile::H}, Tile::TILE_GROUND));
     }
 
     running = true;
@@ -66,8 +66,7 @@ void Game::loop() {
 */
 
         if(distance % level::LENGTH == 0) {
-            std::vector<std::shared_ptr<Object>> level = level::genLevel(this);
-            objects.insert(objects.end(), level.begin(), level.end());
+            level::genLevel(this);
         }
 
         // Tick everything
@@ -168,4 +167,8 @@ void Game::draw() {
 
     // Apply drawings to window
     graphic.update();
+}
+
+void Game::spawn(Object *obj) {
+    objects.emplace_back(obj);
 }
