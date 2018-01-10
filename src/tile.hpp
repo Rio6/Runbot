@@ -10,6 +10,7 @@
 #include "object.hpp"
 #include "anim.hpp"
 #include "vector.hpp"
+#include "collision.hpp"
 
 namespace runbot {
     class Game; //Forward declare
@@ -27,6 +28,7 @@ namespace runbot {
             Tile(Game*, Vector<int> pos, TileType);
             ~Tile();
             void draw();
+            bool onCollide(Object&, Direction);
             bool isDead(int);
             Type getType();
 

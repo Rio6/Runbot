@@ -56,10 +56,9 @@ void Robot::doTick(int tick) {
 
     pos += speed;
 
-    if(pos.x + Robot::W * 2 < game->distance || pos.y > Game::H) {
-        speed.y = 0;
-        pos = {game->distance, 0};
-    }
+    if(pos.x + Robot::W * 2 < game->distance || pos.y > Game::H)
+    // Out of map
+        die();
 
     hitbox.speed = speed;
     hitbox.minPos = pos + 20;
@@ -78,9 +77,18 @@ void Robot::doTick(int tick) {
 }
 
 bool Robot::onCollide(Object &other, Direction dir) {
-    if(other.getType() == TILE && dir == DOWN) {
-        bodyAnim.start();
-        onGround = true;
+    switch(other.getType()) {
+        case TILE:
+            if(dir == DOWN) {
+                bodyAnim.start();
+                onGround = true;
+            }
+            break;
+        case MISSILE:
+            die();
+            break;
+        default:
+            break;
     }
     return true;
 }
@@ -112,8 +120,13 @@ void Robot::releaseJump() {
 void Robot::shoot() {
     if(shootCD == 0) {
         game->spawn(new Bullet(game, pos +
-                    Vector<int>{Robot::W / 2, 102}));
+                    Vector<int>{Robot::W, 102}));
         armAnim.start();
         shootCD = armAnim.getLength();
     }
+}
+
+void Robot::die() {
+    speed.y = 0;
+    pos = {game->distance, 0};
 }

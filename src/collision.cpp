@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/9
  */
 
 #include <algorithm>
@@ -83,43 +83,48 @@ void Collision::solve() {
     // Recalculate before solving
     calculate();
 
-    if(time >= -1 && time <= 0 &&
-        a->onCollide(*b, dir) && b->onCollide(*a, getOpposite(dir))) {
+    if(time >= -1 && time <= 0) {
 
-        Vector<float> speedA = a->getSpeed();
-        Vector<float> speedB = b->getSpeed();
-        Vector<float> fixA, fixB;
+        bool aSolve = a->onCollide(*b, dir);
+        bool bSolve = b->onCollide(*a, getOpposite(dir));
 
-        switch(dir) {
-            case LEFT:
-            case RIGHT:
-                fixA = {speedA.x * time, 0};
-                fixB = {speedB.x * time, 0};
-                speedA = {0, speedA.y};
-                speedB = {0, speedB.y};
-                break;
-            case UP:
-            case DOWN:
-                fixA = {0, speedA.y * time};
-                fixB = {0, speedB.y * time};
-                speedA = {speedA.x, 0};
-                speedB = {speedB.x, 0};
-                break;
-            default:
-                return;
+        if(aSolve || bSolve) {
+
+            Vector<float> speedA = a->getSpeed();
+            Vector<float> speedB = b->getSpeed();
+            Vector<float> fixA, fixB;
+
+            switch(dir) {
+                case LEFT:
+                case RIGHT:
+                    fixA = {speedA.x * time, 0};
+                    fixB = {speedB.x * time, 0};
+                    speedA = {0, speedA.y};
+                    speedB = {0, speedB.y};
+                    break;
+                case UP:
+                case DOWN:
+                    fixA = {0, speedA.y * time};
+                    fixB = {0, speedB.y * time};
+                    speedA = {speedA.x, 0};
+                    speedB = {speedB.x, 0};
+                    break;
+                default:
+                    return;
+            }
+
+            Vector<int> posA = a->getPos();
+            Vector<int> posB = b->getPos();
+
+            posA += fixA;
+            posB += fixB;
+
+            a->setPos(posA);
+            b->setPos(posB);
+
+            a->setSpeed(speedA);
+            b->setSpeed(speedB);
         }
-
-        Vector<int> posA = a->getPos();
-        Vector<int> posB = b->getPos();
-
-        posA += fixA;
-        posB += fixB;
-
-        a->setPos(posA);
-        b->setPos(posB);
-
-        a->setSpeed(speedA);
-        b->setSpeed(speedB);
     }
 }
 

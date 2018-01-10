@@ -32,6 +32,7 @@ namespace runbot {
             void jump();
             void releaseJump();
             void shoot();
+            void die();
 
         private:
             SDL_Texture *sprite;

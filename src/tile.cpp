@@ -12,6 +12,7 @@
 #include "game.hpp"
 #include "graphic.hpp"
 #include "vector.hpp"
+#include "collision.hpp"
 
 using runbot::Tile;
 
@@ -32,6 +33,10 @@ void Tile::draw() {
     src = anim.getCurrentClip();
     des = {pos.x - game->distance, pos.y, Tile::W, Tile::H};
     Graphic::instance().renderImage(TILE_IMG, &src, &des);
+}
+
+bool Tile::onCollide(Object &other, Direction dir) {
+    return false;
 }
 
 bool Tile::isDead(int distance) {

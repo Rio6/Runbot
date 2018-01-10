@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/9
  */
 
 #ifndef _MISSILE_H_
@@ -10,6 +10,7 @@
 #include "object.hpp"
 #include "anim.hpp"
 #include "vector.hpp"
+#include "collision.hpp"
 
 namespace runbot {
     class Game; //Forward declare
@@ -24,12 +25,14 @@ namespace runbot {
             ~Missile();
             void draw();
             void doTick(int);
+            bool onCollide(Object&, Direction);
             bool isDead(int);
             Type getType();
 
         private:
             Game *game;
             Animation anim;
+            bool dead = false;
     };
 };
 

@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/9
  */
 
 #ifndef _BULLET_H_
@@ -9,6 +9,7 @@
 #include "SDL2/SDL.h"
 #include "object.hpp"
 #include "anim.hpp"
+#include "collision.hpp"
 
 namespace runbot {
     class Game; //Forward declare
@@ -24,12 +25,14 @@ namespace runbot {
             ~Bullet();
             void draw();
             void doTick(int);
+            bool onCollide(Object&, Direction);
             bool isDead(int);
             Type getType();
 
         private:
             Game *game;
             Animation anim;
+            bool dead = false;
     };
 };
 

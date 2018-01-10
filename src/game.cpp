@@ -78,10 +78,13 @@ void Game::loop() {
 
         // Resolve collision
         std::vector<Collision> colls;
-        for(std::shared_ptr<Object> object : objects) {
-            colls.emplace_back(&robot, object.get());
+        for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
+            for(auto jt = it + 1; jt != objects.end(); jt++) {
+                colls.emplace_back((*it).get(), (*jt).get());
+            }
         }
 
+        // Sort collision with time
         std::sort(colls.begin(), colls.end());
 
         for(Collision coll : colls) {
