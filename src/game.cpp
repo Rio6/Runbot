@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/9
  */
 
 #include <memory>
@@ -34,6 +34,9 @@ Game::~Game() {
 
 void Game::loop() {
 
+    // Put robot in objects
+    objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
+
     // Some tiles at the beginning
     for(int i = Game::W - Tile::W; i > -Tile::W; i -= Tile::W) {
         objects.emplace_back(new Tile(this,
@@ -58,20 +61,12 @@ void Game::loop() {
             robot.shoot();
         }
 
-        // Add a tile
-/*        if(distance % Tile::W == 0) {
-            objects.emplace_back(new Tile(this, distance + Game::W, Game::H, Tile::TILE_GROUND));
-            objects.emplace_back(new Tile(this, distance + Game::W, Game::H - tick % Game::H, Tile::TILE_GROUND));
-        }
-*/
-
+        // Generate level
         if(distance % level::LENGTH == 0) {
             level::genLevel(this);
         }
 
         // Tick everything
-        robot.doTick(tick);
-
         for(size_t i = 0; i < objects.size(); i++) {
             if(objects[i]->isDead(distance))
                 objects.erase(objects.begin() + i);
@@ -93,11 +88,6 @@ void Game::loop() {
             coll.solve();
         }
 
-        if(robot.isDead(distance)) {
-            robot.setSpeed({speed, 0});
-            robot.setPos({distance, 0});
-        }
-
         tick++;
         distance += speed;
 
@@ -110,6 +100,9 @@ void Game::loop() {
         // Render
         draw();
     }
+
+    // Reset
+    objects.clear();
 }
 
 void Game::processEvents() {
@@ -158,8 +151,6 @@ void Game::draw() {
 
     for(std::shared_ptr<Object> object : objects)
         object->draw();
-
-    robot.draw();
 
     SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
     SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};

@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/9
  */
 
 #include <stdexcept>
@@ -56,6 +56,11 @@ void Robot::doTick(int tick) {
 
     pos += speed;
 
+    if(pos.x + Robot::W * 2 < game->distance || pos.y > Game::H) {
+        speed.y = 0;
+        pos = {game->distance, 0};
+    }
+
     hitbox.speed = speed;
     hitbox.minPos = pos + 20;
     hitbox.maxPos = pos + Vector<int>{Robot::W - 40, Robot::H};
@@ -81,7 +86,7 @@ bool Robot::onCollide(Object &other, Direction dir) {
 }
 
 bool Robot::isDead(int distance) {
-    return pos.x + Robot::W * 2 < distance || pos.y > Game::H;
+    return false;
 }
 
 runbot::Object::Type Robot::getType() {
