@@ -22,11 +22,6 @@
 using runbot::Game;
 
 Game::Game() : robot(this) {
-    try {
-        Graphic::instance(); // Create an instance of singleton
-    } catch(std::runtime_error e) {
-        SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Failed to initilize: %s", e.what());
-    }
 }
 
 Game::~Game() {
