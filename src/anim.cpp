@@ -10,8 +10,8 @@
 
 using runbot::Animation;
 
-Animation::Animation(int x, int y, int w, int h, int aniLength, bool repeat = true) :
-    x(x), y(y), w(w), h(h), aniLength(aniLength), repeat(repeat), spriteClips(0) {
+Animation::Animation(int x, int y, int w, int h, int length, bool repeat = true) :
+    x(x), y(y), w(w), h(h), length(length), repeat(repeat), spriteClips(0) {
 }
 
 Animation::~Animation() {
@@ -35,11 +35,11 @@ SDL_Rect Animation::getCurrentClip() {
 }
 
 int Animation::getLength() {
-    return aniLength;
+    return length;
 }
 
 void Animation::setLength(int length) {
-    aniLength = length;
+    length = length;
 }
 
 void Animation::pause() {
@@ -53,7 +53,7 @@ void Animation::start() {
 void Animation::doTick() {
 
     if(!paused && spriteClips.size() > 0) {
-        while(aniLength / (float) spriteClips.size() * frame < tick) {
+        while(length / (float) spriteClips.size() * frame < tick) {
             frame++;
         }
 
@@ -65,6 +65,6 @@ void Animation::doTick() {
         }
 
         tick++;
-        tick %= aniLength;
+        tick %= length;
     }
 }

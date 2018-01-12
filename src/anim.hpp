@@ -12,11 +12,11 @@
 namespace runbot {
     class Animation {
         public:
-            Animation(int, int, int, int, int, bool);
+            Animation(int x, int y, int w, int h, int length, bool repeat);
             ~Animation();
 
             // Call this to create the clips
-            void createClips(int);
+            void createClips(int clipCount);
             // get current clip, return SDL_Rect{0, 0, 0, 0} if clip has size 0
             SDL_Rect getCurrentClip();
             void setLength(int);
@@ -28,7 +28,7 @@ namespace runbot {
 
         private:
             int x, y, w, h; // Start pint, size
-            int aniLength; // The length of the animation
+            int length; // The length of the animation
             unsigned int frame = 0;
             unsigned int tick = 0;
             bool paused = true;
