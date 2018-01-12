@@ -12,7 +12,6 @@
 using runbot::Background;
 
 Background::Background() : pos(0) {}
-Background::~Background(){}
 
 void Background::doTick() {
     pos += 1;

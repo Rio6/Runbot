@@ -26,7 +26,6 @@ namespace runbot {
             static const int H = 100;
 
             Tile(Game*, Vector<int> pos, TileType);
-            ~Tile();
             void draw();
             bool onCollide(Object&, Direction);
             bool isDead();

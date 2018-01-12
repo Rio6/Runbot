@@ -21,9 +21,6 @@ Missile::Missile(Game *game, Vector<int> pos) :
     anim.start();
 }
 
-Missile::~Missile() {
-}
-
 void Missile::draw() {
     SDL_Rect src = anim.getCurrentClip();
     SDL_Rect des = {pos.x - game->distance, pos.y, Missile::W, Missile::H};

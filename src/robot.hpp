@@ -21,7 +21,6 @@ namespace runbot {
             static const int JUMP_FORCE = 25;
 
             Robot(Game*);
-            ~Robot();
             void draw();
             void doTick(int);
             bool onCollide(Object&, Direction dir);

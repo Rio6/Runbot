@@ -14,9 +14,6 @@ Animation::Animation(int x, int y, int w, int h, int length, bool repeat = true)
     x(x), y(y), w(w), h(h), length(length), repeat(repeat), spriteClips(0) {
 }
 
-Animation::~Animation() {
-}
-
 void Animation::createClips(int clipCount) {
 
     spriteClips.resize(clipCount);

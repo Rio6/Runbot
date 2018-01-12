@@ -27,9 +27,6 @@ Robot::Robot(Game *game) :
     armAnim.createClips(20);
 }
 
-Robot::~Robot() {
-}
-
 void Robot::draw() {
     Graphic &graphic = Graphic::instance();
     SDL_Rect src, des;

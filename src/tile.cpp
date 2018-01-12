@@ -24,9 +24,6 @@ Tile::Tile(Game *game, Vector<int> pos, TileType type) :
     anim.createClips(1);
 }
 
-Tile::~Tile() {
-}
-
 void Tile::draw() {
     SDL_Rect src, des;
 

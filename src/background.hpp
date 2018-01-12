@@ -10,7 +10,6 @@ namespace runbot {
     class Background {
         public:
             Background();
-            ~Background();
 
             void doTick();
             void draw();

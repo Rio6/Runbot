@@ -20,9 +20,6 @@ Bullet::Bullet(Game *game, Vector<int> pos, int baseSpeed) :
     anim.createClips(1);
 }
 
-Bullet::~Bullet() {
-}
-
 void Bullet::draw() {
     SDL_Rect src = anim.getCurrentClip();
     SDL_Rect des = {pos.x - game->distance, pos.y, Bullet::W, Bullet::H};

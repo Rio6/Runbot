@@ -13,7 +13,6 @@ namespace runbot {
     class Animation {
         public:
             Animation(int x, int y, int w, int h, int length, bool repeat);
-            ~Animation();
 
             // Call this to create the clips
             void createClips(int clipCount);

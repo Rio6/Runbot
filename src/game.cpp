@@ -24,9 +24,6 @@ using runbot::Game;
 Game::Game() : robot(this), level(this) {
 }
 
-Game::~Game() {
-}
-
 void Game::loop() {
 
     // Put robot in objects

@@ -32,7 +32,6 @@ namespace runbot {
             float speed = 5;
 
             Game();
-            ~Game();
             void loop();
             void spawn(Object*);
 
