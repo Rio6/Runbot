@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/11
+ * Date: 2018/1/12
  */
 
 #include "SDL2/SDL.h"
@@ -13,8 +13,8 @@
 
 using runbot::Bullet;
 
-Bullet::Bullet(Game *game, Vector<int> pos) :
-    Object(pos, {Bullet::SPEED, 0}, {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}}),
+Bullet::Bullet(Game *game, Vector<int> pos, int baseSpeed) :
+    Object(pos, {baseSpeed + Bullet::SPEED, 0}, {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}}),
     game(game), anim(0, 0, 40, 8, 1, false) {
 
     anim.createClips(1);

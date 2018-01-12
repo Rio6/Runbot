@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/11
+ * Date: 2018/1/12
  */
 
 #ifndef _BULLET_H_
@@ -19,9 +19,9 @@ namespace runbot {
 
             static const int W = 40;
             static const int H = 8;
-            static constexpr float SPEED = 20;
+            static constexpr float SPEED = 15;
 
-            Bullet(Game*, Vector<int>);
+            Bullet(Game*, Vector<int>, int);
             ~Bullet();
             void draw();
             void doTick(int);

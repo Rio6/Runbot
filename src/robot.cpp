@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/11
+ * Date: 2018/1/12
  */
 
 #include <stdexcept>
@@ -120,7 +120,7 @@ void Robot::releaseJump() {
 void Robot::shoot() {
     if(shootCD == 0) {
         game->spawn(new Bullet(game, pos +
-                    Vector<int>{Robot::W, 102}));
+                    Vector<int>{Robot::W, 102}, game->speed));
         armAnim.start();
         shootCD = armAnim.getLength();
     }
