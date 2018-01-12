@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/9
+ * Date: 2018/1/11
  */
 
 #include "SDL2/SDL.h"
@@ -44,7 +44,7 @@ bool Bullet::onCollide(Object &other, Direction dir) {
     return true;
 }
 
-bool Bullet::isDead(int distance) {
+bool Bullet::isDead() {
     return dead;
 }
 

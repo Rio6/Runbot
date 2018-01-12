@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/9
+ * Date: 2018/1/11
  */
 
 #include "SDL2/SDL.h"
@@ -58,7 +58,7 @@ bool Missile::onCollide(Object &other, Direction dir) {
     return false;
 }
 
-bool Missile::isDead(int distance) {
+bool Missile::isDead() {
     return dead;
 }
 

@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/11
  */
 
 #include "object.hpp"
@@ -45,6 +45,6 @@ Hitbox &Object::getHitbox() {
     return hitbox;
 }
 
-bool Object::isDead(int distance) {
-    return pos.x - distance < 0;
+bool Object::isDead() {
+    return false;
 }

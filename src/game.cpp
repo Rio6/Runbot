@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/9
+ * Date: 2018/1/11
  */
 
 #include <memory>
@@ -68,7 +68,7 @@ void Game::loop() {
 
         // Tick everything
         for(size_t i = 0; i < objects.size(); i++) {
-            if(objects[i]->isDead(distance))
+            if(objects[i]->isDead())
                 objects.erase(objects.begin() + i);
             else
                 objects[i]->doTick(tick);

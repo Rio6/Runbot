@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/11
  */
 
 #ifndef _ROBOT_H_
@@ -25,7 +25,7 @@ namespace runbot {
             void draw();
             void doTick(int);
             bool onCollide(Object&, Direction dir);
-            bool isDead(int);
+            bool isDead();
             Type getType();
 
             // Actions

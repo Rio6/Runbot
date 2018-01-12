@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/11
  */
 
 #ifndef _TILE_H_
@@ -29,7 +29,7 @@ namespace runbot {
             ~Tile();
             void draw();
             bool onCollide(Object&, Direction);
-            bool isDead(int);
+            bool isDead();
             Type getType();
 
         private:

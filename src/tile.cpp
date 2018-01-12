@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/11
  */
 
 #include <stdexcept>
@@ -39,8 +39,8 @@ bool Tile::onCollide(Object &other, Direction dir) {
     return false;
 }
 
-bool Tile::isDead(int distance) {
-    return pos.x + Tile::W - distance < 0;
+bool Tile::isDead() {
+    return pos.x + Tile::W - game->distance < 0;
 }
 
 runbot::Object::Type Tile::getType() {

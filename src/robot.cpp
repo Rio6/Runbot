@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/9
+ * Date: 2018/1/11
  */
 
 #include <stdexcept>
@@ -93,7 +93,7 @@ bool Robot::onCollide(Object &other, Direction dir) {
     return true;
 }
 
-bool Robot::isDead(int distance) {
+bool Robot::isDead() {
     return false;
 }
 

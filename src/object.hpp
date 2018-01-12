@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/11
  */
 
 #ifndef _OBJECT_H_
@@ -34,7 +34,7 @@ namespace runbot {
             virtual void setPos(Vector<int>);
             virtual void setSpeed(Vector<float>);
             virtual Hitbox &getHitbox();
-            virtual bool isDead(int);
+            virtual bool isDead();
             virtual Type getType() = 0;
         protected:
             Vector<int> pos;
