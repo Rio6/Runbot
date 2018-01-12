@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/11
+ * Date: 2018/1/12
  */
 
 #include <memory>
@@ -38,7 +38,7 @@ void Game::loop() {
     objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
 
     // Some tiles at the beginning
-    for(int i = Game::W - Tile::W; i > -Tile::W; i -= Tile::W) {
+    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
         objects.emplace_back(new Tile(this,
                     {i, Game::H - Tile::H}, Tile::TILE_GROUND));
     }
@@ -62,9 +62,7 @@ void Game::loop() {
         }
 
         // Generate level
-        if(distance % level::LENGTH == 0) {
-            level::genLevel(this);
-        }
+        level::genLevel(this, distance + Game::W);
 
         // Tick everything
         for(size_t i = 0; i < objects.size(); i++) {
@@ -94,7 +92,7 @@ void Game::loop() {
         tick++;
         distance += speed;
 
-        //if(tick % 100 == 0) speed++;
+        if(tick % 1000 == 0) speed++;
 
         int ticked = SDL_GetTicks() - start;
         if(SDL_TICKS_PASSED(ticked, runbot::MPF)) continue;

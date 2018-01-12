@@ -1,6 +1,6 @@
 /*
  * Author: Rio
- * Date: 2018/1/8
+ * Date: 2018/1/12
  */
 
 #ifndef _LEVEL_H_
@@ -23,11 +23,11 @@ namespace runbot {
                 Vector<int> pos;
                 Object::Type type;
 
-                Object *create(Game*);
+                Object *create(Game*, int);
         };
 
         extern const std::vector<std::vector<ObjectInfo>> PATTERNS;
-        void genLevel(Game*);
+        void genLevel(Game*, int);
     };
 };
 
