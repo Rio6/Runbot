@@ -15,6 +15,7 @@
 #include "robot.hpp"
 #include "object.hpp"
 #include "background.hpp"
+#include "level.hpp"
 
 namespace runbot {
     const char *const NAME = "Runbot";
@@ -43,6 +44,7 @@ namespace runbot {
 
             Robot robot;
             std::vector<std::shared_ptr<Object>> objects;
+            Level level;
             Background bg;
 
             bool running = false;

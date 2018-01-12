@@ -15,19 +15,25 @@
 namespace runbot {
     class Game; // Forward declare
 
-    namespace level {
-        const int LENGTH = 1000;
+    class Level {
+        public:
+            static const int LENGTH = 1000;
 
-        class ObjectInfo {
-            public:
-                Vector<int> pos;
-                Object::Type type;
+            Level(Game*);
+            void genLevel(int);
 
-                Object *create(Game*, int);
-        };
+        private:
+            class ObjectInfo {
+                public:
+                    Vector<int> pos;
+                    Object::Type type;
 
-        extern const std::vector<std::vector<ObjectInfo>> PATTERNS;
-        void genLevel(Game*, int);
+                    Object *create(Game*, int);
+            };
+
+            static const std::vector<std::vector<ObjectInfo>> PATTERNS;
+            Game *game;
+            int lastDist = 0;
     };
 };
 

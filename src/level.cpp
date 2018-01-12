@@ -13,9 +13,9 @@
 #include "missile.hpp"
 #include "vector.hpp"
 
-using namespace runbot;
+using runbot::Level;
 
-const std::vector<std::vector<level::ObjectInfo>> level::PATTERNS = {
+const std::vector<std::vector<Level::ObjectInfo>> Level::PATTERNS = {
     {
         {{Tile::W * 0, Game::H - Tile::H}, Object::TILE},
         {{Tile::W * 1, Game::H - Tile::H}, Object::TILE},
@@ -46,7 +46,20 @@ const std::vector<std::vector<level::ObjectInfo>> level::PATTERNS = {
     },
 };
 
-runbot::Object *level::ObjectInfo::create(Game *game, int distance) {
+Level::Level(Game *game) : game(game) {
+}
+
+void Level::genLevel(int distance) {
+    if(distance - lastDist > Level::LENGTH) {
+        distance = lastDist + Level::LENGTH;
+        for(ObjectInfo info : PATTERNS[std::rand() % PATTERNS.size()]) {
+            game->spawn(info.create(game, distance));
+        }
+        lastDist = distance;
+    }
+}
+
+runbot::Object *Level::ObjectInfo::create(Game *game, int distance) {
     switch(type) {
         case Object::TILE:
             return new Tile(game,
@@ -57,16 +70,5 @@ runbot::Object *level::ObjectInfo::create(Game *game, int distance) {
                     {pos.x + distance, pos.y});
         default:
             return nullptr;
-    }
-}
-
-void level::genLevel(Game *game, int distance) {
-    static int lastDist;
-    if(distance - lastDist > level::LENGTH) {
-        distance = lastDist + level::LENGTH;
-        for(ObjectInfo info : PATTERNS[std::rand() % PATTERNS.size()]) {
-            game->spawn(info.create(game, distance));
-        }
-        lastDist = distance;
     }
 }

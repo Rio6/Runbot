@@ -21,7 +21,7 @@
 
 using runbot::Game;
 
-Game::Game() : robot(this) {
+Game::Game() : robot(this), level(this) {
 }
 
 Game::~Game() {
@@ -56,8 +56,8 @@ void Game::loop() {
             robot.shoot();
         }
 
-        // Generate level
-        level::genLevel(this, distance + Game::W);
+        // Generate Level
+        level.genLevel(distance + Game::W);
 
         // Tick everything
         for(size_t i = 0; i < objects.size(); i++) {
