@@ -18,7 +18,7 @@
 using runbot::Robot;
 
 Robot::Robot(Game *game) :
-    Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 40, Robot::H}}),
+    Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 20, Robot::H}}),
     game(game),
     bodyAnim(0, 0, 200, 400, 30, true),
     armAnim(0, 400, 200, 400, 30, false) {
@@ -61,8 +61,8 @@ void Robot::doTick(int tick) {
         die();
 
     hitbox.speed = speed;
-    hitbox.minPos = pos + 20;
-    hitbox.maxPos = pos + Vector<int>{Robot::W - 40, Robot::H};
+    hitbox.minPos = pos + Vector<int>{20, 0};
+    hitbox.maxPos = pos + Vector<int>{Robot::W - 20, Robot::H};
 
     if(shootCD > 0)
         shootCD--;

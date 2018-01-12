@@ -14,7 +14,7 @@
 using runbot::Missile;
 
 Missile::Missile(Game *game, Vector<int> pos) :
-    Object(pos, {.minPos={10, 5}, .maxPos={Missile::W - 10, Missile::H - 5}}),
+    Object(pos, {.minPos={10, 0}, .maxPos={Missile::W, Missile::H}}),
     game(game), anim(0, 0, 120, 60, 10, true) {
 
     anim.createClips(2);
@@ -38,8 +38,8 @@ void Missile::doTick(int tick) {
     pos += speed;
 
     hitbox.speed = speed;
-    hitbox.minPos = pos + 20;
-    hitbox.maxPos = pos + Vector<int>{Missile::W - 10, Missile::H - 5};
+    hitbox.minPos = pos + Vector<int>{10, 0};
+    hitbox.maxPos = pos + Vector<int>{Missile::W, Missile::H};
 
     dead = pos.x + Missile::W - game->distance < 0;
 

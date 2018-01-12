@@ -14,7 +14,7 @@
 using runbot::Bullet;
 
 Bullet::Bullet(Game *game, Vector<int> pos) :
-    Object(pos, {Bullet::SPEED, 0}, {.minPos=pos + Vector<int>{5, 0}, .maxPos=pos + Vector<int>{Bullet::W - 5, Bullet::H}}),
+    Object(pos, {Bullet::SPEED, 0}, {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}}),
     game(game), anim(0, 0, 40, 8, 1, false) {
 
     anim.createClips(1);
@@ -36,7 +36,7 @@ void Bullet::doTick(int tick) {
     hitbox.minPos = pos;
     hitbox.maxPos = pos + Vector<int>{Bullet::W, Bullet::H};
 
-    dead = pos.x + Bullet::W - game->distance < 0;
+    dead = pos.x > game->distance + Game::W;
 }
 
 bool Bullet::onCollide(Object &other, Direction dir) {
