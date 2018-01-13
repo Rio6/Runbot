@@ -9,9 +9,13 @@ OBJS:= $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
 TGT:=runbot
 
 all: $(BUILDDIR) $(TGT)
+win32:
+	$(MAKE) CXX=i686-w64-mingw32-g++ LIBS="-lmingw32 -lSDL2main $(LIBS)" TGT="$(TGT).exe" all
+win64:
+	$(MAKE) CXX=x86_64-w64-mingw32-g++ LIBS="-lmingw32 -lSDL2main $(LIBS)" TGT="$(TGT).exe" all
 
 $(TGT): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(LIBS) $(OBJS) -o $(TGT)
+	$(CXX) $(CXXFLAGS) $(OBJS) $(LIBS) -o $(TGT)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
 	$(CXX) $(CXXFLAGS) -c $< -o $@

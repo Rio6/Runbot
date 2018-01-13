@@ -5,7 +5,7 @@
 
 #include <cstdlib>
 #include <ctime>
-#include <SDL2/SDL.h>
+#include "SDL2/SDL.h"
 
 #include "game.hpp"
 
