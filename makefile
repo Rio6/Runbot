@@ -10,9 +10,9 @@ TGT:=runbot
 
 all: $(BUILDDIR) $(TGT)
 win32:
-	$(MAKE) CXX=i686-w64-mingw32-g++ LIBS="-lmingw32 -lSDL2main $(LIBS)" TGT="$(TGT).exe" all
+	$(MAKE) CXX=i686-w64-mingw32-g++ LIBS="-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lmingw32 -lSDL2main $(LIBS)" TGT="$(TGT).exe" all
 win64:
-	$(MAKE) CXX=x86_64-w64-mingw32-g++ LIBS="-lmingw32 -lSDL2main $(LIBS)" TGT="$(TGT).exe" all
+	$(MAKE) CXX=x86_64-w64-mingw32-g++ LIBS="-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lmingw32 -lSDL2main $(LIBS)" TGT="$(TGT).exe" all
 
 $(TGT): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) $(LIBS) -o $(TGT)
