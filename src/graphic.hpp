@@ -34,7 +34,7 @@ namespace runbot {
         private:
             SDL_Renderer *rend;
             SDL_Window *win;
-            std::map<std::string, SDL_Texture*> imgs = {
+            std::map<std::string, SDL_Texture*> imgs {
                 {ROBOT_IMG, nullptr},
                 {TILE_IMG, nullptr},
                 {MISSILE_IMG, nullptr},

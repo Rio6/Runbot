@@ -37,7 +37,7 @@ namespace runbot {
 
         private:
             const int CURSOR_SIZE = 20;
-            Vector<int> cursor = {0, -CURSOR_SIZE};
+            Vector<int> cursor {0, -CURSOR_SIZE};
 
             std::map<std::string, bool> keys;
 
