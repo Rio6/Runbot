@@ -1,0 +1,4 @@
+[submodule "jni/src"]
+	path = jni/src
+	url = https://github.com/Rio6/Runbot
+	branch = android
