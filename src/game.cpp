@@ -120,6 +120,9 @@ void Game::processEvents() {
                     case SDLK_RIGHT:
                         keys[SDLK_RIGHT] = false;
                         break;
+                    case SDLK_AC_BACK:
+                        running = false;
+                        break;
                 }
                 break;
             case SDL_MOUSEMOTION:
