@@ -7,7 +7,6 @@
 #include <stdexcept>
 #include <algorithm>
 #include <map>
-#include <string>
 
 #include "SDL2/SDL.h"
 
@@ -43,13 +42,13 @@ void Game::loop() {
         // Control robot
         processEvents();
 
-        if(keys["up"]) {
+        if(keys[SDLK_UP]) {
             robot.jump();
         } else {
             robot.releaseJump();
         }
 
-        if(keys["right"]) {
+        if(keys[SDLK_RIGHT]) {
             robot.shoot();
         }
 
@@ -106,20 +105,20 @@ void Game::processEvents() {
             case SDL_KEYDOWN:
                 switch(eve.key.keysym.sym) {
                     case SDLK_UP:
-                        keys["up"] = true;
+                        keys[SDLK_UP] = true;
                         break;
                     case SDLK_RIGHT:
-                        keys["right"] = true;
+                        keys[SDLK_RIGHT] = true;
                         break;
                 }
                 break;
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
                     case SDLK_UP:
-                        keys["up"] = false;
+                        keys[SDLK_UP] = false;
                         break;
                     case SDLK_RIGHT:
-                        keys["right"] = false;
+                        keys[SDLK_RIGHT] = false;
                         break;
                 }
                 break;
