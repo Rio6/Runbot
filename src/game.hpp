@@ -26,6 +26,7 @@ namespace runbot {
             static const int W = 1024;
             static const int H = 576;
 
+            int cameraY = 0;
             int distance = 0;
             int tick = 0;
             float speed = 5;

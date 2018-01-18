@@ -28,7 +28,7 @@ void Tile::draw() {
     SDL_Rect src, des;
 
     src = anim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y, Tile::W, Tile::H};
+    des = {pos.x - game->distance, pos.y - game->cameraY, Tile::W, Tile::H};
     Graphic::instance().renderImage(TILE_IMG, &src, &des);
 }
 

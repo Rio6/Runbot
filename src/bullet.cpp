@@ -22,7 +22,7 @@ Bullet::Bullet(Game *game, Vector<int> pos, int baseSpeed) :
 
 void Bullet::draw() {
     SDL_Rect src = anim.getCurrentClip();
-    SDL_Rect des = {pos.x - game->distance, pos.y, Bullet::W, Bullet::H};
+    SDL_Rect des = {pos.x - game->distance, pos.y - game->cameraY, Bullet::W, Bullet::H};
     Graphic::instance().renderImage(BULLET_IMG, &src, &des);
 }
 

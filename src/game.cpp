@@ -80,6 +80,12 @@ void Game::loop() {
             coll.solve();
         }
 
+        int robotY = robot.getPos().y;
+        if(robotY < 0)
+            cameraY = robotY;
+        else
+            cameraY = 0;
+
         tick++;
         distance += speed;
 

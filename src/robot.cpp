@@ -33,12 +33,12 @@ void Robot::draw() {
 
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y, Robot::W, Robot::H};
+    des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
     graphic.renderImage(ROBOT_IMG, &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y, Robot::W, Robot::H};
+    des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
     graphic.renderImage(ROBOT_IMG, &src, &des);
 }
 
