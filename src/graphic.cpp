@@ -43,7 +43,6 @@ Graphic::Graphic() {
 
     // Configure SDL
     SDL_ShowCursor(false);
-    SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
 
     // Configure the renderer
     SDL_RenderSetLogicalSize(rend, Game::W, Game::H);
