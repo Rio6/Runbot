@@ -6,7 +6,7 @@
 #ifndef _TILE_H_
 #define _TILE_H_
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "object.hpp"
 #include "anim.hpp"
 #include "vector.hpp"

@@ -5,7 +5,7 @@
 
 #include <stdexcept>
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #include "tile.hpp"
 #include "object.hpp"

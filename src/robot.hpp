@@ -6,7 +6,7 @@
 #ifndef _ROBOT_H_
 #define _ROBOT_H_
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "object.hpp"
 #include "collision.hpp"
 #include "anim.hpp"

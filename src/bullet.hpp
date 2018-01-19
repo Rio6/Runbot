@@ -6,7 +6,7 @@
 #ifndef _BULLET_H_
 #define _BULLET_H_
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "object.hpp"
 #include "anim.hpp"
 #include "collision.hpp"

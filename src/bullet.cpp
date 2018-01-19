@@ -3,7 +3,7 @@
  * Date: 2018/01/08
  */
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #include "bullet.hpp"
 #include "object.hpp"

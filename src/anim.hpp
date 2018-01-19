@@ -7,7 +7,7 @@
 #define _ANIM_H_
 
 #include <vector>
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 namespace runbot {
     class Animation {

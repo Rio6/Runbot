@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <map>
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #include "game.hpp"
 #include "graphic.hpp"

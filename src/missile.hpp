@@ -6,7 +6,7 @@
 #ifndef _MISSILE_H_
 #define _MISSILE_H_
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "object.hpp"
 #include "anim.hpp"
 #include "vector.hpp"

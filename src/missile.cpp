@@ -3,7 +3,7 @@
  * Date: 2018/01/03
  */
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #include "missile.hpp"
 #include "object.hpp"

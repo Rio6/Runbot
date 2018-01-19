@@ -5,7 +5,7 @@
 
 #include <stdexcept>
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #include "robot.hpp"
 #include "object.hpp"
