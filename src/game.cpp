@@ -20,7 +20,7 @@
 
 using runbot::Game;
 
-Game::Game() : robot(this), level(this) {
+Game::Game() : robot(this), level(this), startMenu(this), pauseMenu(this) {
 }
 
 void Game::loop() {
@@ -28,68 +28,23 @@ void Game::loop() {
     // Put robot in objects
     objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
 
-    // Some tiles at the beginning
-    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
-        objects.emplace_back(new Tile(this,
-                    {i, Game::H - Tile::H}, Tile::TILE_GROUND));
-    }
-
-    running = true;
-    while(running) {
+    while(state != STOP) {
 
         int start = SDL_GetTicks();
 
-        // Control robot
         processEvents();
 
-        if(keys[SDLK_UP]) {
-            robot.jump();
-        } else {
-            robot.releaseJump();
+        switch(state) {
+            case MENU:
+                break;
+            case RUNNING:
+                doTick();
+                break;
+            case PAUSED:
+                break;
+            default:
+                break;
         }
-
-        if(keys[SDLK_RIGHT]) {
-            robot.shoot();
-        }
-
-        // Generate Level
-        level.genLevel(distance + Game::W);
-
-        // Tick everything
-        for(size_t i = 0; i < objects.size(); i++) {
-            if(objects[i]->isDead())
-                objects.erase(objects.begin() + i);
-            else
-                objects[i]->doTick(tick);
-        }
-
-        bg.doTick();
-
-        // Resolve collision
-        std::vector<Collision> colls;
-        for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
-            for(auto jt = it + 1; jt != objects.end(); jt++) {
-                colls.emplace_back((*it).get(), (*jt).get());
-            }
-        }
-
-        // Sort collision with time
-        std::sort(colls.begin(), colls.end());
-
-        for(Collision coll : colls) {
-            coll.solve();
-        }
-
-        int robotY = robot.getPos().y;
-        if(robotY < 0)
-            cameraY = robotY;
-        else
-            cameraY = 0;
-
-        tick++;
-        distance += speed;
-
-        if(tick % 1000 == 0) speed++;
 
         int ticked = SDL_GetTicks() - start;
         if(SDL_TICKS_PASSED(ticked, runbot::MPF)) continue;
@@ -101,6 +56,17 @@ void Game::loop() {
 
     // Reset
     objects.clear();
+}
+
+void Game::startGame() {
+    if(state == MENU) {
+        // Some tiles at the beginning
+        for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
+            objects.emplace_back(new Tile(this,
+                        {i, Game::H - Tile::H}, Tile::TILE_GROUND));
+        }
+    }
+    state = RUNNING;
 }
 
 void Game::processEvents() {
@@ -115,6 +81,9 @@ void Game::processEvents() {
                         break;
                     case SDLK_RIGHT:
                         keys[SDLK_RIGHT] = true;
+                        break;
+                    case SDLK_ESCAPE:
+                        state = PAUSED;
                         break;
                 }
                 break;
@@ -132,11 +101,71 @@ void Game::processEvents() {
                 cursor.x = eve.motion.x;
                 cursor.y = eve.motion.y;
                 break;
+            case SDL_MOUSEBUTTONUP:
+                if(eve.button.clicks) {
+                    Vector<int> pos = {eve.button.x, eve.button.y};
+                    if(state == MENU) {
+                        startMenu.onClick(pos);
+                    }
+                }
+                break;
             case SDL_QUIT:
-                running = false;
+                state = STOP;
                 break;
         }
     }
+}
+
+void Game::doTick() {
+
+    if(keys[SDLK_UP]) {
+        robot.jump();
+    } else {
+        robot.releaseJump();
+    }
+
+    if(keys[SDLK_RIGHT]) {
+        robot.shoot();
+    }
+
+    // Generate Level
+    level.genLevel(distance + Game::W);
+
+    // Tick everything
+    for(size_t i = 0; i < objects.size(); i++) {
+        if(objects[i]->isDead())
+            objects.erase(objects.begin() + i);
+        else
+            objects[i]->doTick(tick);
+    }
+
+    bg.doTick();
+
+    // Resolve collision
+    std::vector<Collision> colls;
+    for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
+        for(auto jt = it + 1; jt != objects.end(); jt++) {
+            colls.emplace_back((*it).get(), (*jt).get());
+        }
+    }
+
+    // Sort collision with time
+    std::sort(colls.begin(), colls.end());
+
+    for(Collision coll : colls) {
+        coll.solve();
+    }
+
+    int robotY = robot.getPos().y;
+    if(robotY < 0)
+        cameraY = robotY;
+    else
+        cameraY = 0;
+
+    tick++;
+    distance += speed;
+
+    if(tick % 1000 == 0) speed++;
 }
 
 void Game::draw() {
@@ -149,6 +178,12 @@ void Game::draw() {
 
     for(std::shared_ptr<Object> object : objects)
         object->draw();
+
+    if(state == MENU) {
+        startMenu.draw();
+    } else if(state == PAUSED) {
+        pauseMenu.draw();
+    }
 
     SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
     SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
