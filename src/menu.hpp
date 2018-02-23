@@ -18,6 +18,8 @@ namespace runbot {
             void onClick(Vector<int>&);
             void draw();
         private:
+            static const int BTN_W = 400;
+            static const int BTN_H = 100;
             Game *game;
             SDL_Rect startBtn;
     };
@@ -28,6 +30,9 @@ namespace runbot {
             void onClick(Vector<int>&);
             void draw();
         private:
+            static const int BTN_W = 120;
+            static const int BTN_H = 80;
+            Game *game;
             SDL_Rect resumeBtn;
             SDL_Rect quitBtn;
     };

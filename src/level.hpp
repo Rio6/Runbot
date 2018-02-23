@@ -21,6 +21,7 @@ namespace runbot {
 
             Level(Game*);
             void genLevel(int);
+            void reset();
 
         private:
             class ObjectInfo {

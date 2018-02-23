@@ -83,13 +83,12 @@ void Graphic::renderImage(const std::string &name,
 }
 
 void Graphic::renderText(const std::string &text, const SDL_Rect *des) {
-    int charSize = des->w / text.size();
-    SDL_Rect charDes = {des->x, des->y, charSize, des->h};
+    SDL_Rect charDes = {des->x, des->y, (int) (des->w / text.size()), des->h};
     for(auto c : text) {
         c = std::tolower(c);
         if(letters.count(c) > 0) {
             renderImage(LETTER_IMG, &letters.at(c), &charDes);
-            charDes.x += charSize;
+            charDes.x += charDes.w;
         }
     }
 }

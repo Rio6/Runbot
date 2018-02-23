@@ -25,8 +25,8 @@ Game::Game() : robot(this), level(this), startMenu(this), pauseMenu(this) {
 
 void Game::loop() {
 
-    // Put robot in objects
-    objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
+    // Use reset to init
+    reset();
 
     while(state != STOP) {
 
@@ -53,20 +53,19 @@ void Game::loop() {
         // Render
         draw();
     }
-
-    // Reset
-    objects.clear();
 }
 
-void Game::startGame() {
-    if(state == MENU) {
-        // Some tiles at the beginning
-        for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
-            objects.emplace_back(new Tile(this,
-                        {i, Game::H - Tile::H}, Tile::TILE_GROUND));
-        }
+void Game::setState(State newState) {
+    switch(newState) {
+        case RUNNING:
+            if(state == MENU)
+                reset();
+            break;
+        default:
+            break;
     }
-    state = RUNNING;
+
+    state = newState;
 }
 
 void Game::processEvents() {
@@ -83,7 +82,10 @@ void Game::processEvents() {
                         keys[SDLK_RIGHT] = true;
                         break;
                     case SDLK_ESCAPE:
-                        state = PAUSED;
+                        if(state == RUNNING)
+                            setState(PAUSED);
+                        else if(state == PAUSED)
+                            setState(RUNNING);
                         break;
                 }
                 break;
@@ -158,14 +160,14 @@ void Game::doTick() {
 
     int robotY = robot.getPos().y;
     if(robotY < 0)
-        cameraY = robotY;
+        cameraY = robotY / 2;
     else
-        cameraY = 0;
+        cameraY /= 2;
 
     tick++;
     distance += speed;
 
-    if(tick % 1000 == 0) speed++;
+    if(tick % 1000 == 0) speed += 0.5;
 }
 
 void Game::draw() {
@@ -185,12 +187,36 @@ void Game::draw() {
         pauseMenu.draw();
     }
 
-    SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
-    SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
-    graphic.renderImage(CURSOR_IMG, &src, &des);
+    if(state != RUNNING) {
+        SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
+        SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
+        graphic.renderImage(CURSOR_IMG, &src, &des);
+    }
 
     // Apply drawings to window
     graphic.update();
+}
+
+void Game::reset() {
+
+    // Reset level generator
+    level.reset();
+
+    // Reset numbers
+    distance = 0;
+    speed = 5;
+
+    // Reset objects
+    objects.clear();
+
+    // Put robot in objects
+    objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
+
+    // Put some tiles at the beginning
+    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
+        objects.emplace_back(new Tile(this,
+                    {i, Game::H - Tile::H}, Tile::TILE_GROUND));
+    }
 }
 
 void Game::spawn(Object *obj) {

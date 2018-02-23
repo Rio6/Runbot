@@ -24,14 +24,14 @@ namespace runbot {
 
     class Game {
 
-        enum State {
-            MENU,
-            RUNNING,
-            PAUSED,
-            STOP
-        };
-
         public:
+            enum State {
+                MENU,
+                RUNNING,
+                PAUSED,
+                STOP
+            };
+
             static const int W = 1024;
             static const int H = 576;
 
@@ -42,7 +42,7 @@ namespace runbot {
 
             Game();
             void loop();
-            void startGame();
+            void setState(State);
             void spawn(Object*);
 
         private:
@@ -63,6 +63,7 @@ namespace runbot {
             void processEvents();
             void doTick();
             void draw();
+            void reset();
     };
 };
 

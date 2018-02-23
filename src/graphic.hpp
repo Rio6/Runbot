@@ -21,7 +21,6 @@ namespace runbot {
     static const std::string BULLET_IMG = "bullet.png";
     static const std::string BG_IMG = "bg.png";
     static const std::string CURSOR_IMG = "cursor.png";
-    static const std::string MENU_IMG = "menu.png";
     static const std::string LETTER_IMG = "letters.png";
 
     class Graphic {
@@ -45,7 +44,6 @@ namespace runbot {
                 {BULLET_IMG, nullptr},
                 {BG_IMG, nullptr},
                 {CURSOR_IMG, nullptr},
-                {MENU_IMG, nullptr},
                 {LETTER_IMG, nullptr}
             };
 
