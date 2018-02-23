@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <map>
+#include <string>
 #include <cstdio>
 
 #include "SDL.h"
@@ -76,9 +77,9 @@ void Game::processEvents() {
         switch(eve.type) {
             case SDL_FINGERDOWN:
                 if(eve.tfinger.x < .5f) {
-                        keys[SDLK_UP] = true;
+                        keys["jump"] = true;
                 } else {
-                    keys[SDLK_RIGHT] = true;
+                    keys["shoot"] = true;
                 }
                 break;
             case SDL_FINGERUP:
@@ -87,9 +88,9 @@ void Game::processEvents() {
                     startMenu.onClick(pos);
                 }
                 if(eve.tfinger.x < .5f) {
-                        keys[SDLK_UP] = false;
+                        keys["jump"] = false;
                 } else {
-                    keys[SDLK_RIGHT] = false;
+                    keys["shoot"] = false;
                 }
                 break;
             case SDL_KEYUP:
@@ -111,13 +112,13 @@ void Game::processEvents() {
 
 void Game::doTick() {
 
-    if(keys[SDLK_UP]) {
+    if(keys["jump"]) {
         robot.jump();
     } else {
         robot.releaseJump();
     }
 
-    if(keys[SDLK_RIGHT]) {
+    if(keys["shoot"]) {
         robot.shoot();
     }
 

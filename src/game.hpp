@@ -9,6 +9,7 @@
 #include <memory>
 #include <map>
 #include <vector>
+#include <string>
 
 #include "graphic.hpp"
 #include "robot.hpp"
@@ -49,7 +50,7 @@ namespace runbot {
             const int CURSOR_SIZE = 20;
             Vector<int> cursor {0, -CURSOR_SIZE};
 
-            std::map<SDL_Keycode, bool> keys;
+            std::map<std::string, bool> keys;
 
             Robot robot;
             std::vector<std::shared_ptr<Object>> objects;
