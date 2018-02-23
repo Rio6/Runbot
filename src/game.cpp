@@ -82,16 +82,24 @@ void Game::processEvents() {
                     keys["shoot"] = true;
                 }
                 break;
+            case SDL_FINGERMOTION:
+                if(eve.tfinger.x - eve.tfinger.dx > .5f)
+                    keys["jump"] = false;
+                else
+                    keys["shoot"] = false;
+
+                break;
             case SDL_FINGERUP:
                 if(state == MENU) {
                     Vector<int> pos {(int) (eve.tfinger.x * Game::W), (int) (eve.tfinger.y * Game::H)};
                     startMenu.onClick(pos);
                 }
-                if(eve.tfinger.x < .5f) {
+
+                if(eve.tfinger.x < .5f)
                         keys["jump"] = false;
-                } else {
+                else
                     keys["shoot"] = false;
-                }
+
                 break;
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
