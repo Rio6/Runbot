@@ -83,7 +83,8 @@ void Game::processEvents() {
                 break;
             case SDL_FINGERUP:
                 if(state == MENU) {
-                    startMenu.onClick({eve.tfinger.x * Game::W, eve.tfinger.y * Game::H)};
+                    Vector<int> pos {(int) (eve.tfinger.x * Game::W), (int) (eve.tfinger.y * Game::H)};
+                    startMenu.onClick(pos);
                 }
                 if(eve.tfinger.x < .5f) {
                         keys[SDLK_UP] = false;
