@@ -99,18 +99,15 @@ runbot::Object::Type Robot::getType() {
 }
 
 void Robot::jump() {
-    if(jumpReleased && onGround) {
+    if(onGround) {
         speed.y = -Robot::JUMP_FORCE;
-        jumpReleased = false;
         onGround = false;
         bodyAnim.pause();
     }
 }
 
 void Robot::releaseJump() {
-    if(onGround)
-        jumpReleased = true;
-    else
+    if(!onGround)
         speed.y += 2;
 }
 
