@@ -74,45 +74,31 @@ void Game::processEvents() {
     SDL_Event eve;
     while(SDL_PollEvent(&eve)) {
         switch(eve.type) {
-            case SDL_KEYDOWN:
-                switch(eve.key.keysym.sym) {
-                    case SDLK_UP:
+            case SDL_FINGERDOWN:
+                if(eve.tfinger.x < .5f) {
                         keys[SDLK_UP] = true;
-                        break;
-                    case SDLK_RIGHT:
-                        keys[SDLK_RIGHT] = true;
-                        break;
-                    case SDLK_ESCAPE:
+                } else {
+                    keys[SDLK_RIGHT] = true;
+                }
+                break;
+            case SDL_FINGERUP:
+                if(state == MENU) {
+                    startMenu.onClick({eve.tfinger.x * Game::W, eve.tfinger.y * Game::H)};
+                }
+                if(eve.tfinger.x < .5f) {
+                        keys[SDLK_UP] = false;
+                } else {
+                    keys[SDLK_RIGHT] = false;
+                }
+                break;
+            case SDL_KEYUP:
+                switch(eve.key.keysym.sym) {
+                    case SDLK_AC_BACK:
                         if(state == RUNNING)
                             setState(PAUSED);
                         else if(state == PAUSED)
                             setState(RUNNING);
                         break;
-                }
-                break;
-            case SDL_KEYUP:
-                switch(eve.key.keysym.sym) {
-                    case SDLK_UP:
-                        keys[SDLK_UP] = false;
-                        break;
-                    case SDLK_RIGHT:
-                        keys[SDLK_RIGHT] = false;
-                        break;
-                    case SDLK_AC_BACK:
-                        running = false;
-                        break;
-                }
-                break;
-            case SDL_MOUSEMOTION:
-                cursor.x = eve.motion.x;
-                cursor.y = eve.motion.y;
-                break;
-            case SDL_MOUSEBUTTONUP:
-                if(eve.button.clicks) {
-                    Vector<int> pos = {eve.button.x, eve.button.y};
-                    if(state == MENU) {
-                        startMenu.onClick(pos);
-                    }
                 }
                 break;
             case SDL_QUIT:
