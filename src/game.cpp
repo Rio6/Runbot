@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <map>
+#include <cstdio>
 
 #include "SDL.h"
 
@@ -20,76 +21,31 @@
 
 using runbot::Game;
 
-Game::Game() : robot(this), level(this) {
+Game::Game() : robot(this), level(this), startMenu(this), pauseMenu(this) {
 }
 
 void Game::loop() {
 
-    // Put robot in objects
-    objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
+    // Use reset to init
+    reset();
 
-    // Some tiles at the beginning
-    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
-        objects.emplace_back(new Tile(this,
-                    {i, Game::H - Tile::H}, Tile::TILE_GROUND));
-    }
-
-    running = true;
-    while(running) {
+    while(state != STOP) {
 
         int start = SDL_GetTicks();
 
-        // Control robot
         processEvents();
 
-        if(keys[SDLK_UP]) {
-            robot.jump();
-        } else {
-            robot.releaseJump();
+        switch(state) {
+            case MENU:
+                break;
+            case RUNNING:
+                doTick();
+                break;
+            case PAUSED:
+                break;
+            default:
+                break;
         }
-
-        if(keys[SDLK_RIGHT]) {
-            robot.shoot();
-        }
-
-        // Generate Level
-        level.genLevel(distance + Game::W);
-
-        // Tick everything
-        for(size_t i = 0; i < objects.size(); i++) {
-            if(objects[i]->isDead())
-                objects.erase(objects.begin() + i);
-            else
-                objects[i]->doTick(tick);
-        }
-
-        bg.doTick();
-
-        // Resolve collision
-        std::vector<Collision> colls;
-        for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
-            for(auto jt = it + 1; jt != objects.end(); jt++) {
-                colls.emplace_back((*it).get(), (*jt).get());
-            }
-        }
-
-        // Sort collision with time
-        std::sort(colls.begin(), colls.end());
-
-        for(Collision coll : colls) {
-            coll.solve();
-        }
-
-        int robotY = robot.getPos().y;
-        if(robotY < 0)
-            cameraY = robotY;
-        else
-            cameraY = 0;
-
-        tick++;
-        distance += speed;
-
-        if(tick % 1000 == 0) speed++;
 
         int ticked = SDL_GetTicks() - start;
         if(SDL_TICKS_PASSED(ticked, runbot::MPF)) continue;
@@ -98,9 +54,19 @@ void Game::loop() {
         // Render
         draw();
     }
+}
 
-    // Reset
-    objects.clear();
+void Game::setState(State newState) {
+    switch(newState) {
+        case RUNNING:
+            if(state == MENU)
+                reset();
+            break;
+        default:
+            break;
+    }
+
+    state = newState;
 }
 
 void Game::processEvents() {
@@ -115,6 +81,12 @@ void Game::processEvents() {
                         break;
                     case SDLK_RIGHT:
                         keys[SDLK_RIGHT] = true;
+                        break;
+                    case SDLK_ESCAPE:
+                        if(state == RUNNING)
+                            setState(PAUSED);
+                        else if(state == PAUSED)
+                            setState(RUNNING);
                         break;
                 }
                 break;
@@ -135,11 +107,71 @@ void Game::processEvents() {
                 cursor.x = eve.motion.x;
                 cursor.y = eve.motion.y;
                 break;
+            case SDL_MOUSEBUTTONUP:
+                if(eve.button.clicks) {
+                    Vector<int> pos = {eve.button.x, eve.button.y};
+                    if(state == MENU) {
+                        startMenu.onClick(pos);
+                    }
+                }
+                break;
             case SDL_QUIT:
-                running = false;
+                state = STOP;
                 break;
         }
     }
+}
+
+void Game::doTick() {
+
+    if(keys[SDLK_UP]) {
+        robot.jump();
+    } else {
+        robot.releaseJump();
+    }
+
+    if(keys[SDLK_RIGHT]) {
+        robot.shoot();
+    }
+
+    // Generate Level
+    level.genLevel(distance + Game::W);
+
+    // Tick everything
+    for(size_t i = 0; i < objects.size(); i++) {
+        if(objects[i]->isDead())
+            objects.erase(objects.begin() + i);
+        else
+            objects[i]->doTick(tick);
+    }
+
+    bg.doTick(speed);
+
+    // Resolve collision
+    std::vector<Collision> colls;
+    for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
+        for(auto jt = it + 1; jt != objects.end(); jt++) {
+            colls.emplace_back((*it).get(), (*jt).get());
+        }
+    }
+
+    // Sort collision with time
+    std::sort(colls.begin(), colls.end());
+
+    for(Collision coll : colls) {
+        coll.solve();
+    }
+
+    int robotY = robot.getPos().y;
+    if(robotY < 0)
+        cameraY = robotY / 2;
+    else
+        cameraY /= 2;
+
+    tick++;
+    distance += speed;
+
+    if(tick % 1000 == 0) speed += 0.5;
 }
 
 void Game::draw() {
@@ -153,12 +185,47 @@ void Game::draw() {
     for(std::shared_ptr<Object> object : objects)
         object->draw();
 
-    SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
-    SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
-    graphic.renderImage(CURSOR_IMG, &src, &des);
+    if(state == MENU) {
+        startMenu.draw();
+    } else if(state == PAUSED) {
+        pauseMenu.draw();
+    }
+
+    if(state == RUNNING) {
+        char distDisplay[32];
+        std::sprintf(distDisplay, "Distance:%5d", distance / 10);
+        SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
+        graphic.renderText(distDisplay, &des);
+    } else {
+        SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
+        SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
+        graphic.renderImage(CURSOR_IMG, &src, &des);
+    }
 
     // Apply drawings to window
     graphic.update();
+}
+
+void Game::reset() {
+
+    // Reset level generator
+    level.reset();
+
+    // Reset numbers
+    distance = 0;
+    speed = 5;
+
+    // Reset objects
+    objects.clear();
+
+    // Put robot in objects
+    objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
+
+    // Put some tiles at the beginning
+    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
+        objects.emplace_back(new Tile(this,
+                    {i, Game::H - Tile::H}, Tile::TILE_GROUND));
+    }
 }
 
 void Game::spawn(Object *obj) {

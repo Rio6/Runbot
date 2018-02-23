@@ -99,18 +99,15 @@ runbot::Object::Type Robot::getType() {
 }
 
 void Robot::jump() {
-    if(jumpReleased && onGround) {
+    if(onGround) {
         speed.y = -Robot::JUMP_FORCE;
-        jumpReleased = false;
         onGround = false;
         bodyAnim.pause();
     }
 }
 
 void Robot::releaseJump() {
-    if(onGround)
-        jumpReleased = true;
-    else
+    if(!onGround)
         speed.y += 2;
 }
 
@@ -124,6 +121,7 @@ void Robot::shoot() {
 }
 
 void Robot::die() {
-    speed.y = 0;
-    pos = {game->distance, 0};
+    speed = {0, 0};
+    pos = {0, 0};
+    game->setState(Game::MENU);
 }

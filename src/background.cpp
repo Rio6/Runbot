@@ -13,8 +13,8 @@ using runbot::Background;
 
 Background::Background() : pos(0) {}
 
-void Background::doTick() {
-    pos += 1;
+void Background::doTick(float gameSpeed) {
+    pos += (int) (gameSpeed / 5);
     pos %= Background::W;
 }
 

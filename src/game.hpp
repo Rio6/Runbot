@@ -15,6 +15,7 @@
 #include "object.hpp"
 #include "background.hpp"
 #include "level.hpp"
+#include "menu.hpp"
 
 namespace runbot {
     const char *const NAME = "Runbot";
@@ -22,7 +23,15 @@ namespace runbot {
     const int MPF = 1000 / FPS; // ms per frame
 
     class Game {
+
         public:
+            enum State {
+                MENU,
+                RUNNING,
+                PAUSED,
+                STOP
+            };
+
             static const int W = 1024;
             static const int H = 576;
 
@@ -33,6 +42,7 @@ namespace runbot {
 
             Game();
             void loop();
+            void setState(State);
             void spawn(Object*);
 
         private:
@@ -46,10 +56,14 @@ namespace runbot {
             Level level;
             Background bg;
 
-            bool running = false;
+            State state = MENU;
+            StartMenu startMenu;
+            PauseMenu pauseMenu;
 
             void processEvents();
+            void doTick();
             void draw();
+            void reset();
     };
 };
 

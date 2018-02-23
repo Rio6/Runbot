@@ -21,6 +21,7 @@ namespace runbot {
     static const std::string BULLET_IMG = "bullet.png";
     static const std::string BG_IMG = "bg.png";
     static const std::string CURSOR_IMG = "cursor.png";
+    static const std::string LETTER_IMG = "letters.png";
 
     class Graphic {
         public:
@@ -28,20 +29,25 @@ namespace runbot {
 
             void renderImage(const std::string&,
                     const SDL_Rect*, const SDL_Rect*);
+            void renderText(const std::string&, const SDL_Rect*);
             void clear();
             void update();
 
         private:
             SDL_Renderer *rend;
             SDL_Window *win;
+
             std::map<std::string, SDL_Texture*> imgs {
                 {ROBOT_IMG, nullptr},
                 {TILE_IMG, nullptr},
                 {MISSILE_IMG, nullptr},
                 {BULLET_IMG, nullptr},
                 {BG_IMG, nullptr},
-                {CURSOR_IMG, nullptr}
-            };;
+                {CURSOR_IMG, nullptr},
+                {LETTER_IMG, nullptr}
+            };
+
+            std::map<char, SDL_Rect> letters;
 
             Graphic();
             ~Graphic();

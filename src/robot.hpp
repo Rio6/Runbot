@@ -40,7 +40,6 @@ namespace runbot {
             Animation armAnim;
 
             int shootCD = 0;
-            bool jumpReleased = false;
             bool onGround = false;
     };
 };

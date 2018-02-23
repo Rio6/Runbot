@@ -4,6 +4,7 @@
  */
 
 #include <stdexcept>
+#include <cctype>
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -20,6 +21,7 @@ Graphic::Graphic() {
 
     // Configure SDL
     SDL_LogSetAllPriority(SDL_LOG_PRIORITY_INFO);
+    SDL_ShowCursor(false);
 
     int imgFlags = IMG_INIT_PNG;
     if((IMG_Init(imgFlags) & imgFlags) != imgFlags)
@@ -84,6 +86,17 @@ void Graphic::renderImage(const std::string &name,
     }
 }
 
+void Graphic::renderText(const std::string &text, const SDL_Rect *des) {
+    SDL_Rect charDes = {des->x, des->y, (int) (des->w / text.size()), des->h};
+    for(auto c : text) {
+        c = std::tolower(c);
+        if(letters.count(c) > 0) {
+            renderImage(LETTER_IMG, &letters.at(c), &charDes);
+            charDes.x += charDes.w;
+        }
+    }
+}
+
 void Graphic::clear() {
     SDL_RenderClear(rend);
 }
@@ -106,5 +119,11 @@ void Graphic::loadImages() {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", img.first.c_str(), SDL_GetError());
 
         SDL_FreeSurface(loadSurface);
+    }
+
+    int i = 0;
+    for(auto c : " :0123456789abcdefghijklmnopqrstuvwxyz") {
+        letters[c] = {64 * i, 0, 64, 64};
+        i++;
     }
 }

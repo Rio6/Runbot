@@ -72,3 +72,7 @@ runbot::Object *Level::ObjectInfo::create(Game *game, int distance) {
             return nullptr;
     }
 }
+
+void Level::reset() {
+    lastDist = 0;
+}
