@@ -7,6 +7,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <map>
+#include <cstdio>
 
 #include "SDL2/SDL.h"
 
@@ -141,7 +142,7 @@ void Game::doTick() {
             objects[i]->doTick(tick);
     }
 
-    bg.doTick();
+    bg.doTick(speed);
 
     // Resolve collision
     std::vector<Collision> colls;
@@ -187,7 +188,12 @@ void Game::draw() {
         pauseMenu.draw();
     }
 
-    if(state != RUNNING) {
+    if(state == RUNNING) {
+        char distDisplay[32];
+        std::sprintf(distDisplay, "Distance:%5d", distance / 10);
+        SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
+        graphic.renderText(distDisplay, &des);
+    } else {
         SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
         graphic.renderImage(CURSOR_IMG, &src, &des);

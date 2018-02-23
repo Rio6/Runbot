@@ -118,7 +118,7 @@ void Graphic::loadImages() {
     }
 
     int i = 0;
-    for(auto c : "0123456789abcdefghijklmnopqrstuvwxyz") {
+    for(auto c : " :0123456789abcdefghijklmnopqrstuvwxyz") {
         letters[c] = {64 * i, 0, 64, 64};
         i++;
     }
