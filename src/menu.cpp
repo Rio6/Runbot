@@ -3,7 +3,7 @@
  * Date: 2018/02/11
  */
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #include "menu.hpp"
 #include "game.hpp"
