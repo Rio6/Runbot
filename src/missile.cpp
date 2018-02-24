@@ -24,7 +24,7 @@ Missile::Missile(Game *game, Vector<int> pos) :
 void Missile::draw() {
     SDL_Rect src = anim.getCurrentClip();
     SDL_Rect des = {pos.x - game->distance, pos.y - game->cameraY, Missile::W, Missile::H};
-    Graphic::instance().renderImage(MISSILE_IMG, &src, &des);
+    Graphic::instance().renderImage("missile.png", &src, &des);
 }
 
 void Missile::doTick(int tick) {

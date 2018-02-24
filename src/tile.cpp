@@ -29,7 +29,7 @@ void Tile::draw() {
 
     src = anim.getCurrentClip();
     des = {pos.x - game->distance, pos.y - game->cameraY, Tile::W, Tile::H};
-    Graphic::instance().renderImage(TILE_IMG, &src, &des);
+    Graphic::instance().renderImage("tiles.png", &src, &des);
 }
 
 bool Tile::onCollide(Object &other, Direction dir) {

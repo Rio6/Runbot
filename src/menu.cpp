@@ -30,7 +30,7 @@ void StartMenu::draw() {
 
     SDL_Rect src = {0, 0, 1024, 575};
     SDL_Rect des = {0, 0, Game::W, Game::H};
-    graphic.renderImage(BG_IMG, &src, &des);
+    graphic.renderImage("bg.png", &src, &des);
 
     des = {Game::W / 2 - 300, 100, 600, 150};
     graphic.renderText("RUNBOT", &des);

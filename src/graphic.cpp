@@ -87,7 +87,7 @@ void Graphic::renderText(const std::string &text, const SDL_Rect *des) {
     for(auto c : text) {
         c = std::tolower(c);
         if(letters.count(c) > 0) {
-            renderImage(LETTER_IMG, &letters.at(c), &charDes);
+            renderImage("letters.png", &letters.at(c), &charDes);
             charDes.x += charDes.w;
         }
     }

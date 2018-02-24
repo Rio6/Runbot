@@ -23,7 +23,7 @@ namespace runbot {
             Robot(Game*);
             void draw();
             void doTick(int);
-            bool onCollide(Object&, Direction dir);
+            bool onCollide(Object&, Direction);
             bool isDead();
             Type getType();
 

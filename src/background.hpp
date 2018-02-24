@@ -11,7 +11,7 @@ namespace runbot {
         public:
             Background();
 
-            void doTick(float);
+            void doTick(float gameSpeed);
             void draw();
         private:
             static const int W = 500;
