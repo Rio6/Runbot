@@ -22,7 +22,8 @@
 
 using runbot::Game;
 
-Game::Game() : robot(this), level(this), startMenu(this), pauseMenu(this) {
+Game::Game() : robot(this), level(this) {
+    setState(START);
 }
 
 void Game::loop() {
@@ -37,12 +38,9 @@ void Game::loop() {
         processEvents();
 
         switch(state) {
-            case MENU:
-                break;
             case RUNNING:
+            case DEAD:
                 doTick();
-                break;
-            case PAUSED:
                 break;
             default:
                 break;
@@ -59,9 +57,19 @@ void Game::loop() {
 
 void Game::setState(State newState) {
     switch(newState) {
+        case START:
+            menu = std::make_unique<StartMenu>(this);
+            break;
         case RUNNING:
-            if(state == MENU)
+            menu.release();
+            if(state == START)
                 reset();
+            break;
+        case PAUSED:
+            menu = std::make_unique<PauseMenu>(this);
+            break;
+        case DEAD:
+            menu = std::make_unique<DeadMenu>(this);
             break;
         default:
             break;
@@ -108,8 +116,8 @@ void Game::processEvents() {
             case SDL_MOUSEBUTTONUP:
                 if(eve.button.clicks) {
                     Vector<int> pos = {eve.button.x, eve.button.y};
-                    if(state == MENU) {
-                        startMenu.onClick(pos);
+                    if(menu != nullptr) {
+                        menu->onClick(pos);
                     }
                 }
                 break;
@@ -160,16 +168,22 @@ void Game::doTick() {
         coll.solve();
     }
 
-    int robotY = robot.getPos().y;
-    if(robotY < 0)
-        cameraY = robotY / 2;
-    else
-        cameraY /= 2;
+    if(state == RUNNING) {
+        // Only do these when game is running
+
+        // Move camera up if robot is too high
+        int robotY = robot.getPos().y;
+        if(robotY < 0)
+            cameraY = robotY / 2;
+        else
+            cameraY /= 2;
+
+        // Make game go faster
+        if(tick % 1000 == 0) speed += 0.5;
+    }
 
     tick++;
     distance += speed;
-
-    if(tick % 1000 == 0) speed += 0.5;
 }
 
 void Game::draw() {
@@ -183,18 +197,18 @@ void Game::draw() {
     for(std::shared_ptr<Object> object : objects)
         object->draw();
 
-    if(state == MENU) {
-        startMenu.draw();
-    } else if(state == PAUSED) {
-        pauseMenu.draw();
+    if(menu != nullptr) {
+        menu->draw();
     }
 
     if(state == RUNNING) {
+        // Draw score
         char distDisplay[32];
         std::sprintf(distDisplay, "Distance:%5d", distance / 10);
         SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
         graphic.renderText(distDisplay, &des);
     } else {
+        // Draw cursor
         SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
         graphic.renderImage("cursor.png", &src, &des);
@@ -216,8 +230,12 @@ void Game::reset() {
     // Reset objects
     objects.clear();
 
-    // Put robot in objects
-    objects.emplace_back(&robot, [](Robot *r) {}); // Don't delete robot
+    // Reset robot
+    robot.setPos({0, 0});
+    robot.setSpeed({0, 0});
+
+    // Put robot in objects, easier to loop through
+    objects.emplace_back(&robot, [](Robot *r) {}); // But don't delete robot
 
     // Put some tiles at the beginning
     for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {

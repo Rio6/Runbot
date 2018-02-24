@@ -121,7 +121,5 @@ void Robot::shoot() {
 }
 
 void Robot::die() {
-    speed = {0, 0};
-    pos = {0, 0};
-    game->setState(Game::MENU);
+    game->setState(Game::DEAD);
 }
