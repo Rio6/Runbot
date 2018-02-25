@@ -42,9 +42,9 @@ void StartMenu::draw() {
 }
 
 
-const SDL_Rect PauseMenu::TITLE_RECT = {Game::W / 2 - 100, 130, 200, 50};
-const SDL_Rect PauseMenu::RESUME_BTN = {Game::W / 2 - 120, Game::H / 2, 80, 40};
-const SDL_Rect PauseMenu::MENU_BTN = {Game::W / 2 + 40, Game::H / 2, 80, 40};
+const SDL_Rect PauseMenu::TITLE_RECT = {Game::W / 2 - 125, 200, 250, 80};
+const SDL_Rect PauseMenu::RESUME_BTN = {Game::W / 2 - 120, Game::H / 2, 130, 50};
+const SDL_Rect PauseMenu::MENU_BTN = {Game::W / 2 + 40, Game::H / 2, 130, 50};
 
 PauseMenu::PauseMenu(Game *game) : game(game) {
 }
@@ -66,14 +66,18 @@ void PauseMenu::draw() {
 }
 
 
-const SDL_Rect DeadMenu::TITLE_RECT = {Game::W / 2 - 100, 130, 200, 50};
-const SDL_Rect DeadMenu::MENU_BTN = {Game::W / 2 - 100, Game::H / 2, 200, 80};
+const SDL_Rect DeadMenu::TITLE_RECT = {Game::W / 2 - 125, 200, 250, 80};
+const SDL_Rect DeadMenu::RESTART_BTN = {Game::W / 2 - 160, Game::H / 2, 140, 50};
+const SDL_Rect DeadMenu::MENU_BTN = {Game::W / 2 + 20, Game::H / 2, 140, 50};
+const SDL_Rect DeadMenu::DIST_RECT = {Game::W / 2 - 100, Game::H / 2 + 50, 200, 40};
 
-DeadMenu::DeadMenu(Game *game) : game(game) {
+DeadMenu::DeadMenu(Game *game, int distance) : game(game), distance(distance) {
 }
 
 void DeadMenu::onClick(Vector<int> &pos) {
-    if(inRect(MENU_BTN, pos)) {
+    if(inRect(RESTART_BTN, pos)) {
+        game->setState(Game::RUNNING);
+    } else if(inRect(MENU_BTN, pos)) {
         game->setState(Game::START);
     }
 }
@@ -82,5 +86,10 @@ void DeadMenu::draw() {
     Graphic &graphic = Graphic::instance();
 
     graphic.renderText("GAME OVER", &TITLE_RECT, 0);
+    graphic.renderText("RESTART", &RESTART_BTN, 0);
     graphic.renderText("MENU", &MENU_BTN, 0);
+
+    char distDisplay[32];
+    std::sprintf(distDisplay, "Distance:%5d", distance / 10);
+    graphic.renderText(distDisplay, &DIST_RECT, 0);
 }

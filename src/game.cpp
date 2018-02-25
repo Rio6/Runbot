@@ -56,20 +56,23 @@ void Game::loop() {
 }
 
 void Game::setState(State newState) {
+
+    if(newState == state) return;
+
     switch(newState) {
         case START:
             menu = std::make_unique<StartMenu>(this);
             break;
         case RUNNING:
             menu.release();
-            if(state == START)
+            if(state == START || state == DEAD)
                 reset();
             break;
         case PAUSED:
             menu = std::make_unique<PauseMenu>(this);
             break;
         case DEAD:
-            menu = std::make_unique<DeadMenu>(this);
+            menu = std::make_unique<DeadMenu>(this, distance);
             break;
         default:
             break;
@@ -130,14 +133,17 @@ void Game::processEvents() {
 
 void Game::doTick() {
 
-    if(keys["jump"]) {
-        robot.jump();
-    } else {
-        robot.releaseJump();
-    }
+    // Robot actions
+    if(state == RUNNING) { // Only do these when game is running
+        if(keys["jump"]) {
+            robot.jump();
+        } else {
+            robot.releaseJump();
+        }
 
-    if(keys["shoot"]) {
-        robot.shoot();
+        if(keys["shoot"]) {
+            robot.shoot();
+        }
     }
 
     // Generate Level
@@ -168,8 +174,7 @@ void Game::doTick() {
         coll.solve();
     }
 
-    if(state == RUNNING) {
-        // Only do these when game is running
+    if(state == RUNNING) { // Only do these when game is running
 
         // Move camera up if robot is too high
         int robotY = robot.getPos().y;

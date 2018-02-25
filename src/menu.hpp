@@ -47,14 +47,17 @@ namespace runbot {
 
     class DeadMenu : public Menu {
         public:
-            DeadMenu(Game*);
+            DeadMenu(Game*, int distance);
             void onClick(Vector<int> &pos);
             void draw();
         private:
             static const SDL_Rect TITLE_RECT;
+            static const SDL_Rect RESTART_BTN;
             static const SDL_Rect MENU_BTN;
+            static const SDL_Rect DIST_RECT;
 
             Game *game;
+            int distance;
     };
 };
 
