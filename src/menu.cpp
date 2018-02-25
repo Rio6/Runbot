@@ -37,8 +37,8 @@ void StartMenu::draw() {
     SDL_Rect des = {0, 0, Game::W, Game::H};
     graphic.renderImage("bg.png", &src, &des);
 
-    graphic.renderText("RUNBOT", &TITLE_RECT);
-    graphic.renderText("PLAY", &START_BTN);
+    graphic.renderText("RUNBOT", &TITLE_RECT, 0);
+    graphic.renderText("PLAY", &START_BTN, 0);
 }
 
 
@@ -60,9 +60,9 @@ void PauseMenu::onClick(Vector<int> &pos) {
 void PauseMenu::draw() {
     Graphic &graphic = Graphic::instance();
 
-    graphic.renderText("PAUSED", &TITLE_RECT);
-    graphic.renderText("RESUME", &RESUME_BTN);
-    graphic.renderText("MENU", &MENU_BTN);
+    graphic.renderText("PAUSED", &TITLE_RECT, 0);
+    graphic.renderText("RESUME", &RESUME_BTN, 0);
+    graphic.renderText("MENU", &MENU_BTN, 0);
 }
 
 
@@ -81,6 +81,6 @@ void DeadMenu::onClick(Vector<int> &pos) {
 void DeadMenu::draw() {
     Graphic &graphic = Graphic::instance();
 
-    graphic.renderText("GAME OVER", &TITLE_RECT);
-    graphic.renderText("MENU", &MENU_BTN);
+    graphic.renderText("GAME OVER", &TITLE_RECT, 0);
+    graphic.renderText("MENU", &MENU_BTN, 0);
 }

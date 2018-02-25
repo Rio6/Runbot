@@ -20,8 +20,8 @@ namespace runbot {
             static Graphic &instance();
 
             void renderImage(const std::string& name,
-                    const SDL_Rect* src, const SDL_Rect* des);
-            void renderText(const std::string &text, const SDL_Rect *des);
+                    const SDL_Rect* src, const SDL_Rect* des, int color = 0xffffff);
+            void renderText(const std::string &text, const SDL_Rect *des, int color = 0xffffff);
             void clear();
             void update();
 
