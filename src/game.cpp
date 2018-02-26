@@ -236,8 +236,7 @@ void Game::reset() {
     objects.clear();
 
     // Reset robot
-    robot.setPos({0, 0});
-    robot.setSpeed({0, 0});
+    robot.reset();
 
     // Put robot in objects, easier to loop through
     objects.emplace_back(&robot, [](Robot *r) {}); // But don't delete robot

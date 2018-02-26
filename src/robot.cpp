@@ -26,6 +26,9 @@ Robot::Robot(Game *game) :
 }
 
 void Robot::draw() {
+
+    if(dead) return;
+
     Graphic &graphic = Graphic::instance();
     SDL_Rect src, des;
 
@@ -96,6 +99,12 @@ runbot::Object::Type Robot::getType() {
     return ROBOT;
 }
 
+void Robot::reset() {
+    pos = {0, 0};
+    speed = {0, 0};
+    dead = false;
+}
+
 void Robot::jump() {
     if(onGround) {
         speed.y = -Robot::JUMP_FORCE;
@@ -119,6 +128,9 @@ void Robot::shoot() {
 }
 
 void Robot::die() {
-    game->spawn(new Explosion(game, pos, {Robot::W, Robot::H}));
-    game->setState(Game::DEAD);
+    if(!dead) {
+        game->spawn(new Explosion(game, pos, {Robot::W, Robot::H}));
+        game->setState(Game::DEAD);
+        dead = true;
+    }
 }
