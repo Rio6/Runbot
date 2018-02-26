@@ -119,5 +119,6 @@ void Robot::shoot() {
 }
 
 void Robot::die() {
+    game->spawn(new Explosion(game, pos, {Robot::W, Robot::H}));
     game->setState(Game::DEAD);
 }

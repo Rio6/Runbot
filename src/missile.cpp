@@ -48,6 +48,7 @@ bool Missile::onCollide(Object &other, Direction dir) {
         case ROBOT:
         case BULLET:
             dead = true;
+            game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
             break;
         default:
             break;

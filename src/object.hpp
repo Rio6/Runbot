@@ -19,7 +19,8 @@ namespace runbot {
                 ROBOT,
                 TILE,
                 MISSILE,
-                BULLET
+                BULLET,
+                EXPLOSION
             };
 
             Object(Vector<int> pos);
