@@ -19,9 +19,7 @@ using runbot::Tile;
 Tile::Tile(Game *game, Vector<int> pos, TileType type) :
     Object(pos, {.minPos=pos, .maxPos=pos + Vector<int>{Tile::W, Tile::H}}),
     game(game),
-    anim(0, 0, 100, 100, 1, false), type(type) {
-
-    anim.createClips(1);
+    anim(0, 0, 100, 100, 1, 1, false), type(type) {
 }
 
 void Tile::draw() {

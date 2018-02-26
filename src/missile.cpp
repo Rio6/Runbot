@@ -10,14 +10,14 @@
 #include "game.hpp"
 #include "vector.hpp"
 #include "collision.hpp"
+#include "explosion.hpp"
 
 using runbot::Missile;
 
 Missile::Missile(Game *game, Vector<int> pos) :
     Object(pos, {.minPos={10, 0}, .maxPos={Missile::W, Missile::H}}),
-    game(game), anim(0, 0, 120, 60, 10, true) {
+    game(game), anim(0, 0, 120, 60, 10, 2, true) {
 
-    anim.createClips(2);
     anim.start();
 }
 

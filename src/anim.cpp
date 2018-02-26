@@ -10,13 +10,8 @@
 
 using runbot::Animation;
 
-Animation::Animation(int x, int y, int w, int h, int length, bool repeat = true) :
-    x(x), y(y), w(w), h(h), length(length), repeat(repeat), spriteClips(0) {
-}
-
-void Animation::createClips(int clipCount) {
-
-    spriteClips.resize(clipCount);
+Animation::Animation(int x, int y, int w, int h, int length, int count, bool repeat = true) :
+    x(x), y(y), w(w), h(h), length(length), repeat(repeat), spriteClips(count) {
 
     for(int i = 0; i < (signed) spriteClips.size(); i++) {
         spriteClips[i] = {i * w + x, y, w, h};

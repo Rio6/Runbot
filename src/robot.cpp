@@ -14,17 +14,15 @@
 #include "graphic.hpp"
 #include "collision.hpp"
 #include "anim.hpp"
+#include "explosion.hpp"
 
 using runbot::Robot;
 
 Robot::Robot(Game *game) :
     Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 20, Robot::H}}),
     game(game),
-    bodyAnim(0, 0, 200, 400, 30, true),
-    armAnim(0, 400, 200, 400, 30, false) {
-
-    bodyAnim.createClips(20);
-    armAnim.createClips(20);
+    bodyAnim(0, 0, 200, 400, 30, 20, true),
+    armAnim(0, 400, 200, 400, 30, 20, false) {
 }
 
 void Robot::draw() {
