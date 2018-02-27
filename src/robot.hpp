@@ -23,9 +23,10 @@ namespace runbot {
             Robot(Game*);
             void draw();
             void doTick(int);
-            bool onCollide(Object&, Direction dir);
+            bool onCollide(Object&, Direction);
             bool isDead();
             Type getType();
+            void reset();
 
             // Actions
             void jump();
@@ -41,6 +42,7 @@ namespace runbot {
 
             int shootCD = 0;
             bool onGround = false;
+            bool dead = false;
     };
 };
 

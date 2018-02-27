@@ -26,8 +26,8 @@ void Background::draw() {
 
     src = {pos, 0, Background::W - pos, Background::H};
     des = {0, 0, edge, Game::H};
-    graphic.renderImage(BG_IMG, &src, &des);
+    graphic.renderImage("bg.png", &src, &des);
     src = {0, 0, pos, Background::H};
     des = {edge, 0, Game::W - edge, Game::H};
-    graphic.renderImage(BG_IMG, &src, &des);
+    graphic.renderImage("bg.png", &src, &des);
 }

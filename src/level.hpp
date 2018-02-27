@@ -20,7 +20,7 @@ namespace runbot {
             static const int LENGTH = 1000;
 
             Level(Game*);
-            void genLevel(int);
+            void genLevel(int distance);
             void reset();
 
         private:

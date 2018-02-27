@@ -21,7 +21,7 @@ namespace runbot {
             static const int H = 8;
             static constexpr float SPEED = 15;
 
-            Bullet(Game*, Vector<int>, int);
+            Bullet(Game*, Vector<int> pos, int baseSpeed);
             void draw();
             void doTick(int);
             bool onCollide(Object&, Direction);

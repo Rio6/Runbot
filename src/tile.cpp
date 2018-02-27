@@ -19,9 +19,7 @@ using runbot::Tile;
 Tile::Tile(Game *game, Vector<int> pos, TileType type) :
     Object(pos, {.minPos=pos, .maxPos=pos + Vector<int>{Tile::W, Tile::H}}),
     game(game),
-    anim(0, 0, 100, 100, 1, false), type(type) {
-
-    anim.createClips(1);
+    anim(0, 0, 100, 100, 1, 1, false), type(type) {
 }
 
 void Tile::draw() {
@@ -29,7 +27,7 @@ void Tile::draw() {
 
     src = anim.getCurrentClip();
     des = {pos.x - game->distance, pos.y - game->cameraY, Tile::W, Tile::H};
-    Graphic::instance().renderImage(TILE_IMG, &src, &des);
+    Graphic::instance().renderImage("tiles.png", &src, &des);
 }
 
 bool Tile::onCollide(Object &other, Direction dir) {

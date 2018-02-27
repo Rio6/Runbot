@@ -12,29 +12,52 @@
 namespace runbot {
     class Game; //Forward declare
 
-    class StartMenu {
+    class Menu {
         public:
-            StartMenu(Game*);
-            void onClick(Vector<int>&);
-            void draw();
-        private:
-            static const int BTN_W = 400;
-            static const int BTN_H = 100;
-            Game *game;
-            SDL_Rect startBtn;
+            virtual void onClick(Vector<int> &pos) = 0;
+            virtual void draw() = 0;
+        protected:
+            bool inRect(const SDL_Rect&, const Vector<int>&);
     };
 
-    class PauseMenu {
+    class StartMenu : public Menu {
         public:
-            PauseMenu(Game*);
-            void onClick(Vector<int>&);
+            StartMenu(Game*);
+            void onClick(Vector<int> &pos);
             void draw();
         private:
-            static const int BTN_W = 120;
-            static const int BTN_H = 80;
+            static const SDL_Rect TITLE_RECT;
+            static const SDL_Rect START_BTN;
+
             Game *game;
-            SDL_Rect resumeBtn;
-            SDL_Rect quitBtn;
+    };
+
+    class PauseMenu : public Menu {
+        public:
+            PauseMenu(Game*);
+            void onClick(Vector<int> &pos);
+            void draw();
+        private:
+            static const SDL_Rect TITLE_RECT;
+            static const SDL_Rect RESUME_BTN;
+            static const SDL_Rect MENU_BTN;
+
+            Game *game;
+    };
+
+    class DeadMenu : public Menu {
+        public:
+            DeadMenu(Game*, int distance);
+            void onClick(Vector<int> &pos);
+            void draw();
+        private:
+            static const SDL_Rect TITLE_RECT;
+            static const SDL_Rect RESTART_BTN;
+            static const SDL_Rect MENU_BTN;
+            static const SDL_Rect DIST_RECT;
+
+            Game *game;
+            int distance;
     };
 };
 

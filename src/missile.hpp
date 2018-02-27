@@ -21,7 +21,7 @@ namespace runbot {
             static const int W = 120;
             static const int H = 60;
 
-            Missile(Game*, Vector<int>);
+            Missile(Game*, Vector<int> pos);
             void draw();
             void doTick(int);
             bool onCollide(Object&, Direction);

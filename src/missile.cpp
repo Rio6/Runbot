@@ -10,21 +10,21 @@
 #include "game.hpp"
 #include "vector.hpp"
 #include "collision.hpp"
+#include "explosion.hpp"
 
 using runbot::Missile;
 
 Missile::Missile(Game *game, Vector<int> pos) :
     Object(pos, {.minPos={10, 0}, .maxPos={Missile::W, Missile::H}}),
-    game(game), anim(0, 0, 120, 60, 10, true) {
+    game(game), anim(0, 0, 120, 60, 10, 2, true) {
 
-    anim.createClips(2);
     anim.start();
 }
 
 void Missile::draw() {
     SDL_Rect src = anim.getCurrentClip();
     SDL_Rect des = {pos.x - game->distance, pos.y - game->cameraY, Missile::W, Missile::H};
-    Graphic::instance().renderImage(MISSILE_IMG, &src, &des);
+    Graphic::instance().renderImage("missile.png", &src, &des);
 }
 
 void Missile::doTick(int tick) {
@@ -48,6 +48,7 @@ bool Missile::onCollide(Object &other, Direction dir) {
         case ROBOT:
         case BULLET:
             dead = true;
+            game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
             break;
         default:
             break;

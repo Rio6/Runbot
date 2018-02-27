@@ -14,32 +14,33 @@
 #include "graphic.hpp"
 #include "collision.hpp"
 #include "anim.hpp"
+#include "explosion.hpp"
 
 using runbot::Robot;
 
 Robot::Robot(Game *game) :
     Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 20, Robot::H}}),
     game(game),
-    bodyAnim(0, 0, 200, 400, 30, true),
-    armAnim(0, 400, 200, 400, 30, false) {
-
-    bodyAnim.createClips(20);
-    armAnim.createClips(20);
+    bodyAnim(0, 0, 200, 400, 30, 20, true),
+    armAnim(0, 400, 200, 400, 30, 20, false) {
 }
 
 void Robot::draw() {
+
+    if(dead) return;
+
     Graphic &graphic = Graphic::instance();
     SDL_Rect src, des;
 
     // Body animation
     src = bodyAnim.getCurrentClip();
     des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
-    graphic.renderImage(ROBOT_IMG, &src, &des);
+    graphic.renderImage("robot.png", &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
     des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
-    graphic.renderImage(ROBOT_IMG, &src, &des);
+    graphic.renderImage("robot.png", &src, &des);
 }
 
 void Robot::doTick(int tick) {
@@ -98,6 +99,12 @@ runbot::Object::Type Robot::getType() {
     return ROBOT;
 }
 
+void Robot::reset() {
+    pos = {0, 0};
+    speed = {0, 0};
+    dead = false;
+}
+
 void Robot::jump() {
     if(onGround) {
         speed.y = -Robot::JUMP_FORCE;
@@ -121,7 +128,9 @@ void Robot::shoot() {
 }
 
 void Robot::die() {
-    speed = {0, 0};
-    pos = {0, 0};
-    game->setState(Game::MENU);
+    if(!dead) {
+        game->spawn(new Explosion(game, pos, {Robot::W, Robot::H}));
+        game->setState(Game::DEAD);
+        dead = true;
+    }
 }

@@ -27,9 +27,10 @@ namespace runbot {
 
         public:
             enum State {
-                MENU,
+                START,
                 RUNNING,
                 PAUSED,
+                DEAD,
                 STOP
             };
 
@@ -57,9 +58,8 @@ namespace runbot {
             Level level;
             Background bg;
 
-            State state = MENU;
-            StartMenu startMenu;
-            PauseMenu pauseMenu;
+            State state;
+            std::unique_ptr<Menu> menu;
 
             void processEvents();
             void doTick();

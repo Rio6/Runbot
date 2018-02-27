@@ -77,21 +77,25 @@ Graphic &Graphic::instance() {
 }
 
 void Graphic::renderImage(const std::string &name,
-        const SDL_Rect *src, const SDL_Rect *des) {
+        const SDL_Rect *src, const SDL_Rect *des, int color) {
     if(imgs.count(name) > 0) {
         SDL_Texture *text = imgs.at(name);
+        SDL_SetTextureColorMod(text,
+                (0xff0000 & color) >> 16,
+                (0x00ff00 & color) >> 8,
+                0x0000ff & color);
         SDL_RenderCopy(rend, text, src, des);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Cannot render %s", name.c_str());
     }
 }
 
-void Graphic::renderText(const std::string &text, const SDL_Rect *des) {
+void Graphic::renderText(const std::string &text, const SDL_Rect *des, int color) {
     SDL_Rect charDes = {des->x, des->y, (int) (des->w / text.size()), des->h};
     for(auto c : text) {
         c = std::tolower(c);
         if(letters.count(c) > 0) {
-            renderImage(LETTER_IMG, &letters.at(c), &charDes);
+            renderImage("letters.png", &letters.at(c), &charDes, color);
             charDes.x += charDes.w;
         }
     }

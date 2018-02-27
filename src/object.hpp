@@ -19,12 +19,13 @@ namespace runbot {
                 ROBOT,
                 TILE,
                 MISSILE,
-                BULLET
+                BULLET,
+                EXPLOSION
             };
 
-            Object(Vector<int>);
-            Object(Vector<int>, Hitbox);
-            Object(Vector<int>, Vector<float>, Hitbox);
+            Object(Vector<int> pos);
+            Object(Vector<int> pos, Hitbox);
+            Object(Vector<int> pos, Vector<float> speed, Hitbox);
             virtual ~Object() = default;
             virtual void draw() = 0;
             virtual void doTick(int);
