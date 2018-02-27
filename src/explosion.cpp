@@ -16,7 +16,9 @@ using runbot::Explosion;
 
 Explosion::Explosion(Game *game, Vector<int> pos, Vector<int> size) :
     Object(pos), game(game),
-    anim(0, 0, 100, 100, life, 1, false), size(size) {
+    anim(0, 0, 100, 100, life, 5, false), size(size) {
+
+    anim.start();
 }
 
 void Explosion::draw() {
@@ -26,8 +28,8 @@ void Explosion::draw() {
 }
 
 void Explosion::doTick(int tick) {
-    anim.doTick();
-    life--;
+    if(--life > 0)
+        anim.doTick();
 }
 
 bool Explosion::isDead() {

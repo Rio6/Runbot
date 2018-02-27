@@ -21,10 +21,10 @@ namespace runbot {
             bool isDead();
             Type getType();
         private:
+            int life = 8;
             Game *game;
             Animation anim;
             Vector<int> size;
-            int life = 8;
     };
 };
 
