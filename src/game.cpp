@@ -119,6 +119,8 @@ void Game::processEvents() {
                             setState(PAUSED);
                         else if(state == PAUSED)
                             setState(RUNNING);
+                        else if(state == START)
+                            setState(STOP);
                         break;
                 }
                 break;
