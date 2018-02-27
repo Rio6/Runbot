@@ -13,6 +13,11 @@ using runbot::Animation;
 Animation::Animation(int x, int y, int w, int h, int length, int count, bool repeat = true) :
     x(x), y(y), w(w), h(h), length(length), repeat(repeat), spriteClips(count) {
 
+    if(length <= 0) {
+        SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Length is %d, setting to 1", length);
+        this->length = 1;
+    }
+
     for(int i = 0; i < (signed) spriteClips.size(); i++) {
         spriteClips[i] = {i * w + x, y, w, h};
     }
@@ -31,7 +36,7 @@ int Animation::getLength() {
 }
 
 void Animation::setLength(int length) {
-    length = length;
+    this->length = length;
 }
 
 void Animation::pause() {
