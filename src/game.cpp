@@ -88,8 +88,7 @@ void Game::processEvents() {
         switch(eve.type) {
             case SDL_FINGERDOWN:
                 if(eve.tfinger.x < .5f) {
-                        keys["jump"] = true;
-<<<<<<< HEAD
+                    keys["jump"] = true;
                 } else {
                     keys["shoot"] = true;
                 }
