@@ -129,7 +129,7 @@ void Game::processEvents() {
                 }
                 break;
             case SDL_QUIT:
-                state = STOP;
+                setState(STOP);
                 break;
         }
     }
