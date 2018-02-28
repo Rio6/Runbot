@@ -89,6 +89,7 @@ void Game::processEvents() {
             case SDL_FINGERDOWN:
                 if(eve.tfinger.x < .5f) {
                         keys["jump"] = true;
+<<<<<<< HEAD
                 } else {
                     keys["shoot"] = true;
                 }
@@ -107,7 +108,7 @@ void Game::processEvents() {
                 }
 
                 if(eve.tfinger.x < .5f)
-                        keys["jump"] = false;
+                    keys["jump"] = false;
                 else
                     keys["shoot"] = false;
 
@@ -119,6 +120,8 @@ void Game::processEvents() {
                             setState(PAUSED);
                         else if(state == PAUSED)
                             setState(RUNNING);
+                        else if(state == DEAD)
+                            setState(START);
                         else if(state == START)
                             setState(STOP);
                         break;
