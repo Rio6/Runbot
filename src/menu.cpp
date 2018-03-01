@@ -96,7 +96,7 @@ void DeadMenu::draw() {
     graphic.renderText(distDisplay, &DIST_RECT, 0);
 }
 
-const SDL_Rect GameMenu::PAUSE_BTN = {0, 0, 20, 20};
+const SDL_Rect GameMenu::PAUSE_BTN = {10, 10, 40, 40};
 
 GameMenu::GameMenu(Game *game) : game(game) {
 }
