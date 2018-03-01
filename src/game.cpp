@@ -134,6 +134,18 @@ void Game::processEvents() {
                         break;
                 }
                 break;
+            case SDL_MOUSEMOTION:
+                cursor.x = eve.motion.x;
+                cursor.y = eve.motion.y;
+                break;
+            case SDL_MOUSEBUTTONUP:
+                if(eve.button.clicks) {
+                    Vector<int> pos = {eve.button.x, eve.button.y};
+                    if(menu != nullptr) {
+                        menu->onClick(pos);
+                    }
+                }
+                break;
             case SDL_APP_WILLENTERBACKGROUND:
                 if(state == RUNNING)
                     setState(PAUSED);
