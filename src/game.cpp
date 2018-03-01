@@ -115,19 +115,31 @@ void Game::processEvents() {
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
                     case SDLK_AC_BACK:
-                        if(state == RUNNING)
-                            setState(PAUSED);
-                        else if(state == PAUSED)
-                            setState(RUNNING);
-                        else if(state == DEAD)
-                            setState(START);
-                        else if(state == START)
-                            setState(STOP);
+                        switch(state) {
+                            case RUNNING:
+                                setState(PAUSED);
+                                break;
+                            case PAUSED:
+                                setState(RUNNING);
+                                break;
+                            case DEAD:
+                                setState(START);
+                                break;
+                            case START:
+                                setState(STOP);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                 }
                 break;
-            case SDL_QUIT:
-                state = STOP;
+            case SDL_APP_WILLENTERBACKGROUND:
+                if(state == RUNNING)
+                    setState(PAUSED);
+                break;
+            case SDL_APP_TERMINATING:
+                //setState(STOP); // It got called at strange times (start of app)
                 break;
         }
     }
