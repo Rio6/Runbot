@@ -95,3 +95,19 @@ void DeadMenu::draw() {
     std::sprintf(distDisplay, "Distance:%5d", distance / 10);
     graphic.renderText(distDisplay, &DIST_RECT, 0);
 }
+
+const SDL_Rect GameMenu::PAUSE_BTN = {0, 0, 20, 20};
+
+GameMenu::GameMenu(Game *game) : game(game) {
+}
+
+void GameMenu::onClick(Vector<int> &pos) {
+    if(inRect(PAUSE_BTN, pos)) {
+        game->setState(Game::PAUSED);
+    }
+}
+
+void GameMenu::draw() {
+    SDL_Rect src = {0, 0, 20, 20};
+    Graphic::instance().renderImage("pause.png", &src, &PAUSE_BTN);
+}

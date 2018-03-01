@@ -59,6 +59,17 @@ namespace runbot {
             Game *game;
             int distance;
     };
+
+    class GameMenu : public Menu {
+        public:
+            GameMenu(Game*);
+            void onClick(Vector<int> &pos);
+            void draw();
+        private:
+            static const SDL_Rect PAUSE_BTN;
+
+            Game *game;
+    };
 };
 
 #endif
