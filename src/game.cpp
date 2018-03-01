@@ -95,14 +95,22 @@ void Game::processEvents() {
                         keys["shoot"] = true;
                         break;
                     case SDLK_ESCAPE:
-                        if(state == RUNNING)
-                            setState(PAUSED);
-                        else if(state == PAUSED)
-                            setState(RUNNING);
-                        else if(state == DEAD)
-                            setState(START);
-                        else if(state == START)
-                            setState(STOP);
+                        switch(state) {
+                            case RUNNING:
+                                setState(PAUSED);
+                                break;
+                            case PAUSED:
+                                setState(RUNNING);
+                                break;
+                            case DEAD:
+                                setState(START);
+                                break;
+                            case START:
+                                setState(STOP);
+                                break;
+                            default:
+                                break;
+                        }
                         break;
                 }
                 break;
