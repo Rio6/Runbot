@@ -58,7 +58,7 @@ namespace runbot {
             Level level;
             Background bg;
 
-            State state;
+            State state = STOP;
             std::unique_ptr<Menu> menu;
 
             void processEvents();
