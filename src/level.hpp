@@ -7,6 +7,7 @@
 #define _LEVEL_H_
 
 #include <vector>
+#include <string>
 
 #include "object.hpp"
 #include "tile.hpp"
@@ -26,13 +27,18 @@ namespace runbot {
         private:
             class ObjectInfo {
                 public:
-                    Vector<int> pos;
-                    Object::Type type;
+                    ObjectInfo(Vector<int>, Object::Type);
+                    ObjectInfo(int, int, const std::string& type);
 
                     Object *create(Game*, int);
+                private:
+                    Vector<int> pos;
+                    Object::Type type;
             };
 
-            static const std::vector<std::vector<ObjectInfo>> PATTERNS;
+            const std::string FILE_PATH = "assets/levels.json";
+
+            std::vector<std::vector<ObjectInfo>> patterns;
             Game *game;
             int lastDist = 0;
     };

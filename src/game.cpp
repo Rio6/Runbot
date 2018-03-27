@@ -261,5 +261,6 @@ void Game::reset() {
 }
 
 void Game::spawn(Object *obj) {
-    objects.emplace_back(obj);
+    if(obj != nullptr)
+        objects.emplace_back(obj);
 }

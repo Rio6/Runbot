@@ -15,7 +15,7 @@ namespace runbot {
         public:
 
             enum Type {
-                UNKNOWN,
+                UNKNOWN = -1,
                 ROBOT,
                 TILE,
                 MISSILE,

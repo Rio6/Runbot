@@ -20,7 +20,6 @@ Graphic::Graphic() {
         throw std::runtime_error(SDL_GetError());
 
     // Configure SDL
-    SDL_LogSetAllPriority(SDL_LOG_PRIORITY_INFO);
     SDL_ShowCursor(false);
 
     int imgFlags = IMG_INIT_PNG;
