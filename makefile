@@ -1,7 +1,7 @@
 SRCDIR:=src
 BUILDDIR:=build
 
-CXXFLAGS:=-O2 -Wall
+CXXFLAGS+=-O2 -Wall --std=c++1z
 LIBS:=-lSDL2 -lSDL2_image
 SRCS:=$(wildcard $(SRCDIR)/*.cpp)
 HDRS:=$(wildcard $(SRCDIR)/*.hpp)
