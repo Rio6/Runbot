@@ -1,6 +1,7 @@
 {
     "patterns": [
         {
+            "size": 1000,
             "objects": [
                 {
                     "x": 0,

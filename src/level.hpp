@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <string>
+#include <utility>
 
 #include "object.hpp"
 #include "tile.hpp"
@@ -18,8 +19,6 @@ namespace runbot {
 
     class Level {
         public:
-            static const int LENGTH = 1000;
-
             Level(Game*);
             void genLevel(int distance);
             void reset();
@@ -38,9 +37,11 @@ namespace runbot {
 
             const std::string FILE_PATH = "assets/levels.json";
 
-            std::vector<std::vector<ObjectInfo>> patterns;
+            std::vector<std::pair<std::vector<ObjectInfo>, int>> patterns;
             Game *game;
+
             int lastDist = 0;
+            int pattSize = 1000;
     };
 };
 

@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <string>
+#include <utility>
 
 #include "nlohmann/json.hpp"
 
@@ -36,6 +37,8 @@ Level::Level(Game *game) : game(game) {
             for(json pattJson : lvlJson["patterns"]) {
                 std::vector<ObjectInfo> objects;
 
+                int size = pattJson["size"];
+
                 for(json objJson : pattJson["objects"]) {
                     int x = objJson["x"], y = objJson["y"];
                     std::string type = objJson["type"];
@@ -43,7 +46,7 @@ Level::Level(Game *game) : game(game) {
                     objects.emplace_back(x, y, type);
                 }
 
-                patterns.push_back(objects);
+                patterns.emplace_back(objects, size);
             }
         } catch(json::exception& e) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to parse level file: %s", e.what());
@@ -54,12 +57,14 @@ Level::Level(Game *game) : game(game) {
 void Level::genLevel(int distance) {
     if(patterns.size() <= 0) return;
 
-    if(distance - lastDist > Level::LENGTH) {
-        distance = lastDist + Level::LENGTH;
-        for(ObjectInfo info : patterns[std::rand() % patterns.size()]) {
+    if(distance - lastDist > pattSize) {
+        distance = lastDist + pattSize;
+        const auto &[objects, size] = patterns[std::rand() % patterns.size()];
+        for(ObjectInfo info : objects) {
             game->spawn(info.create(game, distance));
         }
         lastDist = distance;
+        pattSize = size;
     }
 }
 
