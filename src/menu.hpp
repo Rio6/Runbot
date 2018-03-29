@@ -14,50 +14,64 @@ namespace runbot {
 
     class Menu {
         public:
-            virtual void onClick(Vector<int> &pos) = 0;
+            class MenuRect : public SDL_Rect {
+                public:
+                    enum State {
+                        UP, DOWN
+                    } state = UP;
+
+                    MenuRect(int, int, int, int);
+                    // Return true when clicked
+                    bool onMouse(Vector<int> &pos, bool down);
+
+                private:
+                    bool inRect(const Vector<int>&);
+            };
+
+            virtual void onMouse(Vector<int> &pos, bool down) = 0;
             virtual void draw() = 0;
-        protected:
-            bool inRect(const SDL_Rect&, const Vector<int>&);
     };
 
     class StartMenu : public Menu {
         public:
             StartMenu(Game*);
-            void onClick(Vector<int> &pos);
+            void onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
-            static const SDL_Rect TITLE_RECT;
-            static const SDL_Rect START_BTN;
-
             Game *game;
+
+            MenuRect titleRect;
+            MenuRect startBtn;
     };
 
     class PauseMenu : public Menu {
         public:
             PauseMenu(Game*);
-            void onClick(Vector<int> &pos);
+            void onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
-            static const SDL_Rect TITLE_RECT;
-            static const SDL_Rect RESUME_BTN;
-            static const SDL_Rect MENU_BTN;
-
             Game *game;
+
+            MenuRect bgRect;
+            MenuRect titleRect;
+            MenuRect resumeBtn;
+            MenuRect menuBtn;
     };
 
     class DeadMenu : public Menu {
         public:
             DeadMenu(Game*, int distance);
-            void onClick(Vector<int> &pos);
+            void onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
-            static const SDL_Rect TITLE_RECT;
-            static const SDL_Rect RESTART_BTN;
-            static const SDL_Rect MENU_BTN;
-            static const SDL_Rect DIST_RECT;
-
             Game *game;
             int distance;
+
+            MenuRect bgRect;
+            MenuRect titleRect;
+            MenuRect restartBtn;
+            MenuRect menuBtn;
+            MenuRect distRect;
     };
 };
 

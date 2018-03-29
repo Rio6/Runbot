@@ -127,13 +127,22 @@ void Game::processEvents() {
             case SDL_MOUSEMOTION:
                 cursor.x = eve.motion.x;
                 cursor.y = eve.motion.y;
+
+                if(menu != nullptr) {
+                    Vector<int> pos = {eve.button.x, eve.button.y};
+                    menu->onMouse(pos, !!(eve.motion.state & SDL_BUTTON_LMASK));
+                }
                 break;
             case SDL_MOUSEBUTTONUP:
-                if(eve.button.clicks) {
+                if(menu != nullptr && eve.button.button == SDL_BUTTON_LEFT) {
                     Vector<int> pos = {eve.button.x, eve.button.y};
-                    if(menu != nullptr) {
-                        menu->onClick(pos);
-                    }
+                    menu->onMouse(pos, false);
+                }
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if(menu != nullptr && eve.button.button == SDL_BUTTON_LEFT) {
+                    Vector<int> pos = {eve.button.x, eve.button.y};
+                    menu->onMouse(pos, true);
                 }
                 break;
             case SDL_QUIT:

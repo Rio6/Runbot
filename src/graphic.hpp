@@ -37,7 +37,8 @@ namespace runbot {
                 {"bg.png", nullptr},
                 {"cursor.png", nullptr},
                 {"letters.png", nullptr},
-                {"explosion.png", nullptr}
+                {"explosion.png", nullptr},
+                {"menu.png", nullptr}
             };
 
             std::map<char, SDL_Rect> letters;
