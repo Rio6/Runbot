@@ -235,9 +235,8 @@ void Game::draw() {
         graphic.renderText(distDisplay, &des, 0);
     } else {
         // Draw cursor
-        SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
-        graphic.renderImage("cursor.png", &src, &des);
+        graphic.renderImage("cursor.png", nullptr, &des);
     }
 
     // Apply drawings to window
