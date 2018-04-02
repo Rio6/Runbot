@@ -77,7 +77,7 @@ namespace runbot {
     class GameMenu : public Menu {
         public:
             GameMenu(Game*);
-            void onMouse(Vector<int> &pos, bool down);
+            bool onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
             Game *game;

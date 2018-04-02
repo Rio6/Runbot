@@ -94,14 +94,13 @@ void Game::processEvents() {
                     if(menu != nullptr) {
                         Vector<int> pos = {static_cast<int>(eve.tfinger.x * Game::W),
                             static_cast<int>(eve.tfinger.y * Game::H)};
-                        menu->onMouse(pos, down);
+                        if(!menu->onMouse(pos, down)) {
+                            if(eve.tfinger.x < .5f)
+                                keys["jump"] = down;
+                            else
+                                keys["shoot"] = down;
+                        }
                     }
-
-                    if(eve.tfinger.x < .5f)
-                        keys["jump"] = down;
-                    else
-                        keys["shoot"] = down;
-
                     break;
                 }
             case SDL_KEYUP:

@@ -122,10 +122,12 @@ void DeadMenu::draw() {
 GameMenu::GameMenu(Game *game) : game(game),
     pauseBtn{10, 10, 45, 45} {}
 
-void GameMenu::onMouse(Vector<int> &pos, bool down) {
+bool GameMenu::onMouse(Vector<int> &pos, bool down) {
     if(pauseBtn.onMouse(pos, down)) {
         game->setState(Game::PAUSED);
+        return true;
     }
+    return false;
 }
 
 void GameMenu::draw() {
