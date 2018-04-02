@@ -77,12 +77,11 @@ namespace runbot {
     class GameMenu : public Menu {
         public:
             GameMenu(Game*);
-            void onClick(Vector<int> &pos);
+            void onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
-            static const SDL_Rect PAUSE_BTN;
-
             Game *game;
+            MenuRect pauseBtn;
     };
 };
 

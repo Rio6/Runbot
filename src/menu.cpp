@@ -110,18 +110,15 @@ void DeadMenu::draw() {
     graphic.renderText(distDisplay, &distRect, 0);
 }
 
-const SDL_Rect GameMenu::PAUSE_BTN = {10, 10, 40, 40};
+GameMenu::GameMenu(Game *game) : game(game),
+    pauseBtn{10, 10, 45, 45} {}
 
-GameMenu::GameMenu(Game *game) : game(game) {
-}
-
-void GameMenu::onClick(Vector<int> &pos) {
-    if(inRect(PAUSE_BTN, pos)) {
+void GameMenu::onMouse(Vector<int> &pos, bool down) {
+    if(pauseBtn.onMouse(pos, down)) {
         game->setState(Game::PAUSED);
     }
 }
 
 void GameMenu::draw() {
-    SDL_Rect src = {0, 0, 20, 20};
-    Graphic::instance().renderImage("pause.png", &src, &PAUSE_BTN);
+    Graphic::instance().renderImage("pause.png", nullptr, &pauseBtn, pauseBtn.state * 0x00ff00);
 }
