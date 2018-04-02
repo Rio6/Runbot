@@ -14,6 +14,8 @@
 
 using runbot::Graphic;
 
+Graphic *Graphic::graphic = nullptr;
+
 Graphic::Graphic() {
 
     if(SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -30,7 +32,7 @@ Graphic::Graphic() {
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             runbot::Game::W, runbot::Game::H,
             SDL_WINDOW_FULLSCREEN_DESKTOP);
-    if(win == nullptr)
+    if(!win)
         throw std::runtime_error(SDL_GetError());
 
     rend = SDL_CreateRenderer(win, -1,
@@ -39,7 +41,7 @@ Graphic::Graphic() {
             | SDL_RENDERER_PRESENTVSYNC
 #endif
             );
-    if(rend == nullptr)
+    if(!rend)
         throw std::runtime_error(SDL_GetError());
 
     // Configure the renderer
@@ -67,8 +69,14 @@ Graphic::~Graphic() {
 }
 
 Graphic &Graphic::instance() {
-    static Graphic graphic;
-    return graphic;
+    if(!graphic)
+        graphic = new Graphic();
+    return *graphic;
+}
+
+void Graphic::reset() {
+    delete graphic;
+    graphic = nullptr;
 }
 
 void Graphic::renderImage(const std::string &name,
@@ -108,13 +116,13 @@ void Graphic::loadImages() {
 
     for(auto &img : imgs) {
         SDL_Surface *loadSurface = IMG_Load(("assets/" + img.first).c_str());
-        if(loadSurface == nullptr) {
+        if(!loadSurface) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", img.first.c_str(), IMG_GetError());
             continue;
         }
 
         img.second = SDL_CreateTextureFromSurface(rend, loadSurface);
-        if(img.second == nullptr)
+        if(!img.second)
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", img.first.c_str(), SDL_GetError());
 
         SDL_FreeSurface(loadSurface);

@@ -18,6 +18,7 @@ namespace runbot {
     class Graphic {
         public:
             static Graphic &instance();
+            static void reset();
 
             void renderImage(const std::string& name,
                     const SDL_Rect* src, const SDL_Rect* des, int color = 0xffffff);
@@ -26,6 +27,8 @@ namespace runbot {
             void update();
 
         private:
+            static Graphic *graphic;
+
             SDL_Renderer *rend;
             SDL_Window *win;
 
