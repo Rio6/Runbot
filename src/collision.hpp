@@ -31,7 +31,7 @@ namespace runbot {
         public:
             Collision(Object*, Object*);
             void solve();
-            bool operator<(const Collision&); // For std::sort
+            bool operator<(const Collision&) const; // For std::sort
         private:
             Object *a, *b;
             Direction dir;

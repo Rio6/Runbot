@@ -128,6 +128,6 @@ void Collision::solve() {
     }
 }
 
-bool Collision::operator<(const Collision &rhs) {
+bool Collision::operator<(const Collision &rhs) const {
     return this->time < rhs.time;
 }
