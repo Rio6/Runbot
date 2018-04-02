@@ -41,9 +41,10 @@ StartMenu::StartMenu(Game *game) : game(game),
     titleRect{Game::W / 2 - 300, 100, 600, 150},
     startBtn{Game::W / 2 - 100, Game::H / 2, 200, 80} {}
 
-void StartMenu::onMouse(Vector<int> &pos, bool down) {
+bool StartMenu::onMouse(Vector<int> &pos, bool down) {
     if(startBtn.onMouse(pos, down))
         game->setState(Game::RUNNING);
+    return startBtn.state == MenuRect::DOWN;
 }
 
 void StartMenu::draw() {
@@ -64,12 +65,12 @@ PauseMenu::PauseMenu(Game *game) : game(game),
     resumeBtn{Game::W / 2 - 120, Game::H / 2, 130, 50},
     menuBtn{Game::W / 2 + 40, Game::H / 2, 130, 50} {}
 
-void PauseMenu::onMouse(Vector<int> &pos, bool down) {
-    if(resumeBtn.onMouse(pos, down)) {
+bool PauseMenu::onMouse(Vector<int> &pos, bool down) {
+    if(resumeBtn.onMouse(pos, down))
         game->setState(Game::RUNNING);
-    } else if(menuBtn.onMouse(pos, down)) {
+    else if(menuBtn.onMouse(pos, down))
         game->setState(Game::START);
-    }
+    return resumeBtn.state == MenuRect::DOWN || menuBtn.state == MenuRect::DOWN;
 }
 
 void PauseMenu::draw() {
@@ -89,12 +90,12 @@ DeadMenu::DeadMenu(Game *game, int distance) : game(game), distance(distance),
     menuBtn{Game::W / 2 + 20, Game::H / 2, 140, 50},
     distRect{Game::W / 2 - 100, Game::H / 2 + 80, 200, 40} {}
 
-void DeadMenu::onMouse(Vector<int> &pos, bool down) {
-    if(restartBtn.onMouse(pos, down)) {
+bool DeadMenu::onMouse(Vector<int> &pos, bool down) {
+    if(restartBtn.onMouse(pos, down))
         game->setState(Game::RUNNING);
-    } else if(menuBtn.onMouse(pos, down)) {
+    else if(menuBtn.onMouse(pos, down))
         game->setState(Game::START);
-    }
+    return restartBtn.state == MenuRect::DOWN || menuBtn.state == MenuRect::DOWN;
 }
 
 void DeadMenu::draw() {
