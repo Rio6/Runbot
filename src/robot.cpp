@@ -45,6 +45,8 @@ void Robot::draw() {
 
 void Robot::doTick(int tick) {
 
+    if(dead) return;
+
     if(pos.x < game->distance + Robot::W)
         speed.x = game->speed * 2;
     else

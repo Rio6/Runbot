@@ -137,13 +137,22 @@ void Game::processEvents() {
             case SDL_MOUSEMOTION:
                 cursor.x = eve.motion.x;
                 cursor.y = eve.motion.y;
+
+                if(menu != nullptr) {
+                    Vector<int> pos = {eve.button.x, eve.button.y};
+                    menu->onMouse(pos, !!(eve.motion.state & SDL_BUTTON_LMASK));
+                }
                 break;
             case SDL_MOUSEBUTTONUP:
-                if(eve.button.clicks) {
+                if(menu != nullptr && eve.button.button == SDL_BUTTON_LEFT) {
                     Vector<int> pos = {eve.button.x, eve.button.y};
-                    if(menu != nullptr) {
-                        menu->onClick(pos);
-                    }
+                    menu->onMouse(pos, false);
+                }
+                break;
+            case SDL_MOUSEBUTTONDOWN:
+                if(menu != nullptr && eve.button.button == SDL_BUTTON_LEFT) {
+                    Vector<int> pos = {eve.button.x, eve.button.y};
+                    menu->onMouse(pos, true);
                 }
                 break;
             case SDL_APP_WILLENTERBACKGROUND:
@@ -240,9 +249,8 @@ void Game::draw() {
         graphic.renderText(distDisplay, &des, 0);
     } else {
         // Draw cursor
-        SDL_Rect src = {0, 0, CURSOR_SIZE, CURSOR_SIZE};
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
-        graphic.renderImage("cursor.png", &src, &des);
+        graphic.renderImage("cursor.png", nullptr, &des);
     }
 
     // Apply drawings to window
@@ -275,5 +283,6 @@ void Game::reset() {
 }
 
 void Game::spawn(Object *obj) {
-    objects.emplace_back(obj);
+    if(obj != nullptr)
+        objects.emplace_back(obj);
 }
