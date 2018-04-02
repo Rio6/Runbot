@@ -2,7 +2,7 @@ SRCDIR:=src
 BUILDDIR:=build
 
 CXXFLAGS+=-O2 -Wall --std=c++1z
-LIBS:=-lSDL2 -lSDL2_image
+LIBS:=-lSDL2 -lSDL2_image -lSDL2_mixer
 SRCS:=$(wildcard $(SRCDIR)/*.cpp)
 HDRS:=$(wildcard $(SRCDIR)/*.hpp)
 OBJS:= $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))

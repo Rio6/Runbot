@@ -8,6 +8,7 @@
 
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_mixer.h"
 
 #include "graphic.hpp"
 #include "game.hpp"
@@ -18,7 +19,7 @@ Graphic *Graphic::graphic = nullptr;
 
 Graphic::Graphic() {
 
-    if(SDL_Init(SDL_INIT_VIDEO) != 0)
+    if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
         throw std::runtime_error(SDL_GetError());
 
     // Configure SDL
@@ -27,6 +28,9 @@ Graphic::Graphic() {
     int imgFlags = IMG_INIT_PNG;
     if((IMG_Init(imgFlags) & imgFlags) != imgFlags)
         throw std::runtime_error(IMG_GetError());
+
+    if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+        throw std::runtime_error(Mix_GetError());
 
     win = SDL_CreateWindow(runbot::NAME,
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
@@ -48,7 +52,7 @@ Graphic::Graphic() {
     SDL_RenderSetLogicalSize(rend, Game::W, Game::H);
     SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xff);
 
-    loadImages();
+    loadMedia();
 }
 
 Graphic::~Graphic() {
@@ -58,12 +62,18 @@ Graphic::~Graphic() {
         img.second = nullptr;
     }
 
+    for(auto &sound : sounds) {
+        Mix_FreeChunk(sound.second);
+        sound.second = nullptr;
+    }
+
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(win);
 
     rend = nullptr;
     win = nullptr;
 
+    Mix_Quit();
     IMG_Quit();
     SDL_Quit();
 }
@@ -104,6 +114,14 @@ void Graphic::renderText(const std::string &text, const SDL_Rect *des, int color
     }
 }
 
+void Graphic::playSound(const std::string& name) {
+    if(sounds.count(name) > 0) {
+        Mix_PlayChannel(-1, sounds.at(name), 0);
+    } else {
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot play %s", name.c_str());
+    }
+}
+
 void Graphic::clear() {
     SDL_RenderClear(rend);
 }
@@ -112,7 +130,7 @@ void Graphic::update() {
     SDL_RenderPresent(rend);
 }
 
-void Graphic::loadImages() {
+void Graphic::loadMedia() {
 
     for(auto &img : imgs) {
         SDL_Surface *loadSurface = IMG_Load(("assets/" + img.first).c_str());
@@ -126,6 +144,13 @@ void Graphic::loadImages() {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", img.first.c_str(), SDL_GetError());
 
         SDL_FreeSurface(loadSurface);
+    }
+
+    for(auto &sound : sounds) {
+        sound.second = Mix_LoadWAV(("assets/" + sound.first).c_str());
+        if(!sound.second) {
+            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", sound.first.c_str(), Mix_GetError());
+        }
     }
 
     int i = 0;

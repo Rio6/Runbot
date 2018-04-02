@@ -19,6 +19,8 @@ Explosion::Explosion(Game *game, Vector<int> pos, Vector<int> size) :
     anim(0, 0, 100, 100, life, 5, false), size(size) {
 
     anim.start();
+
+    Graphic::instance().playSound("explosion.wav");
 }
 
 void Explosion::draw() {

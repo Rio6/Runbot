@@ -12,9 +12,12 @@
 #include <map>
 
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_mixer.h"
 
 namespace runbot {
 
+    // Class for graphics and audio
+    // I put audio here because it kind of fits here
     class Graphic {
         public:
             static Graphic &instance();
@@ -23,6 +26,7 @@ namespace runbot {
             void renderImage(const std::string& name,
                     const SDL_Rect* src, const SDL_Rect* des, int color = 0xffffff);
             void renderText(const std::string &text, const SDL_Rect *des, int color = 0xffffff);
+            void playSound(const std::string& name);
             void clear();
             void update();
 
@@ -44,11 +48,16 @@ namespace runbot {
                 {"menu.png", nullptr}
             };
 
+            std::map<std::string, Mix_Chunk*> sounds {
+                {"bullet.wav", nullptr},
+                {"explosion.wav", nullptr}
+            };
+
             std::map<char, SDL_Rect> letters;
 
             Graphic();
             ~Graphic();
-            void loadImages();
+            void loadMedia();
     };
 };
 
