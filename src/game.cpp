@@ -86,32 +86,24 @@ void Game::processEvents() {
     SDL_Event eve;
     while(SDL_PollEvent(&eve)) {
         switch(eve.type) {
-            case SDL_FINGERDOWN:
-                if(eve.tfinger.x < .5f) {
-                    keys["jump"] = true;
-                } else {
-                    keys["shoot"] = true;
-                }
-                break;
-            case SDL_FINGERMOTION:
-                if(eve.tfinger.x - eve.tfinger.dx > .5f)
-                    keys["jump"] = false;
-                else
-                    keys["shoot"] = false;
-
-                break;
             case SDL_FINGERUP:
-                if(menu != nullptr) {
-                    Vector<int> pos {(int) (eve.tfinger.x * Game::W), (int) (eve.tfinger.y * Game::H)};
-                    menu->onClick(pos);
+            case SDL_FINGERDOWN:
+            case SDL_FINGERMOTION:
+                {
+                    bool down = eve.type != SDL_FINGERUP;
+                    if(menu != nullptr) {
+                        Vector<int> pos = {static_cast<int>(eve.tfinger.x * Game::W),
+                            static_cast<int>(eve.tfinger.y * Game::H)};
+                        menu->onMouse(pos, down);
+                    }
+
+                    if(eve.tfinger.x < .5f)
+                        keys["jump"] = down;
+                    else
+                        keys["shoot"] = down;
+
+                    break;
                 }
-
-                if(eve.tfinger.x < .5f)
-                    keys["jump"] = false;
-                else
-                    keys["shoot"] = false;
-
-                break;
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
                     case SDLK_AC_BACK:
@@ -160,7 +152,7 @@ void Game::processEvents() {
                     setState(PAUSED);
                 break;
             case SDL_APP_TERMINATING:
-                //setState(STOP); // It got called at strange times (start of app)
+                setState(STOP);
                 break;
         }
     }
