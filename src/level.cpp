@@ -9,7 +9,7 @@
 #include <string>
 #include <utility>
 
-#include "nlohmann/json.hpp"
+#include "json.hpp"
 
 #include "level.hpp"
 #include "game.hpp"

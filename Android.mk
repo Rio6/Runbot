@@ -7,7 +7,7 @@ LOCAL_MODULE := main
 SDL_PATH := ../SDL2
 SDL_IMAGE_PATH := ../SDL2_image
 
-LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/$(SDL_IMAGE_PATH)
+LOCAL_C_INCLUDES := $(LOCAL_PATH)/$(SDL_PATH)/include $(LOCAL_PATH)/$(SDL_IMAGE_PATH) $(LOCAL_PATH)/include
 
 # Add your application source files here...
 LOCAL_SRC_FILES :=  $(wildcard $(LOCAL_PATH)/src/*.cpp)
