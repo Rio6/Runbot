@@ -28,14 +28,14 @@ namespace runbot {
                     bool inRect(const Vector<int>&);
             };
 
-            virtual void onMouse(Vector<int> &pos, bool down) = 0;
+            virtual bool onMouse(Vector<int> &pos, bool down) = 0;
             virtual void draw() = 0;
     };
 
     class StartMenu : public Menu {
         public:
             StartMenu(Game*);
-            void onMouse(Vector<int> &pos, bool down);
+            bool onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
             Game *game;
@@ -47,7 +47,7 @@ namespace runbot {
     class PauseMenu : public Menu {
         public:
             PauseMenu(Game*);
-            void onMouse(Vector<int> &pos, bool down);
+            bool onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
             Game *game;
@@ -61,7 +61,7 @@ namespace runbot {
     class DeadMenu : public Menu {
         public:
             DeadMenu(Game*, int distance);
-            void onMouse(Vector<int> &pos, bool down);
+            bool onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
             Game *game;
