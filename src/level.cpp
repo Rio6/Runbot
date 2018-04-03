@@ -5,7 +5,6 @@
 
 #include <vector>
 #include <cstdlib>
-#include <fstream>
 #include <string>
 #include <utility>
 
@@ -24,15 +23,27 @@ using nlohmann::json;
 Level::Level(Game *game) : game(game) {
 
     // Load level patterns from file
-    std::ifstream lvlFile;
-    lvlFile.open(Level::FILE_PATH);
+    SDL_RWops *lvlFile = SDL_RWFromFile(Level::FILE_PATH, "r");
+    int size = SDL_RWsize(lvlFile);
 
-    if(!lvlFile) {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s", FILE_PATH.c_str());
+    if(size < 0) {
+        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s", FILE_PATH);
     } else {
+        // File code from https://gitlab.com/wikibooks-opengl/modern-tutorials/blob/master/common-sdl2/shader_utils.cpp
+        char content[size + 1];
+        char *buff = content;
+
+        int read = 1, readTotal = 0;
+        while(read < size && read != 0) {
+            read = SDL_RWread(lvlFile, buff, 1, (size - readTotal));
+            readTotal += read;
+            buff += read;
+        }
+
+        content[readTotal] = '\0';
+
         try {
-            json lvlJson;
-            lvlFile >> lvlJson;
+            json lvlJson = json::parse(content);
 
             for(json pattJson : lvlJson["patterns"]) {
                 std::vector<ObjectInfo> objects;
@@ -52,6 +63,8 @@ Level::Level(Game *game) : game(game) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to parse level file: %s", e.what());
         }
     }
+
+    SDL_RWclose(lvlFile);
 }
 
 void Level::genLevel(int distance) {

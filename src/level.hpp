@@ -35,7 +35,7 @@ namespace runbot {
                     Object::Type type;
             };
 
-            const std::string FILE_PATH = "assets/levels.json";
+            const char *FILE_PATH = "assets/levels.json";
 
             std::vector<std::pair<std::vector<ObjectInfo>, int>> patterns;
             Game *game;
