@@ -38,8 +38,9 @@ bool Menu::MenuRect::inRect(const Vector<int> &pos) {
 
 
 StartMenu::StartMenu(Game *game) : game(game),
-    titleRect{Game::W / 2 - 300, 100, 600, 150},
-    startBtn{Game::W / 2 - 100, Game::H / 2, 200, 80} {}
+    bgRect{100, 50, Game::W - 200, Game::H - 100},
+    titleRect{Game::W / 2 - 300, 150, 600, 150},
+    startBtn{Game::W / 2 - 100, Game::H / 2 + 50, 200, 80} {}
 
 bool StartMenu::onMouse(Vector<int> &pos, bool down) {
     if(startBtn.onMouse(pos, down))
@@ -50,8 +51,8 @@ bool StartMenu::onMouse(Vector<int> &pos, bool down) {
 void StartMenu::draw() {
     Graphic &graphic = Graphic::instance();
 
-    SDL_Rect des = {0, 0, Game::W, Game::H};
-    graphic.renderImage("bg.png", nullptr, &des);
+    graphic.renderImage("bg.png", nullptr, nullptr);
+    graphic.renderImage("menu.png", nullptr, &bgRect);
 
     graphic.renderText("RUNBOT", &titleRect, 0);
     // UP = 0; DOWN = 1; So state * color would be black when UP, the color when DOWN
