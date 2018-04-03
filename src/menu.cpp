@@ -42,11 +42,9 @@ StartMenu::StartMenu(Game *game) : game(game),
     startBtn{Game::W / 2 - 100, Game::H / 2, 200, 80} {}
 
 bool StartMenu::onMouse(Vector<int> &pos, bool down) {
-    if(startBtn.onMouse(pos, down)) {
+    if(startBtn.onMouse(pos, down))
         game->setState(Game::RUNNING);
-        return true;
-    }
-    return false;
+    return startBtn.state == MenuRect::DOWN;
 }
 
 void StartMenu::draw() {
@@ -68,14 +66,11 @@ PauseMenu::PauseMenu(Game *game) : game(game),
     menuBtn{Game::W / 2 + 40, Game::H / 2, 130, 50} {}
 
 bool PauseMenu::onMouse(Vector<int> &pos, bool down) {
-    if(resumeBtn.onMouse(pos, down)) {
+    if(resumeBtn.onMouse(pos, down))
         game->setState(Game::RUNNING);
-        return true;
-    } else if(menuBtn.onMouse(pos, down)) {
+    else if(menuBtn.onMouse(pos, down))
         game->setState(Game::START);
-        return true;
-    }
-    return false;
+    return resumeBtn.state == MenuRect::DOWN || menuBtn.state == MenuRect::DOWN;
 }
 
 void PauseMenu::draw() {
@@ -96,14 +91,11 @@ DeadMenu::DeadMenu(Game *game, int distance) : game(game), distance(distance),
     distRect{Game::W / 2 - 100, Game::H / 2 + 80, 200, 40} {}
 
 bool DeadMenu::onMouse(Vector<int> &pos, bool down) {
-    if(restartBtn.onMouse(pos, down)) {
+    if(restartBtn.onMouse(pos, down))
         game->setState(Game::RUNNING);
-        return true;
-    } else if(menuBtn.onMouse(pos, down)) {
+    else if(menuBtn.onMouse(pos, down))
         game->setState(Game::START);
-        return true;
-    }
-    return false;
+    return restartBtn.state == MenuRect::DOWN || menuBtn.state == MenuRect::DOWN;
 }
 
 void DeadMenu::draw() {
@@ -123,11 +115,9 @@ GameMenu::GameMenu(Game *game) : game(game),
     pauseBtn{0, 0, 50, 50} {}
 
 bool GameMenu::onMouse(Vector<int> &pos, bool down) {
-    if(pauseBtn.onMouse(pos, down)) {
+    if(pauseBtn.onMouse(pos, down))
         game->setState(Game::PAUSED);
-        return true;
-    }
-    return false;
+    return pauseBtn.state == MenuRect::DOWN;
 }
 
 void GameMenu::draw() {

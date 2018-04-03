@@ -129,19 +129,19 @@ void Game::processEvents() {
                 cursor.x = eve.motion.x;
                 cursor.y = eve.motion.y;
 
-                if(menu != nullptr) {
+                if(!!menu) {
                     Vector<int> pos = {eve.button.x, eve.button.y};
                     menu->onMouse(pos, !!(eve.motion.state & SDL_BUTTON_LMASK));
                 }
                 break;
             case SDL_MOUSEBUTTONUP:
-                if(menu != nullptr && eve.button.button == SDL_BUTTON_LEFT) {
+                if(!!menu && eve.button.button == SDL_BUTTON_LEFT) {
                     Vector<int> pos = {eve.button.x, eve.button.y};
                     menu->onMouse(pos, false);
                 }
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                if(menu != nullptr && eve.button.button == SDL_BUTTON_LEFT) {
+                if(!!menu && eve.button.button == SDL_BUTTON_LEFT) {
                     Vector<int> pos = {eve.button.x, eve.button.y};
                     menu->onMouse(pos, true);
                 }
@@ -228,7 +228,7 @@ void Game::draw() {
     for(std::shared_ptr<Object> object : objects)
         object->draw();
 
-    if(menu != nullptr) {
+    if(!!menu) {
         menu->draw();
     }
 
@@ -274,6 +274,6 @@ void Game::reset() {
 }
 
 void Game::spawn(Object *obj) {
-    if(obj != nullptr)
+    if(!!obj)
         objects.emplace_back(obj);
 }
