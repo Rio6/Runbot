@@ -120,7 +120,7 @@ void DeadMenu::draw() {
 }
 
 GameMenu::GameMenu(Game *game) : game(game),
-    pauseBtn{10, 10, 45, 45} {}
+    pauseBtn{0, 0, 50, 50} {}
 
 bool GameMenu::onMouse(Vector<int> &pos, bool down) {
     if(pauseBtn.onMouse(pos, down)) {
