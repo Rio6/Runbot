@@ -18,7 +18,10 @@ Menu::MenuRect::MenuRect(int x, int y, int w, int h) : SDL_Rect{x, y, w, h} {}
 bool Menu::MenuRect::onMouse(Vector<int> &pos, bool down) {
     if(inRect(pos)) {
         if(down) {
-            state = DOWN;
+            if(state != DOWN) {
+                Graphic::instance().playSound("button.wav");
+                state = DOWN;
+            }
         } else {
             if(state == DOWN) {
                 // mouse down and up -> clicked
