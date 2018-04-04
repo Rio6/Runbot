@@ -3,6 +3,7 @@ BUILDDIR:=build
 
 CXXFLAGS+=-O2 -Wall --std=c++1z
 LIBS:=-lSDL2 -lSDL2_image -lSDL2_mixer
+INCLUDES:=-Iinclude
 SRCS:=$(wildcard $(SRCDIR)/*.cpp)
 HDRS:=$(wildcard $(SRCDIR)/*.hpp)
 OBJS:= $(patsubst $(SRCDIR)/%.cpp,$(BUILDDIR)/%.o,$(SRCS))
@@ -18,7 +19,7 @@ $(TGT): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(OBJS) $(LIBS) -o $(TGT)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.cpp
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 $(BUILDDIR):
 	mkdir -p $(BUILDDIR)
