@@ -26,7 +26,8 @@ namespace runbot {
             void renderImage(const std::string& name,
                     const SDL_Rect* src, const SDL_Rect* des, int color = 0xffffff);
             void renderText(const std::string &text, const SDL_Rect *des, int color = 0xffffff);
-            void playSound(const std::string& name);
+            int playSound(const std::string& name, int repeat = 0);
+            void stopSound(int channel);
             void clear();
             void update();
 
