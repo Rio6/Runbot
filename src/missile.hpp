@@ -22,6 +22,7 @@ namespace runbot {
             static const int H = 60;
 
             Missile(Game*, Vector<int> pos);
+            ~Missile();
             void draw();
             void doTick(int);
             bool onCollide(Object&, Direction);
@@ -31,6 +32,7 @@ namespace runbot {
         private:
             Game *game;
             Animation anim;
+            int soundCh;
             bool dead = false;
     };
 };

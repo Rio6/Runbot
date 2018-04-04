@@ -61,11 +61,12 @@ void Game::setState(State newState) {
 
     switch(newState) {
         case START:
+            reset();
             menu = std::make_unique<StartMenu>(this);
             break;
         case RUNNING:
             menu.release();
-            if(state == START || state == DEAD)
+            if(state == DEAD)
                 reset();
             break;
         case PAUSED:

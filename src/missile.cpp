@@ -19,6 +19,14 @@ Missile::Missile(Game *game, Vector<int> pos) :
     game(game), anim(0, 0, 120, 60, 10, 2, true) {
 
     anim.start();
+
+    soundCh = Graphic::instance().playSound("missile.wav", -1);
+}
+
+Missile::~Missile() {
+    Graphic::instance().stopSound(soundCh);
+    if(!dead)
+        Graphic::instance().playSound("missile_end.wav");
 }
 
 void Missile::draw() {
@@ -38,8 +46,6 @@ void Missile::doTick(int tick) {
     hitbox.minPos = pos + Vector<int>{10, 0};
     hitbox.maxPos = pos + Vector<int>{Missile::W, Missile::H};
 
-    dead = pos.x + Missile::W - game->distance < 0;
-
     anim.doTick();
 }
 
@@ -57,7 +63,7 @@ bool Missile::onCollide(Object &other, Direction dir) {
 }
 
 bool Missile::isDead() {
-    return dead;
+    return dead || pos.x + Missile::W - game->distance < 0;
 }
 
 runbot::Object::Type Missile::getType() {

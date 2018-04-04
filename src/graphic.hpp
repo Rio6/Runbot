@@ -52,7 +52,9 @@ namespace runbot {
             std::map<std::string, Mix_Chunk*> sounds {
                 {"bullet.wav", nullptr},
                 {"explosion.wav", nullptr},
-                {"button.wav", nullptr}
+                {"button.wav", nullptr},
+                {"missile.wav", nullptr},
+                {"missile_end.wav", nullptr}
             };
 
             std::map<char, SDL_Rect> letters;
