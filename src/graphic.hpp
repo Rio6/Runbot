@@ -26,7 +26,8 @@ namespace runbot {
             void renderImage(const std::string& name,
                     const SDL_Rect* src, const SDL_Rect* des, int color = 0xffffff);
             void renderText(const std::string &text, const SDL_Rect *des, int color = 0xffffff);
-            void playSound(const std::string& name);
+            int playSound(const std::string& name, int repeat = 0);
+            void stopSound(int channel);
             void clear();
             void update();
 
@@ -51,7 +52,10 @@ namespace runbot {
 
             std::map<std::string, Mix_Chunk*> sounds {
                 {"bullet.wav", nullptr},
-                {"explosion.wav", nullptr}
+                {"explosion.wav", nullptr},
+                {"button.wav", nullptr},
+                {"missile.wav", nullptr},
+                {"missile_end.wav", nullptr}
             };
 
             std::map<char, SDL_Rect> letters;

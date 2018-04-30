@@ -40,6 +40,7 @@ namespace runbot {
         private:
             Game *game;
 
+            MenuRect bgRect;
             MenuRect titleRect;
             MenuRect startBtn;
     };
