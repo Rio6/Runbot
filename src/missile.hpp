@@ -32,7 +32,7 @@ namespace runbot {
         private:
             Game *game;
             Animation anim;
-            int soundCh;
+            int soundCh = -1;
             bool dead = false;
     };
 };

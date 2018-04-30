@@ -19,8 +19,6 @@ Missile::Missile(Game *game, Vector<int> pos) :
     game(game), anim(0, 0, 120, 60, 10, 2, true) {
 
     anim.start();
-
-    soundCh = Graphic::instance().playSound("missile.wav", -1);
 }
 
 Missile::~Missile() {
@@ -45,6 +43,10 @@ void Missile::doTick(int tick) {
     hitbox.speed = speed;
     hitbox.minPos = pos + Vector<int>{10, 0};
     hitbox.maxPos = pos + Vector<int>{Missile::W, Missile::H};
+
+    // Play sound when missile is close to screen
+    if(soundCh < 0 && pos.x < game->distance + Game::W + Missile::W)
+        soundCh = Graphic::instance().playSound("missile.wav", -1);
 
     anim.doTick();
 }
