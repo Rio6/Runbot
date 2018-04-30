@@ -45,8 +45,13 @@ void Missile::doTick(int tick) {
     hitbox.maxPos = pos + Vector<int>{Missile::W, Missile::H};
 
     // Play sound when missile is close to screen
-    if(soundCh < 0 && pos.x < game->distance + Game::W + Missile::W)
-        soundCh = Graphic::instance().playSound("missile.wav", -1);
+    Graphic& graphic = Graphic::instance();
+    if(soundCh < 0) {
+        if(pos.x < game->distance + Game::W + Missile::W)
+            soundCh = graphic.playSound("missile_start.wav", 0);
+    } else if(!graphic.soundPlaying(soundCh)) {
+        graphic.playSound("missile.wav", -1, soundCh);
+    }
 
     anim.doTick();
 }

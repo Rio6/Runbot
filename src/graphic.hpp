@@ -55,7 +55,8 @@ namespace runbot {
                 {"explosion.wav", nullptr},
                 {"button.wav", nullptr},
                 {"missile.wav", nullptr},
-                {"missile_end.wav", nullptr}
+                {"missile_end.wav", nullptr},
+                {"missile_start.wav", nullptr}
             };
 
             std::map<char, SDL_Rect> letters;
