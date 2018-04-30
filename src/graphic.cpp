@@ -114,9 +114,9 @@ void Graphic::renderText(const std::string &text, const SDL_Rect *des, int color
     }
 }
 
-int Graphic::playSound(const std::string& name, int repeat) {
+int Graphic::playSound(const std::string& name, int repeat, int channel) {
     if(sounds.count(name) > 0) {
-        return Mix_PlayChannel(-1, sounds.at(name), repeat);
+        return Mix_PlayChannel(channel, sounds.at(name), repeat);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot play %s", name.c_str());
         return 1000; // Just return a number
@@ -125,6 +125,10 @@ int Graphic::playSound(const std::string& name, int repeat) {
 
 void Graphic::stopSound(int channel) {
     Mix_HaltChannel(channel);
+}
+
+bool Graphic::soundPlaying(int channel) {
+    return !!Mix_Playing(channel);
 }
 
 void Graphic::clear() {
