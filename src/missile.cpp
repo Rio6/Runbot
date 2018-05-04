@@ -23,7 +23,7 @@ Missile::Missile(Game *game, Vector<int> pos) :
 
 Missile::~Missile() {
     Graphic::instance().stopSound(soundCh);
-    if(!dead)
+    if(!dead && speed.x != 0) // Not dead && was flying
         Graphic::instance().playSound("missile_end.wav");
 }
 
@@ -34,8 +34,19 @@ void Missile::draw() {
 }
 
 void Missile::doTick(int tick) {
+    Graphic& graphic = Graphic::instance();
+
+    // Start moving & play sound when inside the screen
     if(game->distance + Game::W >= pos.x) {
         speed = {-game->speed, 0};
+        if(soundCh < 0) {
+            soundCh = graphic.playSound("missile_start.wav", 0);
+        }
+    }
+
+    // Play sound loop when start sound finished
+    if(soundCh >= 0 && !graphic.soundPlaying(soundCh)) {
+        graphic.playSound("missile.wav", -1, soundCh);
     }
 
     pos += speed;
@@ -43,15 +54,6 @@ void Missile::doTick(int tick) {
     hitbox.speed = speed;
     hitbox.minPos = pos + Vector<int>{10, 0};
     hitbox.maxPos = pos + Vector<int>{Missile::W, Missile::H};
-
-    // Play sound when missile is close to screen
-    Graphic& graphic = Graphic::instance();
-    if(soundCh < 0) {
-        if(pos.x < game->distance + Game::W + Missile::W)
-            soundCh = graphic.playSound("missile_start.wav", 0);
-    } else if(!graphic.soundPlaying(soundCh)) {
-        graphic.playSound("missile.wav", -1, soundCh);
-    }
 
     anim.doTick();
 }
