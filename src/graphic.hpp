@@ -47,7 +47,8 @@ namespace runbot {
                 {"cursor.png", nullptr},
                 {"letters.png", nullptr},
                 {"explosion.png", nullptr},
-                {"menu.png", nullptr}
+                {"menu.png", nullptr},
+                {"shooter.png", nullptr}
             };
 
             std::map<std::string, Mix_Chunk*> sounds {

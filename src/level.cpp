@@ -15,6 +15,7 @@
 #include "object.hpp"
 #include "tile.hpp"
 #include "missile.hpp"
+#include "shooter.hpp"
 #include "vector.hpp"
 
 using runbot::Level;
@@ -97,6 +98,8 @@ Level::ObjectInfo::ObjectInfo(int x, int y, const std::string &type) {
         this->type = Object::BULLET;
     else if(type == "EXPLOSION")
         this->type = Object::EXPLOSION;
+    else if(type == "SHOOTER")
+        this->type = Object::SHOOTER;
     else
         this->type = Object::UNKNOWN;
 }
@@ -108,6 +111,8 @@ runbot::Object *Level::ObjectInfo::create(Game *game, int distance) {
             return new Tile(game, tgtPos, Tile::TILE_GROUND);
         case Object::MISSILE:
             return new Missile(game, tgtPos);
+        case Object::SHOOTER:
+            return new Shooter(game, tgtPos);
         default:
             return nullptr;
     }

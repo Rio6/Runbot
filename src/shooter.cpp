@@ -1,0 +1,74 @@
+/*
+ * Author: Rio
+ * Date: 2018/05/04
+ */
+
+#include "shooter.hpp"
+#include "object.hpp"
+#include "game.hpp"
+#include "collision.hpp"
+#include "explosion.hpp"
+#include "vector.hpp"
+
+using runbot::Shooter;
+
+Shooter::Shooter(Game *game, Vector<int> pos) :
+    Object(pos, {pos, pos + Vector<int>{Shooter::W, Shooter::H}, speed}),
+    game(game),
+    bodyAnim(0, 0, 200, 300, 120, 2, true),
+    armAnim(0, 300, 200, 300, 30, 20, false) {
+}
+
+void Shooter::draw() {
+    Graphic &graphic = Graphic::instance();
+    SDL_Rect src, des;
+
+    // Body animation
+    src = bodyAnim.getCurrentClip();
+    des = {pos.x - game->distance, pos.y - game->cameraY, Shooter::W, Shooter::H};
+    graphic.renderImage("shooter.png", &src, &des);
+
+    // Arm animation
+    src = armAnim.getCurrentClip();
+    des = {pos.x - game->distance, pos.y - game->cameraY, Shooter::W, Shooter::H};
+    graphic.renderImage("shooter.png", &src, &des);
+}
+
+void Shooter::doTick(int tick) {
+
+    if(game->distance + Game::W - Shooter::W >= pos.x)
+        speed = {game->speed, 0};
+
+    pos += speed;
+
+    hitbox.speed = speed;
+    hitbox.minPos = pos + Vector<int>{0, 0};
+    hitbox.maxPos = pos + Vector<int>{Shooter::W, Shooter::H};
+
+    bodyAnim.doTick();
+    armAnim.doTick();
+}
+
+bool Shooter::onCollide(Object& other, Direction dir) {
+    switch(other.getType()) {
+        case ROBOT:
+        case BULLET:
+            hp--;
+            break;
+        default:
+            break;
+    }
+
+    if(hp <= 0)
+        game->spawn(new Explosion(game, pos, {Shooter::W, Shooter::H}));
+
+    return false;
+}
+
+bool Shooter::isDead() {
+    return hp <= 0;
+}
+
+runbot::Object::Type Shooter::getType() {
+    return SHOOTER;
+}
