@@ -13,9 +13,10 @@
 
 using runbot::Bullet;
 
-Bullet::Bullet(Game *game, Vector<int> pos, int baseSpeed) :
-    Object(pos, {baseSpeed + Bullet::SPEED, 0}, {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}}),
-    game(game), anim(0, 0, 40, 8, 1, 1, false) {
+Bullet::Bullet(Game *game, Vector<int> pos, float baseSpeed, bool enemy) :
+    Object(pos, {baseSpeed + (enemy ? -1 : 1) * Bullet::SPEED, 0},
+            {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}}),
+    game(game), anim(0, 0, 40, 8, 1, 1, false), enemy(enemy) {
 
     Graphic::instance().playSound("bullet.wav");
 }
@@ -33,16 +34,21 @@ void Bullet::doTick(int tick) {
     hitbox.minPos = pos;
     hitbox.maxPos = pos + Vector<int>{Bullet::W, Bullet::H};
 
-    dead = pos.x > game->distance + Game::W;
+    dead = pos.x > game->distance + Game::W || pos.x + Bullet::W < game->distance;
 }
 
 bool Bullet::onCollide(Object &other, Direction dir) {
+    Graphic::instance().playSound("explosion.wav");
     dead = true;
     return true;
 }
 
 bool Bullet::isDead() {
     return dead;
+}
+
+bool Bullet::isEnemy() {
+    return enemy;
 }
 
 runbot::Object::Type Bullet::getType() {
