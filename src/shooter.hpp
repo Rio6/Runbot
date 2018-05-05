@@ -29,6 +29,7 @@ namespace runbot {
             Animation bodyAnim;
             Animation armAnim;
             int hp = 5;
+            int spawnTime;
     };
 };
 

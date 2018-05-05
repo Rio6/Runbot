@@ -8,6 +8,7 @@
 #include "game.hpp"
 #include "collision.hpp"
 #include "explosion.hpp"
+#include "bullet.hpp"
 #include "vector.hpp"
 
 using runbot::Shooter;
@@ -16,7 +17,7 @@ Shooter::Shooter(Game *game, Vector<int> pos) :
     Object(pos, {pos, pos + Vector<int>{Shooter::W, Shooter::H}, speed}),
     game(game),
     bodyAnim(0, 0, 200, 300, 120, 2, true),
-    armAnim(0, 300, 200, 300, 30, 20, false) {
+    armAnim(0, 300, 200, 300, 30, 20, false), spawnTime(game->tick) {
 }
 
 void Shooter::draw() {
@@ -36,8 +37,12 @@ void Shooter::draw() {
 
 void Shooter::doTick(int tick) {
 
-    if(game->distance + Game::W - Shooter::W >= pos.x)
-        speed = {game->speed, 0};
+    if(game->distance + Game::W - Shooter::W >= pos.x) {
+        if((tick + spawnTime) % 180 == 0) {
+            game->spawn(new Bullet(game, {pos.x, pos.y + 90}, game->speed, true));
+            armAnim.start();
+        }
+    }
 
     pos += speed;
 
@@ -53,7 +58,8 @@ bool Shooter::onCollide(Object& other, Direction dir) {
     switch(other.getType()) {
         case ROBOT:
         case BULLET:
-            hp--;
+            if(!dynamic_cast<Bullet&>(other).isEnemy())
+                hp--;
             break;
         default:
             break;
