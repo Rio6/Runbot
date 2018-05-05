@@ -18,6 +18,12 @@ Shooter::Shooter(Game *game, Vector<int> pos) :
     game(game),
     bodyAnim(0, 0, 200, 300, 120, 2, true),
     armAnim(0, 300, 200, 300, 30, 20, false), spawnTime(game->tick) {
+
+    for(auto &object : game->getObjectsIn({game->distance, 0}, Game::W, Game::H)) {
+        if(object->getType() == SHOOTER) {
+            dead = true;
+        }
+    }
 }
 
 void Shooter::draw() {
@@ -50,6 +56,11 @@ void Shooter::doTick(int tick) {
     hitbox.minPos = pos + Vector<int>{0, 0};
     hitbox.maxPos = pos + Vector<int>{Shooter::W, Shooter::H};
 
+    if(hp <= 0) {
+        game->spawn(new Explosion(game, pos, {Shooter::W, Shooter::H}));
+        dead = true;
+    }
+
     bodyAnim.doTick();
     armAnim.doTick();
 }
@@ -65,14 +76,11 @@ bool Shooter::onCollide(Object& other, Direction dir) {
             break;
     }
 
-    if(hp <= 0)
-        game->spawn(new Explosion(game, pos, {Shooter::W, Shooter::H}));
-
     return false;
 }
 
 bool Shooter::isDead() {
-    return hp <= 0;
+    return dead;
 }
 
 runbot::Object::Type Shooter::getType() {

@@ -28,6 +28,7 @@ namespace runbot {
             Game *game;
             Animation bodyAnim;
             Animation armAnim;
+            bool dead = false;
             int hp = 5;
             int spawnTime;
     };
