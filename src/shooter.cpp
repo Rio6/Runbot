@@ -24,6 +24,8 @@ Shooter::Shooter(Game *game, Vector<int> pos) :
             dead = true;
         }
     }
+
+    bodyAnim.start();
 }
 
 void Shooter::draw() {
