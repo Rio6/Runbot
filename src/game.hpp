@@ -46,6 +46,7 @@ namespace runbot {
             void loop();
             void setState(State);
             void spawn(Object*);
+            std::vector<std::shared_ptr<Object>> getObjectsIn(Vector<int>, int xRange, int yRange);
 
         private:
             const int CURSOR_SIZE = 20;

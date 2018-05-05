@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 #include <cstdio>
+#include <cmath>
 
 #include "SDL2/SDL.h"
 
@@ -272,4 +273,16 @@ void Game::reset() {
 void Game::spawn(Object *obj) {
     if(!!obj)
         objects.emplace_back(obj);
+}
+
+std::vector<std::shared_ptr<runbot::Object>> Game::getObjectsIn(Vector<int> pos, int xRange, int yRange) {
+    std::vector<std::shared_ptr<Object>> rst;
+
+    for(auto &object : objects) {
+        Vector<int> relPos = object->getPos() - pos;
+        if(std::abs(relPos.x) <= xRange && std::abs(relPos.y) <= yRange) {
+            rst.push_back(object);
+        }
+    }
+    return rst;
 }
