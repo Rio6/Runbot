@@ -31,7 +31,7 @@ void Tile::draw() {
 }
 
 bool Tile::onCollide(Object &other, Direction dir) {
-    return false;
+    return true;
 }
 
 bool Tile::isDead() {

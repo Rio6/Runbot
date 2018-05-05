@@ -88,7 +88,7 @@ void Collision::solve() {
         bool aSolve = a->onCollide(*b, dir);
         bool bSolve = b->onCollide(*a, getOpposite(dir));
 
-        if(aSolve || bSolve) {
+        if(aSolve && bSolve) {
 
             Vector<float> speedA = a->getSpeed();
             Vector<float> speedB = b->getSpeed();
