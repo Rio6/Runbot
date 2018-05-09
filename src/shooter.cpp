@@ -46,10 +46,34 @@ void Shooter::draw() {
 void Shooter::doTick(int tick) {
 
     if(game->distance + Game::W - Shooter::W >= pos.x) {
+        if(game->distance + Game::W - Shooter::W * 3 >= pos.x)
+            speed.x = game->speed * 1.2;
+        else if(game->distance + Game::W - Shooter::W * 2 <= pos.x)
+            speed.x = game->speed * 0.8;
+
         if((tick + spawnTime) % 180 == 0) {
             game->spawn(new Bullet(game, {pos.x, pos.y + 90}, game->speed, true));
             armAnim.start();
         }
+    }
+
+    // Hover 10 units above the highest tile
+    int highestY = Game::H;
+    auto objects = game->getObjectsIn(pos, 300, Game::H); // objects are std::vector of std::shared_ptr of Object
+    for(auto &object : objects) {
+        if(object->getType() == TILE) {
+            Vector<int> objPos = object->getPos();
+            if(objPos.y < highestY)
+                highestY = objPos.y;
+        }
+    }
+
+    if(highestY < pos.y + Shooter::H + 10) {
+        speed.y = -game->speed;
+    } else if(highestY > pos.y + Shooter::H + 15) {
+        speed.y = game->speed;
+    } else {
+        speed.y = 0;
     }
 
     pos += speed;
