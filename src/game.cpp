@@ -185,8 +185,10 @@ void Game::doTick() {
     // Resolve collision
     std::vector<Collision> colls;
     for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
+        if((*it)->getPos().x >= distance + Game::W) continue;
         for(auto jt = it + 1; jt != objects.end(); jt++) {
-            colls.emplace_back((*it).get(), (*jt).get());
+            if((*jt)->getPos().x >= distance + Game::W) continue;
+            colls.emplace_back(it->get(), jt->get());
         }
     }
 
