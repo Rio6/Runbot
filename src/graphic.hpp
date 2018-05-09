@@ -1,4 +1,7 @@
 /*
+ * Wrapper for SDL functions
+ * It's called Graphic but there are sound functions in here too
+ *
  * Author: Rio
  * Date: 2017/05/21
  */
@@ -38,6 +41,7 @@ namespace runbot {
             SDL_Renderer *rend;
             SDL_Window *win;
 
+            // Images to load
             std::map<std::string, SDL_Texture*> imgs {
                 {"robot.png", nullptr},
                 {"tiles.png", nullptr},
@@ -51,6 +55,7 @@ namespace runbot {
                 {"shooter.png", nullptr}
             };
 
+            // Sounds to load
             std::map<std::string, Mix_Chunk*> sounds {
                 {"bullet.wav", nullptr},
                 {"bullet_hit.wav", nullptr},

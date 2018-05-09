@@ -40,8 +40,8 @@ void Missile::draw() {
 void Missile::doTick(int tick) {
     Graphic& graphic = Graphic::instance();
 
-    // Play sound when inside the screen
-    if(soundCh < 0 && game->distance + Game::W >= pos.x) {
+    // Play start sound when no sound is playing
+    if(soundCh < 0) {
         soundCh = graphic.playSound("missile_start.wav", 0);
     }
 

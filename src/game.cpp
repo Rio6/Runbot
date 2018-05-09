@@ -177,12 +177,16 @@ void Game::doTick() {
         if(objects[i]->isDead())
             objects.erase(objects.begin() + i);
         else if(objects[i]->getPos().x < distance + Game::W)
+            // Only tick object that are in-screen (left of right screen edge)
             objects[i]->doTick(tick);
     }
 
     bg.doTick(speed);
 
     // Resolve collision
+    // Only solve objects that are in-screen
+
+    // Find collisions
     std::vector<Collision> colls;
     for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
         if((*it)->getPos().x >= distance + Game::W) continue;
@@ -192,9 +196,10 @@ void Game::doTick() {
         }
     }
 
-    // Sort collision with time
+    // Sort collisions with time
     std::sort(colls.begin(), colls.end());
 
+    // Solve collisions
     for(Collision coll : colls) {
         coll.solve();
     }
@@ -222,11 +227,14 @@ void Game::draw() {
 
     graphic.clear();
 
+    // Draw background
     bg.draw();
 
+    // Draw objects
     for(std::shared_ptr<Object> object : objects)
         object->draw();
 
+    // Draw menu
     if(!!menu) {
         menu->draw();
     }
@@ -277,6 +285,7 @@ void Game::spawn(Object *obj) {
         objects.emplace_back(obj);
 }
 
+// Return objects that are within range of a position
 std::vector<std::shared_ptr<runbot::Object>> Game::getObjectsIn(Vector<int> pos, int xRange, int yRange) {
     std::vector<std::shared_ptr<Object>> rst;
 

@@ -43,11 +43,12 @@ Level::Level(Game *game) : game(game) {
 
         content[readTotal] = '\0';
 
+        // Parse the content
         try {
             json lvlJson = json::parse(content);
 
             for(json pattJson : lvlJson["patterns"]) {
-                std::vector<ObjectInfo> objects;
+                std::vector<ObjectInfo> objInfos;
 
                 int size = pattJson["size"];
 
@@ -55,10 +56,10 @@ Level::Level(Game *game) : game(game) {
                     int x = objJson["x"], y = objJson["y"];
                     std::string type = objJson["type"];
 
-                    objects.emplace_back(x, y, type);
+                    objInfos.emplace_back(x, y, type);
                 }
 
-                patterns.emplace_back(objects, size);
+                patterns.emplace_back(objInfos, size);
             }
         } catch(json::exception& e) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to parse level file: %s", e.what());
@@ -68,6 +69,8 @@ Level::Level(Game *game) : game(game) {
     SDL_RWclose(lvlFile);
 }
 
+// Generates level and put objects in game
+// Only generates if the distance is after the end of the last generated pattern
 void Level::genLevel(int distance) {
     if(patterns.size() <= 0) return;
 
@@ -104,6 +107,7 @@ Level::ObjectInfo::ObjectInfo(int x, int y, const std::string &type) {
         this->type = Object::UNKNOWN;
 }
 
+// Create an object from the info
 runbot::Object *Level::ObjectInfo::create(Game *game, int distance) {
     Vector<int> tgtPos = {pos.x + distance, pos.y};
     switch(type) {

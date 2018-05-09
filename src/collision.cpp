@@ -1,4 +1,6 @@
 /*
+ * This game uses swept AABB collision detection
+ *
  * Author: Rio
  * Date: 2017/10/03
  */
@@ -79,6 +81,8 @@ void Collision::calculate() {
 }
 
 void Collision::solve() {
+    // Just move objects back to where they touch
+    // Not a super fancy/accurate solving method
 
     // Recalculate before solving
     calculate();

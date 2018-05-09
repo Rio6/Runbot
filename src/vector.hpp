@@ -1,4 +1,6 @@
 /*
+ * My 2d vector class
+ *
  * Author: Rio
  * Date: 2017/10/05
  */
