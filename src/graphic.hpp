@@ -53,6 +53,7 @@ namespace runbot {
 
             std::map<std::string, Mix_Chunk*> sounds {
                 {"bullet.wav", nullptr},
+                {"bullet_hit.wav", nullptr},
                 {"explosion.wav", nullptr},
                 {"button.wav", nullptr},
                 {"missile.wav", nullptr},

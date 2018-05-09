@@ -52,7 +52,7 @@ bool Bullet::onCollide(Object &other, Direction dir) {
     }
 
     if(dying) {
-        Graphic::instance().playSound("explosion.wav");
+        Graphic::instance().playSound("bullet_hit.wav");
         dead = true;
     }
     return true;
