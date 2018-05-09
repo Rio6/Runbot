@@ -17,9 +17,9 @@ using runbot::Missile;
 
 Missile::Missile(Game *game, Vector<int> pos) :
     Object(pos, {-game->speed, 0}, {
-            pos + Vector<int>{10, 0},
-            pos + Vector<int>{Missile::W, Missile::H},
-            speed}),
+            .minPos = pos + Vector<int>{10, 0},
+            .maxPos = pos + Vector<int>{Missile::W, Missile::H},
+            }),
     game(game), anim(0, 0, 120, 60, 10, 2, true) {
 
     anim.start();

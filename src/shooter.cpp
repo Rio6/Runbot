@@ -14,7 +14,7 @@
 using runbot::Shooter;
 
 Shooter::Shooter(Game *game, Vector<int> pos) :
-    Object(pos, {pos, pos + Vector<int>{Shooter::W, Shooter::H}, speed}),
+    Object(pos, {.minPos = pos, .maxPos = pos + Vector<int>{Shooter::W, Shooter::H}}),
     game(game),
     bodyAnim(0, 0, 200, 300, 120, 2, true),
     armAnim(0, 300, 200, 300, 30, 20, false),
