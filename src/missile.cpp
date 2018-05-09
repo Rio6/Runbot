@@ -11,6 +11,7 @@
 #include "vector.hpp"
 #include "collision.hpp"
 #include "explosion.hpp"
+#include "bullet.hpp"
 
 using runbot::Missile;
 
@@ -59,14 +60,21 @@ void Missile::doTick(int tick) {
 }
 
 bool Missile::onCollide(Object &other, Direction dir) {
+    bool dying = false;
     switch(other.getType()) {
         case ROBOT:
+            dying = true;
+            break;
         case BULLET:
-            dead = true;
-            game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
+            dying = !dynamic_cast<Bullet&>(other).isEnemy();
             break;
         default:
             break;
+    }
+
+    if(dying) {
+        dead = true;
+        game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
     }
     return false;
 }

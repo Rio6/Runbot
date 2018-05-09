@@ -38,8 +38,23 @@ void Bullet::doTick(int tick) {
 }
 
 bool Bullet::onCollide(Object &other, Direction dir) {
-    Graphic::instance().playSound("explosion.wav");
-    dead = true;
+    bool dying = false;
+    switch(other.getType()) {
+        case ROBOT:
+            dying = enemy;
+            break;
+        case TILE:
+        case BULLET:
+            dying = true;
+            break;
+        default:
+            dying = !enemy;
+    }
+
+    if(dying) {
+        Graphic::instance().playSound("explosion.wav");
+        dead = true;
+    }
     return true;
 }
 

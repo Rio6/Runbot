@@ -69,7 +69,6 @@ void Shooter::doTick(int tick) {
 
 bool Shooter::onCollide(Object& other, Direction dir) {
     switch(other.getType()) {
-        case ROBOT:
         case BULLET:
             if(!dynamic_cast<Bullet&>(other).isEnemy())
                 hp--;
@@ -78,7 +77,7 @@ bool Shooter::onCollide(Object& other, Direction dir) {
             break;
     }
 
-    return false;
+    return true;
 }
 
 bool Shooter::isDead() {
