@@ -16,7 +16,10 @@
 using runbot::Missile;
 
 Missile::Missile(Game *game, Vector<int> pos) :
-    Object(pos, {.minPos={10, 0}, .maxPos=pos + Vector<int>{Missile::W, Missile::H}}),
+    Object(pos, {-game->speed, 0}, {
+            pos + Vector<int>{10, 0},
+            pos + Vector<int>{Missile::W, Missile::H},
+            speed}),
     game(game), anim(0, 0, 120, 60, 10, 2, true) {
 
     anim.start();
@@ -24,7 +27,7 @@ Missile::Missile(Game *game, Vector<int> pos) :
 
 Missile::~Missile() {
     Graphic::instance().stopSound(soundCh);
-    if(!dead && speed.x != 0) // Not dead && was flying
+    if(!dead && pos.x < game->distance + Game::W) // Not dead && was in screen
         Graphic::instance().playSound("missile_end.wav");
 }
 
@@ -37,12 +40,9 @@ void Missile::draw() {
 void Missile::doTick(int tick) {
     Graphic& graphic = Graphic::instance();
 
-    // Start moving & play sound when inside the screen
-    if(game->distance + Game::W >= pos.x) {
-        speed = {-game->speed, 0};
-        if(soundCh < 0) {
-            soundCh = graphic.playSound("missile_start.wav", 0);
-        }
+    // Play sound when inside the screen
+    if(soundCh < 0 && game->distance + Game::W >= pos.x) {
+        soundCh = graphic.playSound("missile_start.wav", 0);
     }
 
     // Play sound loop when start sound finished

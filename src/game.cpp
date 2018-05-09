@@ -176,7 +176,7 @@ void Game::doTick() {
     for(size_t i = 0; i < objects.size(); i++) {
         if(objects[i]->isDead())
             objects.erase(objects.begin() + i);
-        else
+        else if(objects[i]->getPos().x < distance + Game::W)
             objects[i]->doTick(tick);
     }
 

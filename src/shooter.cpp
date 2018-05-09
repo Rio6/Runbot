@@ -17,7 +17,8 @@ Shooter::Shooter(Game *game, Vector<int> pos) :
     Object(pos, {pos, pos + Vector<int>{Shooter::W, Shooter::H}, speed}),
     game(game),
     bodyAnim(0, 0, 200, 300, 120, 2, true),
-    armAnim(0, 300, 200, 300, 30, 20, false), spawnTime(game->tick) {
+    armAnim(0, 300, 200, 300, 30, 20, false),
+    spawnTime(game->tick) {
 
     for(auto &object : game->getObjectsIn({game->distance, 0}, Game::W, Game::H)) {
         if(object->getType() == SHOOTER) {
@@ -45,17 +46,17 @@ void Shooter::draw() {
 
 void Shooter::doTick(int tick) {
 
-    if(game->distance + Game::W - Shooter::W >= pos.x) {
-        if(game->distance + Game::W - Shooter::W * 3 >= pos.x)
-            speed.x = game->speed * 1.2;
-        else if(game->distance + Game::W - Shooter::W * 2 <= pos.x)
-            speed.x = game->speed * 0.8;
-
-        if((tick + spawnTime) % 180 == 0) {
-            game->spawn(new Bullet(game, {pos.x, pos.y + 90}, game->speed, true));
-            armAnim.start();
-        }
+    // Shoot bullet every 180 ticks
+    if((tick + spawnTime) % 180 == 0) {
+        game->spawn(new Bullet(game, {pos.x, pos.y + 90}, game->speed, true));
+        armAnim.start();
     }
+
+    // Move around
+    if(game->distance + Game::W - Shooter::W * 3 >= pos.x)
+        speed.x = game->speed * 1.2;
+    else if(game->distance + Game::W - Shooter::W * 2 <= pos.x)
+        speed.x = game->speed * 0.8;
 
     // Hover 10 units above the highest tile
     int highestY = Game::H;
