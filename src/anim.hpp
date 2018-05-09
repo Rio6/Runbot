@@ -1,4 +1,7 @@
 /*
+ * Calculates SDL_Rect of sprites for a spritesheet
+ * Does not store/care about the actual image
+ *
  * Author: Rio
  * Date: 2017/05/21
  */

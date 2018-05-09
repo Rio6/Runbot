@@ -87,6 +87,10 @@ bool Robot::onCollide(Object &other, Direction dir) {
         case MISSILE:
             die();
             break;
+        case BULLET:
+            if(dynamic_cast<Bullet&>(other).isEnemy())
+                die();
+            break;
         default:
             break;
     }
@@ -122,8 +126,8 @@ void Robot::releaseJump() {
 
 void Robot::shoot() {
     if(shootCD == 0) {
-        game->spawn(new Bullet(game, pos +
-                    Vector<int>{Robot::W, 102}, game->speed));
+        game->spawn(new Bullet(game, pos + Vector<int>{Robot::W, 102},
+                    game->speed, false));
         armAnim.start();
         shootCD = armAnim.getLength();
     }

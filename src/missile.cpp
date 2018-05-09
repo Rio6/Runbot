@@ -11,11 +11,15 @@
 #include "vector.hpp"
 #include "collision.hpp"
 #include "explosion.hpp"
+#include "bullet.hpp"
 
 using runbot::Missile;
 
 Missile::Missile(Game *game, Vector<int> pos) :
-    Object(pos, {.minPos={10, 0}, .maxPos={Missile::W, Missile::H}}),
+    Object(pos, {-game->speed, 0}, {
+            .minPos = pos + Vector<int>{10, 0},
+            .maxPos = pos + Vector<int>{Missile::W, Missile::H},
+            }),
     game(game), anim(0, 0, 120, 60, 10, 2, true) {
 
     anim.start();
@@ -23,7 +27,7 @@ Missile::Missile(Game *game, Vector<int> pos) :
 
 Missile::~Missile() {
     Graphic::instance().stopSound(soundCh);
-    if(!dead)
+    if(!dead && pos.x < game->distance + Game::W) // Not dead && was in screen
         Graphic::instance().playSound("missile_end.wav");
 }
 
@@ -34,8 +38,16 @@ void Missile::draw() {
 }
 
 void Missile::doTick(int tick) {
-    if(game->distance + Game::W >= pos.x) {
-        speed = {-game->speed, 0};
+    Graphic& graphic = Graphic::instance();
+
+    // Play start sound when no sound is playing
+    if(soundCh < 0) {
+        soundCh = graphic.playSound("missile_start.wav", 0);
+    }
+
+    // Play sound loop when start sound finished
+    if(soundCh >= 0 && !graphic.soundPlaying(soundCh)) {
+        graphic.playSound("missile.wav", -1, soundCh);
     }
 
     pos += speed;
@@ -44,22 +56,25 @@ void Missile::doTick(int tick) {
     hitbox.minPos = pos + Vector<int>{10, 0};
     hitbox.maxPos = pos + Vector<int>{Missile::W, Missile::H};
 
-    // Play sound when missile is close to screen
-    if(soundCh < 0 && pos.x < game->distance + Game::W + Missile::W)
-        soundCh = Graphic::instance().playSound("missile.wav", -1);
-
     anim.doTick();
 }
 
 bool Missile::onCollide(Object &other, Direction dir) {
+    bool dying = false;
     switch(other.getType()) {
         case ROBOT:
+            dying = true;
+            break;
         case BULLET:
-            dead = true;
-            game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
+            dying = !dynamic_cast<Bullet&>(other).isEnemy();
             break;
         default:
             break;
+    }
+
+    if(dying) {
+        dead = true;
+        game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
     }
     return false;
 }

@@ -1,4 +1,7 @@
 /*
+ * Generates level from a file
+ * Randomly select a pattern in the file to generate
+ *
  * Author: Rio
  * Date: 2018/12/19
  */
@@ -20,15 +23,18 @@ namespace runbot {
     class Level {
         public:
             Level(Game*);
+            // Generates level and put objects in game
             void genLevel(int distance);
             void reset();
 
         private:
+            // Stores info about an object
             class ObjectInfo {
                 public:
                     ObjectInfo(Vector<int>, Object::Type);
                     ObjectInfo(int, int, const std::string& type);
 
+                    // Create an object from the info
                     Object *create(Game*, int);
                 private:
                     Vector<int> pos;

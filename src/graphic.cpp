@@ -19,19 +19,23 @@ Graphic *Graphic::graphic = nullptr;
 
 Graphic::Graphic() {
 
+    // Init SDL
     if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
         throw std::runtime_error(SDL_GetError());
 
     // Configure SDL
     SDL_ShowCursor(false);
 
+    // Init SDL_img
     int imgFlags = IMG_INIT_PNG;
     if((IMG_Init(imgFlags) & imgFlags) != imgFlags)
         throw std::runtime_error(IMG_GetError());
 
+    // Init SDL_mix
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
         throw std::runtime_error(Mix_GetError());
 
+    // Create and configure window
     win = SDL_CreateWindow(runbot::NAME,
             SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
             runbot::Game::W, runbot::Game::H,
@@ -39,6 +43,7 @@ Graphic::Graphic() {
     if(!win)
         throw std::runtime_error(SDL_GetError());
 
+    // Create renderer
     rend = SDL_CreateRenderer(win, -1,
             SDL_RENDERER_ACCELERATED
 #ifdef USE_VSYNC
@@ -118,9 +123,9 @@ void Graphic::renderText(const std::string &text, const SDL_Rect *des, int color
     }
 }
 
-int Graphic::playSound(const std::string& name, int repeat) {
+int Graphic::playSound(const std::string& name, int repeat, int channel) {
     if(sounds.count(name) > 0) {
-        return Mix_PlayChannel(-1, sounds.at(name), repeat);
+        return Mix_PlayChannel(channel, sounds.at(name), repeat);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot play %s", name.c_str());
         return 1000; // Just return a number
@@ -129,6 +134,10 @@ int Graphic::playSound(const std::string& name, int repeat) {
 
 void Graphic::stopSound(int channel) {
     Mix_HaltChannel(channel);
+}
+
+bool Graphic::soundPlaying(int channel) {
+    return !!Mix_Playing(channel);
 }
 
 void Graphic::clear() {
@@ -141,6 +150,7 @@ void Graphic::update() {
 
 void Graphic::loadMedia() {
 
+    // Load textures
     for(auto &img : imgs) {
         SDL_Surface *loadSurface = IMG_Load(("assets/" + img.first).c_str());
         if(!loadSurface) {
@@ -155,6 +165,7 @@ void Graphic::loadMedia() {
         SDL_FreeSurface(loadSurface);
     }
 
+    // Load sounds
     for(auto &sound : sounds) {
         sound.second = Mix_LoadWAV(("assets/" + sound.first).c_str());
         if(!sound.second) {
@@ -162,6 +173,7 @@ void Graphic::loadMedia() {
         }
     }
 
+    // Load fonts
     int i = 0;
     for(auto c : " :0123456789abcdefghijklmnopqrstuvwxyz") {
         letters[c] = {64 * i, 0, 64, 64};

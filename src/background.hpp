@@ -1,4 +1,7 @@
 /*
+ * Calculates tiling background
+ * Does not store/care about the actual image
+ *
  * Author: Rio
  * Date: 2017/12/08
  */

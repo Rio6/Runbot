@@ -22,7 +22,7 @@ Vector<int> Object::getPos() {
 }
 
 bool Object::onCollide(Object &other, Direction dir) {
-    return true;
+    return false;
 }
 
 Vector<float> Object::getSpeed() {

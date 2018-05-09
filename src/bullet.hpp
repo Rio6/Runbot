@@ -21,17 +21,19 @@ namespace runbot {
             static const int H = 8;
             static constexpr float SPEED = 15;
 
-            Bullet(Game*, Vector<int> pos, int baseSpeed);
+            Bullet(Game*, Vector<int> pos, float baseSpeed, bool enemy);
             void draw();
             void doTick(int);
             bool onCollide(Object&, Direction);
             bool isDead();
+            bool isEnemy();
             Type getType();
 
         private:
             Game *game;
             Animation anim;
             bool dead = false;
+            bool enemy;
     };
 };
 

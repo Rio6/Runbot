@@ -15,6 +15,7 @@
 #include "object.hpp"
 #include "tile.hpp"
 #include "missile.hpp"
+#include "shooter.hpp"
 #include "vector.hpp"
 
 using runbot::Level;
@@ -42,11 +43,12 @@ Level::Level(Game *game) : game(game) {
 
         content[readTotal] = '\0';
 
+        // Parse the content
         try {
             json lvlJson = json::parse(content);
 
             for(json pattJson : lvlJson["patterns"]) {
-                std::vector<ObjectInfo> objects;
+                std::vector<ObjectInfo> objInfos;
 
                 int size = pattJson["size"];
 
@@ -54,10 +56,10 @@ Level::Level(Game *game) : game(game) {
                     int x = objJson["x"], y = objJson["y"];
                     std::string type = objJson["type"];
 
-                    objects.emplace_back(x, y, type);
+                    objInfos.emplace_back(x, y, type);
                 }
 
-                patterns.emplace_back(objects, size);
+                patterns.emplace_back(objInfos, size);
             }
         } catch(json::exception& e) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to parse level file: %s", e.what());
@@ -67,6 +69,8 @@ Level::Level(Game *game) : game(game) {
     SDL_RWclose(lvlFile);
 }
 
+// Generates level and put objects in game
+// Only generates if the distance is after the end of the last generated pattern
 void Level::genLevel(int distance) {
     if(patterns.size() <= 0) return;
 
@@ -97,10 +101,13 @@ Level::ObjectInfo::ObjectInfo(int x, int y, const std::string &type) {
         this->type = Object::BULLET;
     else if(type == "EXPLOSION")
         this->type = Object::EXPLOSION;
+    else if(type == "SHOOTER")
+        this->type = Object::SHOOTER;
     else
         this->type = Object::UNKNOWN;
 }
 
+// Create an object from the info
 runbot::Object *Level::ObjectInfo::create(Game *game, int distance) {
     Vector<int> tgtPos = {pos.x + distance, pos.y};
     switch(type) {
@@ -108,6 +115,8 @@ runbot::Object *Level::ObjectInfo::create(Game *game, int distance) {
             return new Tile(game, tgtPos, Tile::TILE_GROUND);
         case Object::MISSILE:
             return new Missile(game, tgtPos);
+        case Object::SHOOTER:
+            return new Shooter(game, tgtPos);
         default:
             return nullptr;
     }

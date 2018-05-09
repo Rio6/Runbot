@@ -9,6 +9,7 @@
 #include <map>
 #include <string>
 #include <cstdio>
+#include <cmath>
 
 #include "SDL.h"
 
@@ -180,23 +181,30 @@ void Game::doTick() {
     for(size_t i = 0; i < objects.size(); i++) {
         if(objects[i]->isDead())
             objects.erase(objects.begin() + i);
-        else
+        else if(objects[i]->getPos().x < distance + Game::W)
+            // Only tick object that are in-screen (left of right screen edge)
             objects[i]->doTick(tick);
     }
 
     bg.doTick(speed);
 
     // Resolve collision
+    // Only solve objects that are in-screen
+
+    // Find collisions
     std::vector<Collision> colls;
     for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
+        if((*it)->getPos().x >= distance + Game::W) continue;
         for(auto jt = it + 1; jt != objects.end(); jt++) {
-            colls.emplace_back((*it).get(), (*jt).get());
+            if((*jt)->getPos().x >= distance + Game::W) continue;
+            colls.emplace_back(it->get(), jt->get());
         }
     }
 
-    // Sort collision with time
+    // Sort collisions with time
     std::sort(colls.begin(), colls.end());
 
+    // Solve collisions
     for(Collision coll : colls) {
         coll.solve();
     }
@@ -224,11 +232,14 @@ void Game::draw() {
 
     graphic.clear();
 
+    // Draw background
     bg.draw();
 
+    // Draw objects
     for(std::shared_ptr<Object> object : objects)
         object->draw();
 
+    // Draw menu
     if(!!menu) {
         menu->draw();
     }
@@ -277,4 +288,17 @@ void Game::reset() {
 void Game::spawn(Object *obj) {
     if(!!obj)
         objects.emplace_back(obj);
+}
+
+// Return objects that are within range of a position
+std::vector<std::shared_ptr<runbot::Object>> Game::getObjectsIn(Vector<int> pos, int xRange, int yRange) {
+    std::vector<std::shared_ptr<Object>> rst;
+
+    for(auto &object : objects) {
+        Vector<int> relPos = object->getPos() - pos;
+        if(std::abs(relPos.x) <= xRange && std::abs(relPos.y) <= yRange) {
+            rst.push_back(object);
+        }
+    }
+    return rst;
 }
