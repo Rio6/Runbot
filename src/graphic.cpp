@@ -13,6 +13,8 @@
 #include "graphic.hpp"
 #include "game.hpp"
 
+#include "config.h"
+
 using runbot::Graphic;
 
 Graphic *Graphic::graphic = nullptr;
