@@ -25,11 +25,10 @@ Level::Level(Game *game) : game(game) {
 
     // Load level patterns from file
     SDL_RWops *lvlFile = SDL_RWFromFile(Level::FILE_PATH, "r");
-    int size = SDL_RWsize(lvlFile);
-
-    if(size < 0) {
+    if(!lvlFile) {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s", FILE_PATH);
     } else {
+        int size = SDL_RWsize(lvlFile);
         // File code from https://gitlab.com/wikibooks-opengl/modern-tutorials/blob/master/common-sdl2/shader_utils.cpp
         char content[size + 1];
         char *buff = content;
@@ -64,9 +63,9 @@ Level::Level(Game *game) : game(game) {
         } catch(json::exception& e) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to parse level file: %s", e.what());
         }
-    }
 
-    SDL_RWclose(lvlFile);
+        SDL_RWclose(lvlFile);
+    }
 }
 
 // Generates level and put objects in game
