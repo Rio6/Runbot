@@ -43,6 +43,7 @@ namespace runbot {
             MenuRect bgRect;
             MenuRect titleRect;
             MenuRect startBtn;
+            MenuRect verRect;
     };
 
     class PauseMenu : public Menu {

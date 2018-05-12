@@ -1,1 +1,3 @@
+#cmakedefine VERSION "@VERSION@"
+#cmakedefine DATA_DIR "@DATA_DIR@"
 #cmakedefine USE_VSYNC

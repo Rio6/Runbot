@@ -150,7 +150,7 @@ void Graphic::loadMedia() {
 
     // Load textures
     for(auto &img : imgs) {
-        SDL_Surface *loadSurface = IMG_Load(("assets/" + img.first).c_str());
+        SDL_Surface *loadSurface = IMG_Load((DATA_DIR + img.first).c_str());
         if(!loadSurface) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", img.first.c_str(), IMG_GetError());
             continue;
@@ -165,7 +165,7 @@ void Graphic::loadMedia() {
 
     // Load sounds
     for(auto &sound : sounds) {
-        sound.second = Mix_LoadWAV(("assets/" + sound.first).c_str());
+        sound.second = Mix_LoadWAV((DATA_DIR + sound.first).c_str());
         if(!sound.second) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", sound.first.c_str(), Mix_GetError());
         }
