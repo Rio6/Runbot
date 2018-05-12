@@ -27,9 +27,10 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
 
 # Configs
 option(USE_VSYNC "Enable V-SYNC" ON)
-set(DATA_DIR ${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}/)
+set(BIN_DIR "bin" CACHE PATH "Binary path")
+set(DATA_DIR "share/${PROJECT_NAME}" CACHE PATH "Asset path")
 configure_file(include/config.h.in include/config.h)
 
 # Install
-install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-install(DIRECTORY assets/ DESTINATION share/${PROJECT_NAME})
+install(TARGETS ${PROJECT_NAME} DESTINATION ${BIN_DIR})
+install(DIRECTORY assets/ DESTINATION ${DATA_DIR})
