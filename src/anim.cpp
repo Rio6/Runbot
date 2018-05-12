@@ -11,7 +11,7 @@
 using runbot::Animation;
 
 Animation::Animation(int x, int y, int w, int h, int length, int count, bool repeat = true) :
-    x(x), y(y), w(w), h(h), length(length), repeat(repeat), spriteClips(count) {
+    length(length), repeat(repeat), spriteClips(count) {
 
     if(length <= 0) {
         SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION, "Length is %d, setting to 1", length);

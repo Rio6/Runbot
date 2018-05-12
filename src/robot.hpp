@@ -35,7 +35,6 @@ namespace runbot {
             void die();
 
         private:
-            SDL_Texture *sprite;
             Game *game;
             Animation bodyAnim;
             Animation armAnim;
