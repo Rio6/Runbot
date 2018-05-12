@@ -10,7 +10,7 @@ file(GLOB sources "src/*.cpp")
 add_executable(${PROJECT_NAME} ${sources})
 
 # Include
-include_directories(${CMAKE_BINARY_DIR}/include)
+include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_BINARY_DIR}/include)
 
 # Libraries for windows
 if(${CMAKE_SYSTEM_NAME} MATCHES Windows)
