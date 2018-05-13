@@ -23,7 +23,7 @@
 
 using runbot::Game;
 
-Game::Game() : robot(this), level(this) {
+Game::Game() : level(this) {
     setState(START);
 }
 
@@ -159,13 +159,13 @@ void Game::doTick() {
     // Robot actions
     if(state == RUNNING) { // Only do these when game is running
         if(keys["jump"]) {
-            robot.jump();
+            robot->jump();
         } else {
-            robot.releaseJump();
+            robot->releaseJump();
         }
 
         if(keys["shoot"]) {
-            robot.shoot();
+            robot->shoot();
         }
     }
 
@@ -207,7 +207,7 @@ void Game::doTick() {
     if(state == RUNNING) { // Only do these when game is running
 
         // Move camera up if robot is too high
-        int robotY = robot.getPos().y;
+        int robotY = robot->getPos().y;
         if(robotY < 0)
             cameraY = robotY / 2;
         else
@@ -268,10 +268,10 @@ void Game::reset() {
     objects.clear();
 
     // Reset robot
-    robot.reset();
+    robot = std::shared_ptr<Robot>(new Robot(this));
 
     // Put robot in objects, easier to loop through
-    objects.emplace_back(&robot, [](Robot *r) {}); // But don't delete robot
+    objects.push_back(robot);
 
     // Put some tiles at the beginning
     for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
