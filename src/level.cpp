@@ -8,7 +8,7 @@
 #include <string>
 #include <utility>
 
-#include "json.hpp"
+#include "nlohmann/json.hpp"
 
 #include "level.hpp"
 #include "game.hpp"
