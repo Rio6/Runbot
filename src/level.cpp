@@ -73,6 +73,17 @@ Level::Level(Game *game) : game(game) {
 void Level::genLevel(int distance) {
     if(patterns.size() <= 0) return;
 
+    if(distance == 0) {
+        // Put some tiles at the beginning
+        int c = 0;
+        for(int i = 0; i < Game::W - Tile::W; i += Tile::W, c++) {
+            game->spawn(new Tile(game,
+                        {i, Game::H - Tile::H}, Tile::TILE_GROUND));
+        }
+        lastDist = 0;
+        pattSize = Tile::W * c;
+    }
+
     if(distance - lastDist > pattSize) {
         distance = lastDist + pattSize;
         const auto &[objects, size] = patterns[std::rand() % patterns.size()];

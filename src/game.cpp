@@ -273,11 +273,8 @@ void Game::reset() {
     // Put robot in objects, easier to loop through
     objects.push_back(robot);
 
-    // Put some tiles at the beginning
-    for(int i = 0; i < Game::W - Tile::W; i += Tile::W) {
-        objects.emplace_back(new Tile(this,
-                    {i, Game::H - Tile::H}, Tile::TILE_GROUND));
-    }
+    // Generate in-screen level
+    level.genLevel(distance);
 }
 
 void Game::spawn(Object *obj) {

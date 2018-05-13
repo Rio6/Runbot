@@ -49,7 +49,7 @@ namespace runbot {
             Game *game;
 
             int lastDist = 0;
-            int pattSize = 1000;
+            int pattSize = 0;
     };
 };
 
