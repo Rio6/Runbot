@@ -26,7 +26,6 @@ namespace runbot {
             void doTick();
 
         private:
-            int x, y, w, h; // Start pint, size
             int length; // The length of the animation
             unsigned int frame = 0;
             unsigned int tick = 0;

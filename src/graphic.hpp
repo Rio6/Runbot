@@ -9,8 +9,6 @@
 #ifndef _GRAPHIC_H_
 #define _GRAPHIC_H_
 
-#define USE_VSYNC
-
 #include <string>
 #include <map>
 

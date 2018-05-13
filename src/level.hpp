@@ -17,6 +17,8 @@
 #include "tile.hpp"
 #include "vector.hpp"
 
+#include "config.h"
+
 namespace runbot {
     class Game; // Forward declare
 
@@ -41,13 +43,13 @@ namespace runbot {
                     Object::Type type;
             };
 
-            const char *FILE_PATH = "assets/levels.json";
+            const char *FILE_PATH = DATA_DIR "levels.json";
 
             std::vector<std::pair<std::vector<ObjectInfo>, int>> patterns;
             Game *game;
 
             int lastDist = 0;
-            int pattSize = 1000;
+            int pattSize = 0;
     };
 };
 

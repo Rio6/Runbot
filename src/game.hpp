@@ -55,7 +55,7 @@ namespace runbot {
 
             std::map<std::string, bool> keys;
 
-            Robot robot;
+            std::shared_ptr<Robot> robot;
             std::vector<std::shared_ptr<Object>> objects;
             Level level;
             Background bg;

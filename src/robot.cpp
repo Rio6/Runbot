@@ -98,17 +98,11 @@ bool Robot::onCollide(Object &other, Direction dir) {
 }
 
 bool Robot::isDead() {
-    return false;
+    return dead;
 }
 
 runbot::Object::Type Robot::getType() {
     return ROBOT;
-}
-
-void Robot::reset() {
-    pos = {0, 0};
-    speed = {0, 0};
-    dead = false;
 }
 
 void Robot::jump() {
