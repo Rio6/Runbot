@@ -35,7 +35,7 @@ Graphic::Graphic() {
 
     // Init SDL_mix
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-        throw std::runtime_error(Mix_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_AUDIO, "Audio error: %s", Mix_GetError());
 
     // Create and configure window
     win = SDL_CreateWindow(runbot::NAME,
