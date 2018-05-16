@@ -98,7 +98,7 @@ void Graphic::reset() {
 
 void Graphic::renderImage(const std::string &name,
         const SDL_Rect *src, const SDL_Rect *des, int color) {
-    if(imgs.count(name) > 0) {
+    if(imgs.count(name) > 0 && imgs.at(name) != nullptr) {
         SDL_Texture *text = imgs.at(name);
         SDL_SetTextureColorMod(text,
                 (0xff0000 & color) >> 16,
@@ -122,7 +122,7 @@ void Graphic::renderText(const std::string &text, const SDL_Rect *des, int color
 }
 
 int Graphic::playSound(const std::string& name, int repeat, int channel) {
-    if(sounds.count(name) > 0) {
+    if(sounds.count(name) > 0 && sounds.at(name) != nullptr) {
         return Mix_PlayChannel(channel, sounds.at(name), repeat);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot play %s", name.c_str());
