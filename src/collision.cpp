@@ -6,6 +6,7 @@
  */
 
 #include <algorithm>
+#include <cmath>
 
 #include "collision.hpp"
 #include "vector.hpp"
@@ -94,8 +95,13 @@ void Collision::solve() {
 
         if(aSolve && bSolve) {
 
+            Hitbox ha = a->getHitbox();
+            Hitbox hb = b->getHitbox();
+
             Vector<float> speedA = a->getSpeed();
             Vector<float> speedB = b->getSpeed();
+            Vector<float> relSpeed = speedB - speedA;
+
             Vector<float> fixA, fixB;
 
             switch(dir) {
@@ -103,15 +109,27 @@ void Collision::solve() {
                 case RIGHT:
                     fixA = {speedA.x * time, 0};
                     fixB = {speedB.x * time, 0};
-                    speedA = {0, speedA.y};
-                    speedB = {0, speedB.y};
+
+                    if(std::isinf(ha.mass) || std::isinf(hb.mass)) {
+                        speedA = {0, speedA.y};
+                        speedB = {0, speedB.y};
+                    } else {
+                        speedA = {speedB.x + (hb.mass - ha.mass) * relSpeed.x / (ha.mass + hb.mass), speedA.y};
+                        speedB = {speedB.x + 2 * ha.mass * relSpeed.x / (ha.mass + hb.mass), speedA.y};
+                    }
                     break;
                 case UP:
                 case DOWN:
                     fixA = {0, speedA.y * time};
                     fixB = {0, speedB.y * time};
-                    speedA = {speedA.x, 0};
-                    speedB = {speedB.x, 0};
+
+                    if(std::isinf(ha.mass) || std::isinf(hb.mass)) {
+                        speedA = {speedA.x, 0};
+                        speedB = {speedB.x, 0};
+                    } else {
+                        speedA = {speedB.y + 2 * ha.mass * relSpeed.y / (ha.mass + hb.mass), speedA.x};
+                        speedB = {speedB.y + (ha.mass - hb.mass) * relSpeed.y / (ha.mass + hb.mass), speedA.x};
+                    }
                     break;
                 default:
                     return;

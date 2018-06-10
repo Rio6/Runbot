@@ -4,6 +4,7 @@
  */
 
 #include <stdexcept>
+#include <cmath>
 
 #include "SDL2/SDL.h"
 
@@ -17,7 +18,10 @@
 using runbot::Tile;
 
 Tile::Tile(Game *game, Vector<int> pos, TileType type) :
-    Object(pos, {.minPos=pos, .maxPos=pos + Vector<int>{Tile::W, Tile::H}}),
+    Object(pos, {
+            .minPos=pos,
+            .maxPos=pos + Vector<int>{Tile::W, Tile::H},
+            .mass=INFINITY}),
     game(game),
     anim(0, 0, 100, 100, 1, 1, false), type(type) {
 }

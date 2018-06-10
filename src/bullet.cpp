@@ -15,7 +15,7 @@ using runbot::Bullet;
 
 Bullet::Bullet(Game *game, Vector<int> pos, float baseSpeed, bool enemy) :
     Object(pos, {baseSpeed + (enemy ? -1 : 1) * Bullet::SPEED, 0},
-            {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}}),
+            {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}, .mass=.5}),
     game(game), anim(0, 0, 40, 8, 1, 1, false), enemy(enemy) {
 
     Graphic::instance().playSound("bullet.wav");
