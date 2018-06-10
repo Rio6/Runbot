@@ -25,6 +25,8 @@ namespace runbot {
             Type getType();
 
         private:
+            static const float SPEED_FACTOR;
+
             Game *game;
             Animation bodyAnim;
             Animation armAnim;

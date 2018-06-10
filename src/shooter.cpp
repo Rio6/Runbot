@@ -13,14 +13,16 @@
 
 using runbot::Shooter;
 
+const float Shooter::SPEED_FACTOR = 5;
+
 Shooter::Shooter(Game *game, Vector<int> pos) :
-    Object(pos, {.minPos = pos, .maxPos = pos + Vector<int>{Shooter::W, Shooter::H}}),
+    Object(pos, {game->speed, 0}, {.minPos = pos, .maxPos = pos + Vector<int>{Shooter::W, Shooter::H}}),
     game(game),
     bodyAnim(0, 0, 200, 300, 120, 2, true),
     armAnim(0, 300, 200, 300, 30, 20, false),
     spawnTime(game->tick) {
 
-    for(auto &object : game->getObjectsIn({game->distance, 0}, Game::W, Game::H)) {
+    for(auto &object : game->getObjectsIn({game->distance + Game::W, 0}, Game::W, Game::H)) {
         if(object->getType() == SHOOTER) {
             dead = true;
         }
@@ -53,14 +55,16 @@ void Shooter::doTick(int tick) {
     }
 
     // Move around
-    if(game->distance + Game::W - Shooter::W * 3 >= pos.x)
-        speed.x = game->speed * 1.2;
-    else if(game->distance + Game::W - Shooter::W * 2 <= pos.x)
-        speed.x = game->speed * 0.8;
+    if(game->distance + Game::W - Shooter::W * 3 >= pos.x &&
+            speed.x < game->speed * 1.2)
+        speed.x += (game->speed * 1.2 - speed.x) / SPEED_FACTOR;
+    else if(game->distance + Game::W - Shooter::W * 2 <= pos.x &&
+            speed.x > game->speed * .8)
+        speed.x += (game->speed * .8 - speed.x) / SPEED_FACTOR;
 
-    // Hover 10 units above the highest tile
+    // Hover above the highest tile
     int highestY = Game::H;
-    auto objects = game->getObjectsIn(pos, 300, Game::H); // objects are std::vector of std::shared_ptr of Object
+    auto objects = game->getObjectsIn({pos.x + 150, pos.y}, 150, Game::H); // objects is std::vector<std::shared_ptr<Object>>
     for(auto &object : objects) {
         if(object->getType() == TILE) {
             Vector<int> objPos = object->getPos();
@@ -69,12 +73,13 @@ void Shooter::doTick(int tick) {
         }
     }
 
-    if(highestY < pos.y + Shooter::H + 10) {
-        speed.y = -game->speed;
-    } else if(highestY > pos.y + Shooter::H + 15) {
-        speed.y = game->speed;
-    } else {
-        speed.y = 0;
+    int diff = highestY - (pos.y + Shooter::H + 20);
+    if(diff < 0) {
+        if(speed.y > 0 || (diff < -10 && speed.y > -game->speed))
+            speed.y -= 1 / SPEED_FACTOR;
+    } else if(diff > 0) {
+        if(speed.y < 0 || (diff > 10 && speed.y < game->speed))
+            speed.y += 1 / SPEED_FACTOR;
     }
 
     pos += speed;
@@ -97,6 +102,7 @@ bool Shooter::onCollide(Object& other, Direction dir) {
         case BULLET:
             if(!dynamic_cast<Bullet&>(other).isEnemy())
                 hp--;
+            else return false;
             break;
         default:
             break;
@@ -106,7 +112,7 @@ bool Shooter::onCollide(Object& other, Direction dir) {
 }
 
 bool Shooter::isDead() {
-    return dead;
+    return dead || pos.x + Shooter::W - game->distance < 0;
 }
 
 runbot::Object::Type Shooter::getType() {
