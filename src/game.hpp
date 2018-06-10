@@ -39,13 +39,13 @@ namespace runbot {
 
             int cameraY = 0;
             int distance = 0;
-            int tick = 0;
             float speed = 5;
 
             Game();
             void loop();
             void setState(State);
             void spawn(Object*);
+            void addScore(int);
             // Return objects that are within range of a position
             std::vector<std::shared_ptr<Object>> getObjectsIn(Vector<int>, int xRange, int yRange);
 
@@ -62,6 +62,9 @@ namespace runbot {
 
             State state = STOP;
             std::unique_ptr<Menu> menu;
+
+            int tick = 0;
+            int score = 0;
 
             void processEvents();
             void doTick();

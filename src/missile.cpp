@@ -74,6 +74,7 @@ bool Missile::onCollide(Object &other, Direction dir) {
 
     if(dying) {
         dead = true;
+        game->addScore(Missile::SCORE);
         game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
     }
     return false;

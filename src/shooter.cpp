@@ -19,8 +19,7 @@ Shooter::Shooter(Game *game, Vector<int> pos) :
     Object(pos, {game->speed, 0}, {.minPos = pos, .maxPos = pos + Vector<int>{Shooter::W, Shooter::H}}),
     game(game),
     bodyAnim(0, 0, 200, 300, 120, 2, true),
-    armAnim(0, 300, 200, 300, 30, 20, false),
-    spawnTime(game->tick) {
+    armAnim(0, 300, 200, 300, 30, 20, false) {
 
     for(auto &object : game->getObjectsIn({game->distance + Game::W, 0}, Game::W, Game::H)) {
         if(object->getType() == SHOOTER) {
@@ -47,6 +46,9 @@ void Shooter::draw() {
 }
 
 void Shooter::doTick(int tick) {
+
+    // Set spawn time at the first tick
+    if(!spawnTime) spawnTime = tick;
 
     // Shoot bullet every 180 ticks
     if((tick + spawnTime) % 180 == 0) {
@@ -89,6 +91,7 @@ void Shooter::doTick(int tick) {
     hitbox.maxPos = pos + Vector<int>{Shooter::W, Shooter::H};
 
     if(hp <= 0) {
+        game->addScore(Shooter::SCORE);
         game->spawn(new Explosion(game, pos, {Shooter::W, Shooter::H}));
         dead = true;
     }
