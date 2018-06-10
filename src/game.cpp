@@ -244,7 +244,7 @@ void Game::draw() {
         char distDisplay[32];
         std::sprintf(distDisplay, "Distance:%5d", distance / 10);
         SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
-        graphic.renderText(distDisplay, &des, 0);
+        graphic.renderText(distDisplay, &des);
     } else {
         // Draw cursor
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
