@@ -18,8 +18,12 @@
 #include "shooter.hpp"
 #include "vector.hpp"
 
+#include "config.h"
+
 using runbot::Level;
 using nlohmann::json;
+
+const char *Level::FILE_PATH = DATA_DIR "levels.json";
 
 Level::Level(Game *game) : game(game) {
 
