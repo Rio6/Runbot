@@ -91,7 +91,7 @@ void PauseMenu::draw() {
 }
 
 
-DeadMenu::DeadMenu(Game *game, int distance) : game(game), distance(distance),
+DeadMenu::DeadMenu(Game *game, int score) : game(game), score(score),
     bgRect{Game::W / 2 - 220, Game::H / 2 - 160, 440, 355},
     titleRect{Game::W / 2 - 125, 200, 250, 80},
     restartBtn{Game::W / 2 - 160, Game::H / 2, 140, 50},
@@ -115,7 +115,7 @@ void DeadMenu::draw() {
     graphic.renderText("MENU", &menuBtn, menuBtn.state * 0x00ff00);
 
     char distDisplay[32];
-    std::sprintf(distDisplay, "Distance:%5d", distance / 10);
+    std::sprintf(distDisplay, "SCORE:%5d", score);
     graphic.renderText(distDisplay, &distRect, 0);
 }
 

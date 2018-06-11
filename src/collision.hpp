@@ -14,6 +14,7 @@ namespace runbot {
     struct Hitbox {
         Vector<int> minPos;
         Vector<int> maxPos;
+        float mass = 1;
         Vector<float> speed;
     };
 

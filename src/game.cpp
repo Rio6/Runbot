@@ -74,7 +74,7 @@ void Game::setState(State newState) {
             menu = std::make_unique<PauseMenu>(this);
             break;
         case DEAD:
-            menu = std::make_unique<DeadMenu>(this, distance);
+            menu = std::make_unique<DeadMenu>(this, distance / 10 + score);
             break;
         default:
             break;
@@ -247,9 +247,9 @@ void Game::draw() {
     if(state == RUNNING) {
         // Draw score
         char distDisplay[32];
-        std::sprintf(distDisplay, "Distance:%5d", distance / 10);
+        std::sprintf(distDisplay, "SCORE:%5d", distance / 10 + score);
         SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
-        graphic.renderText(distDisplay, &des, 0);
+        graphic.renderText(distDisplay, &des);
     } else {
         // Draw cursor
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};
@@ -285,6 +285,10 @@ void Game::reset() {
 void Game::spawn(Object *obj) {
     if(!!obj)
         objects.emplace_back(obj);
+}
+
+void Game::addScore(int score) {
+    this->score += score;
 }
 
 // Return objects that are within range of a position

@@ -62,12 +62,12 @@ namespace runbot {
 
     class DeadMenu : public Menu {
         public:
-            DeadMenu(Game*, int distance);
+            DeadMenu(Game*, int score);
             bool onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
             Game *game;
-            int distance;
+            int score;
 
             MenuRect bgRect;
             MenuRect titleRect;

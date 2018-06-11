@@ -17,8 +17,6 @@
 #include "tile.hpp"
 #include "vector.hpp"
 
-#include "config.h"
-
 namespace runbot {
     class Game; // Forward declare
 
@@ -43,7 +41,7 @@ namespace runbot {
                     Object::Type type;
             };
 
-            const char *FILE_PATH = DATA_DIR "levels.json";
+            static const char *FILE_PATH;
 
             std::vector<std::pair<std::vector<ObjectInfo>, int>> patterns;
             Game *game;

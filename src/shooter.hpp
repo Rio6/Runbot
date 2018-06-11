@@ -16,6 +16,7 @@ namespace runbot {
         public:
             static const int W = 100;
             static const int H = 150;
+            static const int SCORE = 500;
 
             Shooter(Game*, Vector<int> pos);
             void draw();
@@ -25,12 +26,14 @@ namespace runbot {
             Type getType();
 
         private:
+            static const float SPEED_FACTOR;
+
             Game *game;
             Animation bodyAnim;
             Animation armAnim;
             bool dead = false;
             int hp = 5;
-            int spawnTime;
+            int spawnTime = 0;
     };
 };
 

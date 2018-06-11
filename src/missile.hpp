@@ -20,6 +20,7 @@ namespace runbot {
 
             static const int W = 120;
             static const int H = 60;
+            static const int SCORE = 50;
 
             Missile(Game*, Vector<int> pos);
             ~Missile();

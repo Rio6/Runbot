@@ -35,7 +35,7 @@ Graphic::Graphic() {
 
     // Init SDL_mix
     if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-        throw std::runtime_error(Mix_GetError());
+        SDL_LogError(SDL_LOG_CATEGORY_AUDIO, "Audio error: %s", Mix_GetError());
 
     // Create and configure window
     win = SDL_CreateWindow(runbot::NAME,
@@ -102,7 +102,7 @@ void Graphic::reset() {
 
 void Graphic::renderImage(const std::string &name,
         const SDL_Rect *src, const SDL_Rect *des, int color) {
-    if(imgs.count(name) > 0) {
+    if(imgs.count(name) > 0 && imgs.at(name) != nullptr) {
         SDL_Texture *text = imgs.at(name);
         SDL_SetTextureColorMod(text,
                 (0xff0000 & color) >> 16,
@@ -126,7 +126,7 @@ void Graphic::renderText(const std::string &text, const SDL_Rect *des, int color
 }
 
 int Graphic::playSound(const std::string& name, int repeat, int channel) {
-    if(sounds.count(name) > 0) {
+    if(sounds.count(name) > 0 && sounds.at(name) != nullptr) {
         return Mix_PlayChannel(channel, sounds.at(name), repeat);
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot play %s", name.c_str());
