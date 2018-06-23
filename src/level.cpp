@@ -66,6 +66,7 @@ Level::Level(Game *game) : game(game) {
             }
         } catch(json::exception& e) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to parse level file: %s", e.what());
+            patterns.clear();
         }
 
         SDL_RWclose(lvlFile);
