@@ -18,14 +18,10 @@ namespace runbot {
     class Tile : public Object {
         public:
 
-            enum TileType {
-                TILE_GROUND
-            };
-
             static const int W = 100;
             static const int H = 100;
 
-            Tile(Game*, Vector<int> pos, TileType);
+            Tile(Game*, Vector<int> pos);
             void draw();
             bool onCollide(Object&, Direction);
             bool isDead();
@@ -34,7 +30,6 @@ namespace runbot {
         private:
             Game *game;
             Animation anim;
-            TileType type;
     };
 };
 

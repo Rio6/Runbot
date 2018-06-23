@@ -82,7 +82,7 @@ void Level::genLevel(int distance) {
         int c = 0;
         for(int i = 0; i < Game::W - Tile::W; i += Tile::W, c++) {
             game->spawn(new Tile(game,
-                        {i, Game::H - Tile::H}, Tile::TILE_GROUND));
+                        {i, Game::H - Tile::H}));
         }
         lastDist = 0;
         pattSize = Tile::W * c;
@@ -126,7 +126,7 @@ runbot::Object *Level::ObjectInfo::create(Game *game, int distance) {
     Vector<int> tgtPos = {pos.x + distance, pos.y};
     switch(type) {
         case Object::TILE:
-            return new Tile(game, tgtPos, Tile::TILE_GROUND);
+            return new Tile(game, tgtPos);
         case Object::MISSILE:
             return new Missile(game, tgtPos);
         case Object::SHOOTER:
