@@ -4,12 +4,14 @@
  */
 
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_mixer.h"
 
 #include "bullet.hpp"
 #include "object.hpp"
 #include "game.hpp"
 #include "collision.hpp"
 #include "vector.hpp"
+#include "media.hpp"
 
 using runbot::Bullet;
 
@@ -18,7 +20,7 @@ Bullet::Bullet(Game *game, Vector<int> pos, float baseSpeed, bool enemy) :
             {.minPos=pos, .maxPos=pos + Vector<int>{Bullet::W, Bullet::H}, .mass=.5}),
     game(game), anim(0, 0, 40, 8, 1, 1, false), enemy(enemy) {
 
-    Graphic::instance().playSound("bullet.wav");
+    Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("bullet.wav"), 0);
 }
 
 void Bullet::draw() {
@@ -52,7 +54,7 @@ bool Bullet::onCollide(Object &other, Direction dir) {
     }
 
     if(dying) {
-        Graphic::instance().playSound("bullet_hit.wav");
+        Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("bullet_hit.wav"), 0);
         dead = true;
     }
     return true;
