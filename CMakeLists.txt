@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(runbot)
-set(VERSION 0.1)
+set(VERSION 0.2)
 
 # Set flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -Wall")
