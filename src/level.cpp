@@ -27,7 +27,7 @@ const char *Level::FILE_PATH = DATA_DIR "levels.json";
 
 Level::Level(Game *game) : game(game) {
 
-    // Load level patterns from file
+    // Load levels from file
     SDL_RWops *lvlFile = SDL_RWFromFile(Level::FILE_PATH, "r");
     if(!lvlFile) {
         SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s", FILE_PATH);
@@ -48,25 +48,25 @@ Level::Level(Game *game) : game(game) {
 
         // Parse the content
         try {
-            json lvlJson = json::parse(content);
+            json rootJson = json::parse(content);
 
-            for(json pattJson : lvlJson["patterns"]) {
+            for(json lvlJson : rootJson["levels"]) {
                 std::vector<ObjectInfo> objInfos;
 
-                int size = pattJson["size"];
+                int size = lvlJson["size"];
 
-                for(json objJson : pattJson["objects"]) {
+                for(json objJson : lvlJson["objects"]) {
                     int x = objJson["x"], y = objJson["y"];
                     std::string type = objJson["type"];
 
                     objInfos.emplace_back(x, y, type);
                 }
 
-                patterns.emplace_back(objInfos, size);
+                levels.emplace_back(objInfos, size);
             }
         } catch(json::exception& e) {
             SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Failed to parse level file: %s", e.what());
-            patterns.clear();
+            levels.clear();
         }
 
         SDL_RWclose(lvlFile);
@@ -74,9 +74,9 @@ Level::Level(Game *game) : game(game) {
 }
 
 // Generates level and put objects in game
-// Only generates if the distance is after the end of the last generated pattern
+// Only generates if the distance is after the end of the last generated level
 void Level::genLevel(int distance) {
-    if(patterns.size() <= 0) return;
+    if(levels.size() <= 0) return;
 
     if(distance == 0) {
         // Put some tiles at the beginning
@@ -86,17 +86,17 @@ void Level::genLevel(int distance) {
                         {i, Game::H - Tile::H}));
         }
         lastDist = 0;
-        pattSize = Tile::W * c;
+        lvlSize = Tile::W * c;
     }
 
-    if(distance - lastDist > pattSize) {
-        distance = lastDist + pattSize;
-        const auto &[objects, size] = patterns[std::rand() % patterns.size()];
+    if(distance - lastDist > lvlSize) {
+        distance = lastDist + lvlSize;
+        const auto &[objects, size] = levels[std::rand() % levels.size()];
         for(ObjectInfo info : objects) {
             game->spawn(info.create(game, distance));
         }
         lastDist = distance;
-        pattSize = size;
+        lvlSize = size;
     }
 }
 

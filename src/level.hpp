@@ -1,6 +1,6 @@
 /*
  * Generates level from a file
- * Randomly select a pattern in the file to generate
+ * Randomly select a level in the file to generate
  *
  * Author: Rio
  * Date: 2018/12/19
@@ -43,11 +43,11 @@ namespace runbot {
 
             static const char *FILE_PATH;
 
-            std::vector<std::pair<std::vector<ObjectInfo>, int>> patterns;
+            std::vector<std::pair<std::vector<ObjectInfo>, int>> levels;
             Game *game;
 
             int lastDist = 0;
-            int pattSize = 0;
+            int lvlSize = 0;
     };
 };
 
