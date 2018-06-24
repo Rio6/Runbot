@@ -263,6 +263,8 @@ void Game::reset() {
     // Reset numbers
     distance = 0;
     speed = 5;
+    tick = 0;
+    score = 0;
 
     // Reset objects
     objects.clear();
