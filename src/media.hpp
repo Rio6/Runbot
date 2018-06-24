@@ -45,7 +45,9 @@ namespace runbot {
                 {"bullet_hit.wav", nullptr},
                 {"explosion.wav", nullptr},
                 {"button.wav", nullptr},
-                {"missile.wav", nullptr}
+                {"missile.wav", nullptr},
+                {"start.wav", nullptr},
+                {"bg.wav", nullptr}
             };
     };
 

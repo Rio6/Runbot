@@ -12,6 +12,7 @@
 #include <cmath>
 
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_mixer.h"
 
 #include "game.hpp"
 #include "graphic.hpp"
@@ -20,6 +21,7 @@
 #include "background.hpp"
 #include "collision.hpp"
 #include "level.hpp"
+#include "media.hpp"
 
 using runbot::Game;
 
@@ -64,11 +66,19 @@ void Game::setState(State newState) {
         case START:
             reset();
             menu = std::make_unique<StartMenu>(this);
+
+            if(bgCh >= 0)
+                Mix_HaltChannel(bgCh);
+            bgCh = Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("start.wav"), -1);
             break;
         case RUNNING:
             menu.release();
             if(state == DEAD)
                 reset();
+
+            if(bgCh >= 0)
+                Mix_HaltChannel(bgCh);
+            bgCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("bg.wav"), -1, 2000);
             break;
         case PAUSED:
             menu = std::make_unique<PauseMenu>(this);

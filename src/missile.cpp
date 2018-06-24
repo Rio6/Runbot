@@ -29,7 +29,7 @@ Missile::Missile(Game *game, Vector<int> pos) :
 
 Missile::~Missile() {
     if(!dead && pos.x < game->distance + Game::W) // Not dead && was in screen
-        Mix_FadeOutChannel(soundCh, 100);
+        Mix_FadeOutChannel(soundCh, 1000);
     else
         Mix_HaltChannel(soundCh);
 }
@@ -44,7 +44,7 @@ void Missile::doTick(int tick) {
 
     // Play the missile sound
     if(soundCh < 0) {
-        soundCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("missile.wav"), -1, 100);
+        soundCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("missile.wav"), -1, 1000);
     }
 
     pos += speed;
