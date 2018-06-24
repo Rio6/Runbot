@@ -48,6 +48,7 @@ namespace runbot {
 
             int lastDist = 0;
             int lvlSize = 0;
+            int lastInd = -1;
     };
 };
 

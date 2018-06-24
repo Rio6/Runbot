@@ -91,7 +91,16 @@ void Level::genLevel(int distance) {
 
     if(distance - lastDist > lvlSize) {
         distance = lastDist + lvlSize;
-        const auto &[objects, size] = levels[std::rand() % levels.size()];
+
+        // Get a non repeating random index
+        int index = 0;
+        while((index = std::rand() % levels.size()) == lastInd);
+        lastInd = index;
+
+        // Get the level
+        const auto &[objects, size] = levels[index];
+
+        // Create the objects
         for(ObjectInfo info : objects) {
             game->spawn(info.create(game, distance));
         }
