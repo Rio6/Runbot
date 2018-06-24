@@ -193,7 +193,7 @@ void Game::doTick() {
 
     // Find collisions
     std::vector<Collision> colls;
-    for(auto it = objects.begin(); it + 1 != objects.end(); it++) {
+    for(auto it = objects.begin(); it + 1 < objects.end(); it++) {
         if((*it)->getPos().x >= distance + Game::W) continue;
         for(auto jt = it + 1; jt != objects.end(); jt++) {
             if((*jt)->getPos().x >= distance + Game::W) continue;
@@ -268,6 +268,8 @@ void Game::reset() {
     // Reset numbers
     distance = 0;
     speed = 5;
+    tick = 0;
+    score = 0;
 
     // Reset objects
     objects.clear();
