@@ -15,6 +15,7 @@ include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_BINARY_DIR}/include)
 # Libraries for windows
 if(${CMAKE_SYSTEM_NAME} MATCHES Windows)
     target_link_libraries(${PROJECT_NAME} mingw32 SDL2main)
+    SET(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -mwindows")
 endif()
 
 # Find libraries
@@ -28,7 +29,7 @@ target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
 # Configs
 option(USE_VSYNC "Enable V-SYNC" ON)
 set(BIN_DIR "${CMAKE_INSTALL_PREFIX}/bin" CACHE PATH "Binary path")
-set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}" CACHE PATH "Asset path")
+set(DATA_DIR "${CMAKE_INSTALL_PREFIX}/share/${PROJECT_NAME}" CACHE STRING "Asset path")
 configure_file(include/config.h.in include/config.h)
 
 # Install
