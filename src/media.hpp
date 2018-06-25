@@ -36,7 +36,8 @@ namespace runbot {
                 {"letters.png", nullptr},
                 {"explosion.png", nullptr},
                 {"menu.png", nullptr},
-                {"shooter.png", nullptr}
+                {"shooter.png", nullptr},
+                {"heart.png", nullptr}
             };
 
             // Sounds to load

@@ -255,6 +255,13 @@ void Game::draw() {
         std::sprintf(distDisplay, "SCORE:%5d", distance / 10 + score);
         SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
         graphic.renderText(distDisplay, &des);
+        // Draw HP
+        des = {10, Game::H - 40, 35, 35};
+        int hp = robot->getHP();
+        for(int i = 0; i < hp; i++) {
+            graphic.renderImage("heart.png", nullptr, &des);
+            des.x += des.w;
+        }
     } else {
         // Draw cursor
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};

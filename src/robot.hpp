@@ -27,6 +27,7 @@ namespace runbot {
             bool isDead();
             Type getType();
             void reset();
+            int getHP();
 
             // Actions
             void jump();
@@ -40,6 +41,7 @@ namespace runbot {
             Animation armAnim;
 
             int shootCD = 0;
+            int hp = 3;
             bool onGround = false;
             bool dead = false;
     };
