@@ -94,8 +94,10 @@ void Level::genLevel(int distance) {
 
         // Get a non repeating random index
         int index = 0;
-        while((index = std::rand() % levels.size()) == lastInd);
-        lastInd = index;
+        if(levels.size() > 1) {
+            while((index = std::rand() % levels.size()) == lastInd);
+            lastInd = index;
+        }
 
         // Get the level
         const auto &[objects, size] = levels[index];
