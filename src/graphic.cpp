@@ -80,6 +80,8 @@ Graphic::~Graphic() {
     rend = nullptr;
     win = nullptr;
 
+    Mix_CloseAudio();
+
     Mix_Quit();
     IMG_Quit();
     SDL_Quit();
@@ -108,7 +110,8 @@ void Graphic::renderImage(const std::string &name,
                 (0xff0000 & color) >> 16,
                 (0x00ff00 & color) >> 8,
                 0x0000ff & color);
-        SDL_RenderCopy(rend, text, src, des);
+        if(SDL_RenderCopy(rend, text, src, des) < 0)
+            SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Render error: %s", SDL_GetError());
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Cannot render %s", name.c_str());
     }

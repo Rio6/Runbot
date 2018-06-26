@@ -9,6 +9,7 @@
 
 #include "game.hpp"
 #include "graphic.hpp"
+#include "media.hpp"
 
 int main(int argc, char *argv[]) {
 
@@ -23,6 +24,7 @@ int main(int argc, char *argv[]) {
     game.loop();
 
     // Cleanup graphic stuff
+    runbot::Media::reset();
     runbot::Graphic::reset();
 
     return 0;
