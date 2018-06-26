@@ -99,12 +99,14 @@ void PauseMenu::draw() {
 }
 
 
-DeadMenu::DeadMenu(Game *game, int score) : game(game), score(score),
-    bgRect{Game::W / 2 - 220, Game::H / 2 - 160, 440, 355},
+DeadMenu::DeadMenu(Game *game, int score, int hiScore) : game(game),
+    score(score), hiScore(hiScore),
+    bgRect{Game::W / 2 - 220, Game::H / 2 - 160, 440, 395},
     titleRect{Game::W / 2 - 125, 200, 250, 80},
     restartBtn{Game::W / 2 - 160, Game::H / 2, 140, 50},
     menuBtn{Game::W / 2 + 20, Game::H / 2, 140, 50},
-    distRect{Game::W / 2 - 100, Game::H / 2 + 80, 200, 40} {}
+    scoreRect{Game::W / 2 - 100, Game::H / 2 + 75, 200, 40},
+    hiScoreRect{Game::W / 2 - 105, Game::H / 2 + 120, 210, 40} {}
 
 bool DeadMenu::onMouse(Vector<int> &pos, bool down) {
     if(restartBtn.onMouse(pos, down))
@@ -122,7 +124,10 @@ void DeadMenu::draw() {
     graphic.renderText("RESTART", &restartBtn, restartBtn.state * 0x00ff00);
     graphic.renderText("MENU", &menuBtn, menuBtn.state * 0x00ff00);
 
-    char distDisplay[32];
-    std::sprintf(distDisplay, "SCORE:%d", score);
-    graphic.renderText(distDisplay, &distRect, 0);
+    char scoreDisplay[32];
+    std::sprintf(scoreDisplay, "SCORE: %d", score);
+    graphic.renderText(scoreDisplay, &scoreRect, 0);
+
+    std::sprintf(scoreDisplay, "HIGHSCORE: %d", hiScore);
+    graphic.renderText(scoreDisplay, &hiScoreRect, 0);
 }
