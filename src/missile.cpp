@@ -58,9 +58,11 @@ void Missile::doTick(int tick) {
 
 bool Missile::onCollide(Object &other, Direction dir) {
     bool dying = false;
+    bool push = false;
     switch(other.getType()) {
         case ROBOT:
             dying = true;
+            push = true;
             break;
         case BULLET:
             dying = !dynamic_cast<Bullet&>(other).isEnemy();
@@ -74,7 +76,7 @@ bool Missile::onCollide(Object &other, Direction dir) {
         game->addScore(Missile::SCORE);
         game->spawn(new Explosion(game, pos, {Missile::W, Missile::H}));
     }
-    return false;
+    return push;
 }
 
 bool Missile::isDead() {
