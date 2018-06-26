@@ -4,7 +4,7 @@
  */
 
 #include <stdexcept>
-#include <cctype>
+#include <string>
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -12,6 +12,7 @@
 
 #include "graphic.hpp"
 #include "game.hpp"
+#include "media.hpp"
 
 #include "config.h"
 
@@ -63,20 +64,15 @@ Graphic::Graphic() {
     SDL_RenderSetLogicalSize(rend, Game::W, Game::H);
     SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xff);
 
-    loadMedia();
+    // Create font sprites
+    int i = 0;
+    for(auto c : " :.0123456789abcdefghijklmnopqrstuvwxyz") {
+        letters[c] = {64 * i, 0, 64, 64};
+        i++;
+    }
 }
 
 Graphic::~Graphic() {
-
-    for(auto &img : imgs) {
-        SDL_DestroyTexture(img.second);
-        img.second = nullptr;
-    }
-
-    for(auto &sound : sounds) {
-        Mix_FreeChunk(sound.second);
-        sound.second = nullptr;
-    }
 
     SDL_DestroyRenderer(rend);
     SDL_DestroyWindow(win);
@@ -100,10 +96,14 @@ void Graphic::reset() {
     graphic = nullptr;
 }
 
+SDL_Renderer *Graphic::getRenderer() {
+    return rend;
+}
+
 void Graphic::renderImage(const std::string &name,
         const SDL_Rect *src, const SDL_Rect *des, int color) {
-    if(imgs.count(name) > 0 && imgs.at(name) != nullptr) {
-        SDL_Texture *text = imgs.at(name);
+    SDL_Texture *text = Media::get<SDL_Texture*>(name);
+    if(text) {
         SDL_SetTextureColorMod(text,
                 (0xff0000 & color) >> 16,
                 (0x00ff00 & color) >> 8,
@@ -121,25 +121,10 @@ void Graphic::renderText(const std::string &text, const SDL_Rect *des, int color
         if(letters.count(c) > 0) {
             renderImage("letters.png", &letters.at(c), &charDes, color);
             charDes.x += charDes.w;
+        } else {
+            SDL_LogError(SDL_LOG_CATEGORY_RENDER, "No font for %c", c);
         }
     }
-}
-
-int Graphic::playSound(const std::string& name, int repeat, int channel) {
-    if(sounds.count(name) > 0 && sounds.at(name) != nullptr) {
-        return Mix_PlayChannel(channel, sounds.at(name), repeat);
-    } else {
-        SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot play %s", name.c_str());
-        return 1000; // Just return a number
-    }
-}
-
-void Graphic::stopSound(int channel) {
-    Mix_HaltChannel(channel);
-}
-
-bool Graphic::soundPlaying(int channel) {
-    return !!Mix_Playing(channel);
 }
 
 void Graphic::clear() {
@@ -148,37 +133,4 @@ void Graphic::clear() {
 
 void Graphic::update() {
     SDL_RenderPresent(rend);
-}
-
-void Graphic::loadMedia() {
-
-    // Load textures
-    for(auto &img : imgs) {
-        SDL_Surface *loadSurface = IMG_Load((DATA_DIR + img.first).c_str());
-        if(!loadSurface) {
-            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", img.first.c_str(), IMG_GetError());
-            continue;
-        }
-
-        img.second = SDL_CreateTextureFromSurface(rend, loadSurface);
-        if(!img.second)
-            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", img.first.c_str(), SDL_GetError());
-
-        SDL_FreeSurface(loadSurface);
-    }
-
-    // Load sounds
-    for(auto &sound : sounds) {
-        sound.second = Mix_LoadWAV((DATA_DIR + sound.first).c_str());
-        if(!sound.second) {
-            SDL_LogError(SDL_LOG_CATEGORY_ERROR, "Cannot load %s: %s", sound.first.c_str(), Mix_GetError());
-        }
-    }
-
-    // Load fonts
-    int i = 0;
-    for(auto c : " :.0123456789abcdefghijklmnopqrstuvwxyz") {
-        letters[c] = {64 * i, 0, 64, 64};
-        i++;
-    }
 }

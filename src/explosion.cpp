@@ -11,6 +11,7 @@
 #include "vector.hpp"
 #include "graphic.hpp"
 #include "game.hpp"
+#include "media.hpp"
 
 using runbot::Explosion;
 
@@ -20,7 +21,7 @@ Explosion::Explosion(Game *game, Vector<int> pos, Vector<int> size) :
 
     anim.start();
 
-    Graphic::instance().playSound("explosion.wav");
+    Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("explosion.wav"), 0);
 }
 
 void Explosion::draw() {

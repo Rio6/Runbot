@@ -6,10 +6,12 @@
 #include <cstdio>
 
 #include "SDL.h"
+#include "SDL_mixer.h"
 
 #include "menu.hpp"
 #include "game.hpp"
 #include "graphic.hpp"
+#include "media.hpp"
 
 #include "config.h"
 
@@ -21,7 +23,7 @@ bool Menu::MenuRect::onMouse(Vector<int> &pos, bool down) {
     if(inRect(pos)) {
         if(down) {
             if(state != DOWN) {
-                Graphic::instance().playSound("button.wav");
+                Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("button.wav"), 0);
                 state = DOWN;
             }
         } else {

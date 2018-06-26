@@ -4,6 +4,7 @@
  */
 
 #include "SDL.h"
+#include "SDL_mixer.h"
 
 #include "missile.hpp"
 #include "object.hpp"
@@ -12,6 +13,7 @@
 #include "collision.hpp"
 #include "explosion.hpp"
 #include "bullet.hpp"
+#include "media.hpp"
 
 using runbot::Missile;
 
@@ -26,9 +28,10 @@ Missile::Missile(Game *game, Vector<int> pos) :
 }
 
 Missile::~Missile() {
-    Graphic::instance().stopSound(soundCh);
     if(!dead && pos.x < game->distance + Game::W) // Not dead && was in screen
-        Graphic::instance().playSound("missile_end.wav");
+        Mix_FadeOutChannel(soundCh, 1000);
+    else
+        Mix_HaltChannel(soundCh);
 }
 
 void Missile::draw() {
@@ -38,16 +41,10 @@ void Missile::draw() {
 }
 
 void Missile::doTick(int tick) {
-    Graphic& graphic = Graphic::instance();
 
-    // Play start sound when no sound is playing
+    // Play the missile sound
     if(soundCh < 0) {
-        soundCh = graphic.playSound("missile_start.wav", 0);
-    }
-
-    // Play sound loop when start sound finished
-    if(soundCh >= 0 && !graphic.soundPlaying(soundCh)) {
-        graphic.playSound("missile.wav", -1, soundCh);
+        soundCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("missile.wav"), -1, 1000);
     }
 
     pos += speed;

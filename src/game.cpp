@@ -12,6 +12,7 @@
 #include <cmath>
 
 #include "SDL.h"
+#include "SDL_mixer.h"
 
 #include "game.hpp"
 #include "graphic.hpp"
@@ -20,6 +21,7 @@
 #include "background.hpp"
 #include "collision.hpp"
 #include "level.hpp"
+#include "media.hpp"
 
 using runbot::Game;
 
@@ -64,11 +66,19 @@ void Game::setState(State newState) {
         case START:
             reset();
             menu = std::make_unique<StartMenu>(this);
+
+            if(bgCh >= 0)
+                Mix_HaltChannel(bgCh);
+            bgCh = Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("start.wav"), -1);
             break;
         case RUNNING:
             menu = std::make_unique<GameMenu>(this);
             if(state == DEAD)
                 reset();
+
+            if(bgCh >= 0)
+                Mix_HaltChannel(bgCh);
+            bgCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("bg.wav"), -1, 2000);
             break;
         case PAUSED:
             menu = std::make_unique<PauseMenu>(this);
@@ -250,6 +260,13 @@ void Game::draw() {
         std::sprintf(distDisplay, "SCORE:%5d", distance / 10 + score);
         SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
         graphic.renderText(distDisplay, &des);
+        // Draw HP
+        des = {10, Game::H - 40, 35, 35};
+        int hp = robot->getHP();
+        for(int i = 0; i < hp; i++) {
+            graphic.renderImage("heart.png", nullptr, &des);
+            des.x += des.w;
+        }
     } else {
         // Draw cursor
         SDL_Rect des = {cursor.x, cursor.y, CURSOR_SIZE, CURSOR_SIZE};

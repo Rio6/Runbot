@@ -62,6 +62,7 @@ namespace runbot {
 
             State state = STOP;
             std::unique_ptr<Menu> menu;
+            int bgCh = -1;
 
             int tick = 0;
             int score = 0;

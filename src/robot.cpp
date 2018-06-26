@@ -56,8 +56,7 @@ void Robot::doTick(int tick) {
 
     pos += speed;
 
-    if(pos.x + Robot::W * 2 < game->distance || pos.y > Game::H)
-    // Out of map
+    if(pos.x + Robot::W * 2 < game->distance || pos.y > Game::H || hp <= 0)
         die();
 
     hitbox.speed = speed;
@@ -85,11 +84,11 @@ bool Robot::onCollide(Object &other, Direction dir) {
             }
             break;
         case MISSILE:
-            die();
+            hp--;
             break;
         case BULLET:
             if(dynamic_cast<Bullet&>(other).isEnemy())
-                die();
+                hp--;
             break;
         default:
             break;
@@ -103,6 +102,10 @@ bool Robot::isDead() {
 
 runbot::Object::Type Robot::getType() {
     return ROBOT;
+}
+
+int Robot::getHP() {
+    return hp;
 }
 
 void Robot::jump() {

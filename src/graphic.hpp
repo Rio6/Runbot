@@ -1,6 +1,5 @@
 /*
  * Wrapper for SDL functions
- * It's called Graphic but there are sound functions in here too
  *
  * Author: Rio
  * Date: 2017/05/21
@@ -13,23 +12,19 @@
 #include <map>
 
 #include "SDL.h"
-#include "SDL_mixer.h"
 
 namespace runbot {
 
-    // Class for graphics and audio
-    // I put audio here because it kind of fits here
+    // Class graphics
     class Graphic {
         public:
             static Graphic &instance();
             static void reset();
 
-            void renderImage(const std::string& name,
+            SDL_Renderer *getRenderer();
+            void renderImage(const std::string &name,
                     const SDL_Rect* src, const SDL_Rect* des, int color = 0xffffff);
             void renderText(const std::string &text, const SDL_Rect *des, int color = 0x000000);
-            int playSound(const std::string& name, int repeat = 0, int channel = -1);
-            void stopSound(int channel);
-            bool soundPlaying(int channel);
             void clear();
             void update();
 
@@ -39,6 +34,7 @@ namespace runbot {
             SDL_Renderer *rend;
             SDL_Window *win;
 
+<<<<<<< HEAD
             // Images to load
             std::map<std::string, SDL_Texture*> imgs {
                 {"robot.png", nullptr},
@@ -67,9 +63,12 @@ namespace runbot {
 
             std::map<char, SDL_Rect> letters;
 
+=======
+>>>>>>> master
             Graphic();
             ~Graphic();
-            void loadMedia();
+
+            std::map<char, SDL_Rect> letters;
     };
 };
 

@@ -1,0 +1,654 @@
+<!DOCTYPE qtractorSession>
+<session version="Qtractor 0.9.1" name="top">
+ <properties>
+  <directory>/home/rio/code/Runbot/assetFiles</directory>
+  <description>MIDI file import "startMenu.mid" on 6月 24 2018 13:37:55.
+</description>
+  <sample-rate>48000</sample-rate>
+  <tempo>200</tempo>
+  <ticks-per-beat>960</ticks-per-beat>
+  <beats-per-bar>4</beats-per-bar>
+  <beat-divisor>2</beat-divisor>
+ </properties>
+ <state>
+  <loop-start>0</loop-start>
+  <loop-end>0</loop-end>
+  <punch-in>0</punch-in>
+  <punch-out>0</punch-out>
+ </state>
+ <files>
+  <audio-list>
+   <file name="start.wav">../assets/start.wav</file>
+  </audio-list>
+  <midi-list>
+   <file name="startMenu.mid">startMenu.mid</file>
+  </midi-list>
+ </files>
+ <devices>
+  <audio-engine>
+   <audio-control>
+    <transport-mode>duplex</transport-mode>
+    <timebase>1</timebase>
+   </audio-control>
+   <audio-bus mode="duplex" name="Master">
+    <monitor>0</monitor>
+    <channels>2</channels>
+    <auto-connect>1</auto-connect>
+    <input-gain>1</input-gain>
+    <input-panning>0</input-panning>
+    <input-controllers/>
+    <input-plugins/>
+    <input-connects>
+     <connect index="0">
+      <client>system</client>
+      <port>capture_1</port>
+     </connect>
+     <connect index="1">
+      <client>system</client>
+      <port>capture_2</port>
+     </connect>
+    </input-connects>
+    <output-gain>1</output-gain>
+    <output-panning>0</output-panning>
+    <output-controllers/>
+    <output-plugins/>
+    <output-connects>
+     <connect index="0">
+      <client>system</client>
+      <port>playback_1</port>
+     </connect>
+     <connect index="1">
+      <client>system</client>
+      <port>playback_2</port>
+     </connect>
+    </output-connects>
+   </audio-bus>
+  </audio-engine>
+  <midi-engine>
+   <midi-control>
+    <mmc-mode>duplex</mmc-mode>
+    <mmc-device>127</mmc-device>
+    <spp-mode>duplex</spp-mode>
+    <clock-mode>none</clock-mode>
+   </midi-control>
+   <midi-bus mode="duplex" name="Master">
+    <monitor>0</monitor>
+    <input-gain>1</input-gain>
+    <input-panning>0</input-panning>
+    <input-controllers/>
+    <input-plugins>
+     <audio-output-bus-name></audio-output-bus-name>
+     <audio-output-bus>0</audio-output-bus>
+     <audio-output-auto-connect>1</audio-output-auto-connect>
+    </input-plugins>
+    <input-connects>
+     <connect index="0">
+      <client>16:USB Midi</client>
+      <port>0:USB Midi MIDI 1</port>
+     </connect>
+    </input-connects>
+    <output-gain>1</output-gain>
+    <output-panning>1</output-panning>
+    <output-controllers/>
+    <output-plugins>
+     <bank>0</bank>
+     <program>1</program>
+     <audio-output-bus-name></audio-output-bus-name>
+     <audio-output-bus>0</audio-output-bus>
+     <audio-output-auto-connect>1</audio-output-auto-connect>
+    </output-plugins>
+    <output-connects/>
+    <midi-map>
+     <midi-patch channel="1">
+      <midi-bank-sel-method>0</midi-bank-sel-method>
+      <midi-bank>0</midi-bank>
+      <midi-program>1</midi-program>
+     </midi-patch>
+     <midi-patch channel="0">
+      <midi-bank-sel-method>0</midi-bank-sel-method>
+      <midi-bank>0</midi-bank>
+      <midi-program>8</midi-program>
+     </midi-patch>
+    </midi-map>
+   </midi-bus>
+  </midi-engine>
+ </devices>
+ <tracks>
+  <view>
+   <pixels-per-beat>32</pixels-per-beat>
+   <horizontal-zoom>300</horizontal-zoom>
+   <vertical-zoom>100</vertical-zoom>
+   <snap-per-beat>0</snap-per-beat>
+   <edit-head>0</edit-head>
+   <edit-tail>0</edit-tail>
+  </view>
+  <track type="midi" name="Track 1">
+   <properties>
+    <input-bus>Master</input-bus>
+    <output-bus>Master</output-bus>
+    <midi-omni>0</midi-omni>
+    <midi-channel>0</midi-channel>
+    <midi-bank-sel-method>0</midi-bank-sel-method>
+    <midi-bank>0</midi-bank>
+    <midi-program>8</midi-program>
+    <midi-drums>0</midi-drums>
+   </properties>
+   <state>
+    <mute>0</mute>
+    <solo>0</solo>
+    <record>0</record>
+    <monitor>0</monitor>
+    <gain>1</gain>
+    <panning>0</panning>
+   </state>
+   <view>
+    <height>72</height>
+    <background-color>#99ffff</background-color>
+    <foreground-color>#4c7f7f</foreground-color>
+   </view>
+   <controllers/>
+   <clips>
+    <clip name="Track 1">
+     <properties>
+      <name>Track 1</name>
+      <start>0</start>
+      <offset>0</offset>
+      <length>230160</length>
+      <gain>1</gain>
+      <panning>0</panning>
+      <fade-in type="InQuad">0</fade-in>
+      <fade-out type="OutQuad">0</fade-out>
+     </properties>
+     <midi-clip>
+      <filename>startMenu.mid</filename>
+      <track-channel>1</track-channel>
+      <revision>0</revision>
+      <editor-pos>0,23</editor-pos>
+      <editor-size>860,600</editor-size>
+     </midi-clip>
+    </clip>
+   </clips>
+   <plugins>
+    <bank>0</bank>
+    <program>8</program>
+    <plugin type="DSSI">
+     <filename>/usr/lib64/dssi/whysynth.so</filename>
+     <index>0</index>
+     <label>WhySynth</label>
+     <preset></preset>
+     <direct-access-param>-1</direct-access-param>
+     <activated>1</activated>
+     <configs/>
+     <params>
+      <param name="Osc1 Mode" index="2">8</param>
+      <param name="Osc1 Waveform" index="3">21</param>
+      <param name="Osc1 Pitch" index="4">-12</param>
+      <param name="Osc1 Detune" index="5">0</param>
+      <param name="Osc1 Pitch Mod Src" index="6">0</param>
+      <param name="Osc1 Pitch Mod Amt" index="7">0</param>
+      <param name="Osc1 MParam 1" index="8">0.473611</param>
+      <param name="Osc1 MParam 2" index="9">0.5</param>
+      <param name="Osc1 MMod Src" index="10">2</param>
+      <param name="Osc1 MMod Amt" index="11">0</param>
+      <param name="Osc1 Amp Mod Src" index="12">0</param>
+      <param name="Osc1 Amp Mod Amt" index="13">0</param>
+      <param name="Osc1->BusA Level" index="14">0.5</param>
+      <param name="Osc1->BusB Level" index="15">0.5</param>
+      <param name="Osc2 Mode" index="16">0</param>
+      <param name="Osc2 Waveform" index="17">0</param>
+      <param name="Osc2 Pitch" index="18">0</param>
+      <param name="Osc2 Detune" index="19">0</param>
+      <param name="Osc2 Pitch Mod Src" index="20">0</param>
+      <param name="Osc2 Pitch Mod Amt" index="21">0</param>
+      <param name="Osc2 MParam 1" index="22">0</param>
+      <param name="Osc2 MParam 2" index="23">0</param>
+      <param name="Osc2 MMod Src" index="24">0</param>
+      <param name="Osc2 MMod Amt" index="25">0</param>
+      <param name="Osc2 Amp Mod Src" index="26">0</param>
+      <param name="Osc2 Amp Mod Amt" index="27">0</param>
+      <param name="Osc2->BusA Level" index="28">0.5</param>
+      <param name="Osc2->BusB Level" index="29">0.5</param>
+      <param name="Osc3 Mode" index="30">0</param>
+      <param name="Osc3 Waveform" index="31">0</param>
+      <param name="Osc3 Pitch" index="32">0</param>
+      <param name="Osc3 Detune" index="33">0</param>
+      <param name="Osc3 Pitch Mod Src" index="34">0</param>
+      <param name="Osc3 Pitch Mod Amt" index="35">0</param>
+      <param name="Osc3 MParam 1" index="36">0</param>
+      <param name="Osc3 MParam 2" index="37">0</param>
+      <param name="Osc3 MMod Src" index="38">0</param>
+      <param name="Osc3 MMod Amt" index="39">0</param>
+      <param name="Osc3 Amp Mod Src" index="40">0</param>
+      <param name="Osc3 Amp Mod Amt" index="41">0</param>
+      <param name="Osc3->BusA Level" index="42">0.5</param>
+      <param name="Osc3->BusB Level" index="43">0.5</param>
+      <param name="Osc4 Mode" index="44">0</param>
+      <param name="Osc4 Waveform" index="45">0</param>
+      <param name="Osc4 Pitch" index="46">0</param>
+      <param name="Osc4 Detune" index="47">0</param>
+      <param name="Osc4 Pitch Mod Src" index="48">0</param>
+      <param name="Osc4 Pitch Mod Amt" index="49">0</param>
+      <param name="Osc4 MParam 1" index="50">0</param>
+      <param name="Osc4 MParam 2" index="51">0</param>
+      <param name="Osc4 MMod Src" index="52">0</param>
+      <param name="Osc4 MMod Amt" index="53">0</param>
+      <param name="Osc4 Amp Mod Src" index="54">0</param>
+      <param name="Osc4 Amp Mod Amt" index="55">0</param>
+      <param name="Osc4->BusA Level" index="56">0.5</param>
+      <param name="Osc4->BusB Level" index="57">0.5</param>
+      <param name="Filter1 Mode" index="58">6</param>
+      <param name="Filter1 Source" index="59">0</param>
+      <param name="Filter1 Frequency" index="60">2.32015</param>
+      <param name="Filter1 Frq Mod Src" index="61">18</param>
+      <param name="Filter1 Frq Mod Amt" index="62">0.181595</param>
+      <param name="Filter1 Resonance" index="63">0.833333</param>
+      <param name="Filter1 MParameter" index="64">0</param>
+      <param name="Filter2 Mode" index="65">6</param>
+      <param name="Filter2 Source" index="66">1</param>
+      <param name="Filter2 Frequency" index="67">2.09443</param>
+      <param name="Filter2 Frq Mod Src" index="68">18</param>
+      <param name="Filter2 Frq Mod Amt" index="69">0.181595</param>
+      <param name="Filter2 Resonance" index="70">0.818201</param>
+      <param name="Filter2 MParameter" index="71">0</param>
+      <param name="BusA->Out Level" index="72">0</param>
+      <param name="BusA->Out Pan" index="73">0</param>
+      <param name="BusB->Out Level" index="74">0</param>
+      <param name="BusB->Out Pan" index="75">1</param>
+      <param name="Filter1->Out Level" index="76">0.5</param>
+      <param name="Filter1->Out Pan" index="77">0.190149</param>
+      <param name="Filter2->Out Level" index="78">0.5</param>
+      <param name="Filter2->Out Pan" index="79">0.78693</param>
+      <param name="Volume" index="80">0.624959</param>
+      <param name="Effect Mode" index="81">0</param>
+      <param name="Effect Param 1" index="82">0</param>
+      <param name="Effect Param 2" index="83">0</param>
+      <param name="Effect Param 3" index="84">0</param>
+      <param name="Effect Param 4" index="85">0</param>
+      <param name="Effect Param 5" index="86">0</param>
+      <param name="Effect Param 6" index="87">0</param>
+      <param name="Effect Wet/Dry Mix" index="88">0</param>
+      <param name="Glide Rate" index="89">0.984375</param>
+      <param name="Bend Range" index="90">2</param>
+      <param name="GLFO Frequency" index="91">1</param>
+      <param name="GLFO Waveform" index="92">0</param>
+      <param name="GLFO Amp Mod Src" index="93">0</param>
+      <param name="GLFO Amp Mod Amt" index="94">0</param>
+      <param name="VLFO Frequency" index="95">1</param>
+      <param name="VLFO Waveform" index="96">0</param>
+      <param name="VLFO Delay" index="97">0</param>
+      <param name="VLFO Amp Mod Src" index="98">0</param>
+      <param name="VLFO Amp Mod Amt" index="99">0</param>
+      <param name="MLFO Frequency" index="100">1</param>
+      <param name="MLFO Waveform" index="101">0</param>
+      <param name="MLFO Delay" index="102">0</param>
+      <param name="MLFO Amp Mod Src" index="103">0</param>
+      <param name="MLFO Amp Mod Amt" index="104">0</param>
+      <param name="MLFO Phase Spread" index="105">90</param>
+      <param name="MLFO Random Freq" index="106">0</param>
+      <param name="EGO Mode" index="107">1</param>
+      <param name="EGO Shape 1" index="108">3</param>
+      <param name="EGO Time 1" index="109">0.004</param>
+      <param name="EGO Level 1" index="110">1</param>
+      <param name="EGO Shape 2" index="111">3</param>
+      <param name="EGO Time 2" index="112">0.001</param>
+      <param name="EGO Level 2" index="113">1</param>
+      <param name="EGO Shape 3" index="114">3</param>
+      <param name="EGO Time 3" index="115">0.001</param>
+      <param name="EGO Level 3" index="116">1</param>
+      <param name="EGO Shape 4" index="117">3</param>
+      <param name="EGO Time 4" index="118">0.2</param>
+      <param name="EGO Vel Level Sens" index="119">0</param>
+      <param name="EGO Vel Time Scale" index="120">0</param>
+      <param name="EGO Kbd Time Scale" index="121">0</param>
+      <param name="EGO Amp Mod Src" index="122">0</param>
+      <param name="EGO Amp Mod Amt" index="123">0</param>
+      <param name="EG1 Mode" index="124">2</param>
+      <param name="EG1 Shape 1" index="125">3</param>
+      <param name="EG1 Time 1" index="126">0</param>
+      <param name="EG1 Level 1" index="127">1</param>
+      <param name="EG1 Shape 2" index="128">0</param>
+      <param name="EG1 Time 2" index="129">0.496166</param>
+      <param name="EG1 Level 2" index="130">0.118538</param>
+      <param name="EG1 Shape 3" index="131">3</param>
+      <param name="EG1 Time 3" index="132">4.56835</param>
+      <param name="EG1 Level 3" index="133">0</param>
+      <param name="EG1 Shape 4" index="134">3</param>
+      <param name="EG1 Time 4" index="135">0.2</param>
+      <param name="EG1 Vel Level Sens" index="136">0.409467</param>
+      <param name="EG1 Vel Time Scale" index="137">0.28183</param>
+      <param name="EG1 Kbd Time Scale" index="138">0.239079</param>
+      <param name="EG1 Amp Mod Src" index="139">0</param>
+      <param name="EG1 Amp Mod Amt" index="140">0</param>
+      <param name="EG2 Mode" index="141">0</param>
+      <param name="EG2 Shape 1" index="142">3</param>
+      <param name="EG2 Time 1" index="143">0.1</param>
+      <param name="EG2 Level 1" index="144">1</param>
+      <param name="EG2 Shape 2" index="145">3</param>
+      <param name="EG2 Time 2" index="146">0.1</param>
+      <param name="EG2 Level 2" index="147">1</param>
+      <param name="EG2 Shape 3" index="148">3</param>
+      <param name="EG2 Time 3" index="149">0.1</param>
+      <param name="EG2 Level 3" index="150">1</param>
+      <param name="EG2 Shape 4" index="151">3</param>
+      <param name="EG2 Time 4" index="152">0.2</param>
+      <param name="EG2 Vel Level Sens" index="153">0</param>
+      <param name="EG2 Vel Time Scale" index="154">0</param>
+      <param name="EG2 Kbd Time Scale" index="155">0</param>
+      <param name="EG2 Amp Mod Src" index="156">0</param>
+      <param name="EG2 Amp Mod Amt" index="157">0</param>
+      <param name="EG3 Mode" index="158">0</param>
+      <param name="EG3 Shape 1" index="159">3</param>
+      <param name="EG3 Time 1" index="160">0.1</param>
+      <param name="EG3 Level 1" index="161">1</param>
+      <param name="EG3 Shape 2" index="162">3</param>
+      <param name="EG3 Time 2" index="163">0.1</param>
+      <param name="EG3 Level 2" index="164">1</param>
+      <param name="EG3 Shape 3" index="165">3</param>
+      <param name="EG3 Time 3" index="166">0.1</param>
+      <param name="EG3 Level 3" index="167">1</param>
+      <param name="EG3 Shape 4" index="168">3</param>
+      <param name="EG3 Time 4" index="169">0.2</param>
+      <param name="EG3 Vel Level Sens" index="170">0</param>
+      <param name="EG3 Vel Time Scale" index="171">0</param>
+      <param name="EG3 Kbd Time Scale" index="172">0</param>
+      <param name="EG3 Amp Mod Src" index="173">0</param>
+      <param name="EG3 Amp Mod Amt" index="174">0</param>
+      <param name="EG4 Mode" index="175">0</param>
+      <param name="EG4 Shape 1" index="176">3</param>
+      <param name="EG4 Time 1" index="177">0.1</param>
+      <param name="EG4 Level 1" index="178">1</param>
+      <param name="EG4 Shape 2" index="179">3</param>
+      <param name="EG4 Time 2" index="180">0.1</param>
+      <param name="EG4 Level 2" index="181">1</param>
+      <param name="EG4 Shape 3" index="182">3</param>
+      <param name="EG4 Time 3" index="183">0.1</param>
+      <param name="EG4 Level 3" index="184">1</param>
+      <param name="EG4 Shape 4" index="185">3</param>
+      <param name="EG4 Time 4" index="186">0.2</param>
+      <param name="EG4 Vel Level Sens" index="187">0</param>
+      <param name="EG4 Vel Time Scale" index="188">0</param>
+      <param name="EG4 Kbd Time Scale" index="189">0</param>
+      <param name="EG4 Amp Mod Src" index="190">0</param>
+      <param name="EG4 Amp Mod Amt" index="191">0</param>
+      <param name="ModMix Bias" index="192">1</param>
+      <param name="ModMix Mod1 Src" index="193">0</param>
+      <param name="ModMix Mod1 Amt" index="194">0</param>
+      <param name="ModMix Mod2 Src" index="195">0</param>
+      <param name="ModMix Mod2 Amt" index="196">0</param>
+      <param name="Tuning" index="197">440</param>
+     </params>
+     <controllers/>
+     <editor-pos>0,0</editor-pos>
+     <form-pos>0,0</form-pos>
+    </plugin>
+    <audio-output-bus-name></audio-output-bus-name>
+    <audio-output-bus>0</audio-output-bus>
+    <audio-output-auto-connect>1</audio-output-auto-connect>
+   </plugins>
+  </track>
+  <track type="midi" name="Track 2">
+   <properties>
+    <input-bus>Master</input-bus>
+    <output-bus>Master</output-bus>
+    <midi-omni>0</midi-omni>
+    <midi-channel>1</midi-channel>
+    <midi-bank-sel-method>0</midi-bank-sel-method>
+    <midi-bank>0</midi-bank>
+    <midi-program>1</midi-program>
+    <midi-drums>0</midi-drums>
+   </properties>
+   <state>
+    <mute>0</mute>
+    <solo>0</solo>
+    <record>0</record>
+    <monitor>0</monitor>
+    <gain>1</gain>
+    <panning>0</panning>
+   </state>
+   <view>
+    <height>72</height>
+    <background-color>#ffccff</background-color>
+    <foreground-color>#7f667f</foreground-color>
+   </view>
+   <controllers/>
+   <clips>
+    <clip name="Track 2">
+     <properties>
+      <name>Track 2</name>
+      <start>0</start>
+      <offset>0</offset>
+      <length>230220</length>
+      <gain>1</gain>
+      <panning>0</panning>
+      <fade-in type="InQuad">0</fade-in>
+      <fade-out type="OutQuad">0</fade-out>
+     </properties>
+     <midi-clip>
+      <filename>startMenu.mid</filename>
+      <track-channel>2</track-channel>
+      <revision>0</revision>
+      <editor-pos>0,0</editor-pos>
+     </midi-clip>
+    </clip>
+   </clips>
+   <plugins>
+    <bank>0</bank>
+    <program>1</program>
+    <plugin type="DSSI">
+     <filename>/usr/lib64/dssi/whysynth.so</filename>
+     <index>0</index>
+     <label>WhySynth</label>
+     <preset></preset>
+     <direct-access-param>-1</direct-access-param>
+     <activated>1</activated>
+     <configs/>
+     <params>
+      <param name="Osc1 Mode" index="2">4</param>
+      <param name="Osc1 Waveform" index="3">56</param>
+      <param name="Osc1 Pitch" index="4">0</param>
+      <param name="Osc1 Detune" index="5">0</param>
+      <param name="Osc1 Pitch Mod Src" index="6">0</param>
+      <param name="Osc1 Pitch Mod Amt" index="7">0</param>
+      <param name="Osc1 MParam 1" index="8">0.0519861</param>
+      <param name="Osc1 MParam 2" index="9">0.617628</param>
+      <param name="Osc1 MMod Src" index="10">18</param>
+      <param name="Osc1 MMod Amt" index="11">0.7428</param>
+      <param name="Osc1 Amp Mod Src" index="12">9</param>
+      <param name="Osc1 Amp Mod Amt" index="13">0.0345608</param>
+      <param name="Osc1->BusA Level" index="14">0.932864</param>
+      <param name="Osc1->BusB Level" index="15">0</param>
+      <param name="Osc2 Mode" index="16">4</param>
+      <param name="Osc2 Waveform" index="17">56</param>
+      <param name="Osc2 Pitch" index="18">0</param>
+      <param name="Osc2 Detune" index="19">-0.00517476</param>
+      <param name="Osc2 Pitch Mod Src" index="20">0</param>
+      <param name="Osc2 Pitch Mod Amt" index="21">0</param>
+      <param name="Osc2 MParam 1" index="22">0.0682776</param>
+      <param name="Osc2 MParam 2" index="23">0.593337</param>
+      <param name="Osc2 MMod Src" index="24">18</param>
+      <param name="Osc2 MMod Amt" index="25">0.776833</param>
+      <param name="Osc2 Amp Mod Src" index="26">11</param>
+      <param name="Osc2 Amp Mod Amt" index="27">0.0372705</param>
+      <param name="Osc2->BusA Level" index="28">0</param>
+      <param name="Osc2->BusB Level" index="29">0.860843</param>
+      <param name="Osc3 Mode" index="30">0</param>
+      <param name="Osc3 Waveform" index="31">0</param>
+      <param name="Osc3 Pitch" index="32">0</param>
+      <param name="Osc3 Detune" index="33">0</param>
+      <param name="Osc3 Pitch Mod Src" index="34">0</param>
+      <param name="Osc3 Pitch Mod Amt" index="35">0</param>
+      <param name="Osc3 MParam 1" index="36">0</param>
+      <param name="Osc3 MParam 2" index="37">0</param>
+      <param name="Osc3 MMod Src" index="38">0</param>
+      <param name="Osc3 MMod Amt" index="39">0</param>
+      <param name="Osc3 Amp Mod Src" index="40">0</param>
+      <param name="Osc3 Amp Mod Amt" index="41">0</param>
+      <param name="Osc3->BusA Level" index="42">0.5</param>
+      <param name="Osc3->BusB Level" index="43">0.5</param>
+      <param name="Osc4 Mode" index="44">0</param>
+      <param name="Osc4 Waveform" index="45">0</param>
+      <param name="Osc4 Pitch" index="46">0</param>
+      <param name="Osc4 Detune" index="47">0</param>
+      <param name="Osc4 Pitch Mod Src" index="48">0</param>
+      <param name="Osc4 Pitch Mod Amt" index="49">0</param>
+      <param name="Osc4 MParam 1" index="50">0</param>
+      <param name="Osc4 MParam 2" index="51">0</param>
+      <param name="Osc4 MMod Src" index="52">0</param>
+      <param name="Osc4 MMod Amt" index="53">0</param>
+      <param name="Osc4 Amp Mod Src" index="54">0</param>
+      <param name="Osc4 Amp Mod Amt" index="55">0</param>
+      <param name="Osc4->BusA Level" index="56">0.5</param>
+      <param name="Osc4->BusB Level" index="57">0.5</param>
+      <param name="Filter1 Mode" index="58">0</param>
+      <param name="Filter1 Source" index="59">0</param>
+      <param name="Filter1 Frequency" index="60">50</param>
+      <param name="Filter1 Frq Mod Src" index="61">0</param>
+      <param name="Filter1 Frq Mod Amt" index="62">0</param>
+      <param name="Filter1 Resonance" index="63">0</param>
+      <param name="Filter1 MParameter" index="64">0</param>
+      <param name="Filter2 Mode" index="65">0</param>
+      <param name="Filter2 Source" index="66">0</param>
+      <param name="Filter2 Frequency" index="67">50</param>
+      <param name="Filter2 Frq Mod Src" index="68">0</param>
+      <param name="Filter2 Frq Mod Amt" index="69">0</param>
+      <param name="Filter2 Resonance" index="70">0</param>
+      <param name="Filter2 MParameter" index="71">0</param>
+      <param name="BusA->Out Level" index="72">0.810405</param>
+      <param name="BusA->Out Pan" index="73">0.080746</param>
+      <param name="BusB->Out Level" index="74">0.716139</param>
+      <param name="BusB->Out Pan" index="75">1</param>
+      <param name="Filter1->Out Level" index="76">0</param>
+      <param name="Filter1->Out Pan" index="77">0.5</param>
+      <param name="Filter2->Out Level" index="78">0</param>
+      <param name="Filter2->Out Pan" index="79">0.5</param>
+      <param name="Volume" index="80">0.650998</param>
+      <param name="Effect Mode" index="81">1</param>
+      <param name="Effect Param 1" index="82">0</param>
+      <param name="Effect Param 2" index="83">0</param>
+      <param name="Effect Param 3" index="84">0</param>
+      <param name="Effect Param 4" index="85">0.726627</param>
+      <param name="Effect Param 5" index="86">0.614681</param>
+      <param name="Effect Param 6" index="87">0.298288</param>
+      <param name="Effect Wet/Dry Mix" index="88">0.166667</param>
+      <param name="Glide Rate" index="89">0.984375</param>
+      <param name="Bend Range" index="90">2</param>
+      <param name="GLFO Frequency" index="91">1</param>
+      <param name="GLFO Waveform" index="92">0</param>
+      <param name="GLFO Amp Mod Src" index="93">0</param>
+      <param name="GLFO Amp Mod Amt" index="94">0</param>
+      <param name="VLFO Frequency" index="95">1</param>
+      <param name="VLFO Waveform" index="96">0</param>
+      <param name="VLFO Delay" index="97">0</param>
+      <param name="VLFO Amp Mod Src" index="98">0</param>
+      <param name="VLFO Amp Mod Amt" index="99">0</param>
+      <param name="MLFO Frequency" index="100">2.99273</param>
+      <param name="MLFO Waveform" index="101">0</param>
+      <param name="MLFO Delay" index="102">0</param>
+      <param name="MLFO Amp Mod Src" index="103">0</param>
+      <param name="MLFO Amp Mod Amt" index="104">0</param>
+      <param name="MLFO Phase Spread" index="105">146.537</param>
+      <param name="MLFO Random Freq" index="106">0</param>
+      <param name="EGO Mode" index="107">2</param>
+      <param name="EGO Shape 1" index="108">1</param>
+      <param name="EGO Time 1" index="109">0.00161415</param>
+      <param name="EGO Level 1" index="110">1</param>
+      <param name="EGO Shape 2" index="111">3</param>
+      <param name="EGO Time 2" index="112">0.1</param>
+      <param name="EGO Level 2" index="113">1</param>
+      <param name="EGO Shape 3" index="114">2</param>
+      <param name="EGO Time 3" index="115">28.9352</param>
+      <param name="EGO Level 3" index="116">0</param>
+      <param name="EGO Shape 4" index="117">3</param>
+      <param name="EGO Time 4" index="118">0.2</param>
+      <param name="EGO Vel Level Sens" index="119">0.0983891</param>
+      <param name="EGO Vel Time Scale" index="120">0</param>
+      <param name="EGO Kbd Time Scale" index="121">0</param>
+      <param name="EGO Amp Mod Src" index="122">0</param>
+      <param name="EGO Amp Mod Amt" index="123">0</param>
+      <param name="EG1 Mode" index="124">2</param>
+      <param name="EG1 Shape 1" index="125">3</param>
+      <param name="EG1 Time 1" index="126">0.00127513</param>
+      <param name="EG1 Level 1" index="127">1</param>
+      <param name="EG1 Shape 2" index="128">3</param>
+      <param name="EG1 Time 2" index="129">1.14874</param>
+      <param name="EG1 Level 2" index="130">0.381462</param>
+      <param name="EG1 Shape 3" index="131">3</param>
+      <param name="EG1 Time 3" index="132">36.0975</param>
+      <param name="EG1 Level 3" index="133">0</param>
+      <param name="EG1 Shape 4" index="134">3</param>
+      <param name="EG1 Time 4" index="135">0.2</param>
+      <param name="EG1 Vel Level Sens" index="136">0.218653</param>
+      <param name="EG1 Vel Time Scale" index="137">0</param>
+      <param name="EG1 Kbd Time Scale" index="138">0</param>
+      <param name="EG1 Amp Mod Src" index="139">0</param>
+      <param name="EG1 Amp Mod Amt" index="140">0</param>
+      <param name="EG2 Mode" index="141">0</param>
+      <param name="EG2 Shape 1" index="142">3</param>
+      <param name="EG2 Time 1" index="143">0.1</param>
+      <param name="EG2 Level 1" index="144">1</param>
+      <param name="EG2 Shape 2" index="145">3</param>
+      <param name="EG2 Time 2" index="146">0.1</param>
+      <param name="EG2 Level 2" index="147">1</param>
+      <param name="EG2 Shape 3" index="148">3</param>
+      <param name="EG2 Time 3" index="149">0.1</param>
+      <param name="EG2 Level 3" index="150">1</param>
+      <param name="EG2 Shape 4" index="151">3</param>
+      <param name="EG2 Time 4" index="152">0.2</param>
+      <param name="EG2 Vel Level Sens" index="153">0</param>
+      <param name="EG2 Vel Time Scale" index="154">0</param>
+      <param name="EG2 Kbd Time Scale" index="155">0</param>
+      <param name="EG2 Amp Mod Src" index="156">0</param>
+      <param name="EG2 Amp Mod Amt" index="157">0</param>
+      <param name="EG3 Mode" index="158">0</param>
+      <param name="EG3 Shape 1" index="159">3</param>
+      <param name="EG3 Time 1" index="160">0.1</param>
+      <param name="EG3 Level 1" index="161">1</param>
+      <param name="EG3 Shape 2" index="162">3</param>
+      <param name="EG3 Time 2" index="163">0.1</param>
+      <param name="EG3 Level 2" index="164">1</param>
+      <param name="EG3 Shape 3" index="165">3</param>
+      <param name="EG3 Time 3" index="166">0.1</param>
+      <param name="EG3 Level 3" index="167">1</param>
+      <param name="EG3 Shape 4" index="168">3</param>
+      <param name="EG3 Time 4" index="169">0.2</param>
+      <param name="EG3 Vel Level Sens" index="170">0</param>
+      <param name="EG3 Vel Time Scale" index="171">0</param>
+      <param name="EG3 Kbd Time Scale" index="172">0</param>
+      <param name="EG3 Amp Mod Src" index="173">0</param>
+      <param name="EG3 Amp Mod Amt" index="174">0</param>
+      <param name="EG4 Mode" index="175">0</param>
+      <param name="EG4 Shape 1" index="176">3</param>
+      <param name="EG4 Time 1" index="177">0.1</param>
+      <param name="EG4 Level 1" index="178">1</param>
+      <param name="EG4 Shape 2" index="179">3</param>
+      <param name="EG4 Time 2" index="180">0.1</param>
+      <param name="EG4 Level 2" index="181">1</param>
+      <param name="EG4 Shape 3" index="182">3</param>
+      <param name="EG4 Time 3" index="183">0.1</param>
+      <param name="EG4 Level 3" index="184">1</param>
+      <param name="EG4 Shape 4" index="185">3</param>
+      <param name="EG4 Time 4" index="186">0.2</param>
+      <param name="EG4 Vel Level Sens" index="187">0</param>
+      <param name="EG4 Vel Time Scale" index="188">0</param>
+      <param name="EG4 Kbd Time Scale" index="189">0</param>
+      <param name="EG4 Amp Mod Src" index="190">0</param>
+      <param name="EG4 Amp Mod Amt" index="191">0</param>
+      <param name="ModMix Bias" index="192">1</param>
+      <param name="ModMix Mod1 Src" index="193">0</param>
+      <param name="ModMix Mod1 Amt" index="194">0</param>
+      <param name="ModMix Mod2 Src" index="195">0</param>
+      <param name="ModMix Mod2 Amt" index="196">0</param>
+      <param name="Tuning" index="197">440</param>
+     </params>
+     <controllers/>
+     <editor-pos>0,0</editor-pos>
+     <form-pos>0,0</form-pos>
+    </plugin>
+    <audio-output-bus-name></audio-output-bus-name>
+    <audio-output-bus>0</audio-output-bus>
+    <audio-output-auto-connect>1</audio-output-auto-connect>
+   </plugins>
+  </track>
+ </tracks>
+</session>
+

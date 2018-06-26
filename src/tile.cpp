@@ -4,7 +4,7 @@
  */
 
 #include <stdexcept>
-#include <cmath>
+#include <limits>
 
 #include "SDL.h"
 
@@ -21,7 +21,7 @@ Tile::Tile(Game *game, Vector<int> pos) :
     Object(pos, {
             .minPos=pos,
             .maxPos=pos + Vector<int>{Tile::W, Tile::H},
-            .mass=INFINITY}),
+            .mass=std::numeric_limits<float>::infinity()}),
     game(game),
     anim(0, 0, 100, 100, 1, 1, false) {
 }
