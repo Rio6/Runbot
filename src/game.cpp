@@ -74,7 +74,10 @@ void Game::setState(State newState) {
             bgCh = Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("start.wav"), -1);
             break;
         case RUNNING:
-            menu = std::make_unique<GameMenu>(this);
+            if(SDL_GetNumTouchDevices() > 0)
+                menu = std::make_unique<GameMenu>(this);
+            else
+                menu = nullptr;
             if(state == DEAD)
                 reset();
 
@@ -86,8 +89,8 @@ void Game::setState(State newState) {
             menu = std::make_unique<PauseMenu>(this);
             break;
         case DEAD:
-            menu = std::make_unique<DeadMenu>(this, TOTAL_SCORE);
             highScore.updateScore(TOTAL_SCORE);
+            menu = std::make_unique<DeadMenu>(this, TOTAL_SCORE, highScore.getScore());
             break;
         default:
             break;
@@ -118,8 +121,15 @@ void Game::processEvents() {
                     }
                     break;
                 }
-            case SDL_KEYUP:
+            case SDL_KEYDOWN:
                 switch(eve.key.keysym.sym) {
+                    case SDLK_UP:
+                        keys["jump"] = true;
+                        break;
+                    case SDLK_RIGHT:
+                        keys["shoot"] = true;
+                        break;
+                    case SDLK_ESCAPE:
                     case SDLK_AC_BACK:
                         switch(state) {
                             case RUNNING:
@@ -137,6 +147,16 @@ void Game::processEvents() {
                             default:
                                 break;
                         }
+                        break;
+                }
+                break;
+            case SDL_KEYUP:
+                switch(eve.key.keysym.sym) {
+                    case SDLK_UP:
+                        keys["jump"] = false;
+                        break;
+                    case SDLK_RIGHT:
+                        keys["shoot"] = false;
                         break;
                 }
                 break;
@@ -166,6 +186,7 @@ void Game::processEvents() {
                     setState(PAUSED);
                 break;
             case SDL_APP_TERMINATING:
+            case SDL_QUIT:
                 setState(STOP);
                 break;
         }
