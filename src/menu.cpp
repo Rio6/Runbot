@@ -49,7 +49,7 @@ StartMenu::StartMenu(Game *game, int hiScore) : game(game), hiScore(hiScore),
     titleRect{Game::W / 2 - 300, 150, 600, 150},
     startBtn{Game::W / 2 - 100, Game::H / 2 + 50, 200, 80},
     verRect{3, Game::H - 22, 100, 20},
-    scoreRect{Game::W - 200, Game::H - 40, 200, 40} {}
+    scoreRect{Game::W - 300, Game::H - 40, 300, 40} {}
 
 bool StartMenu::onMouse(Vector<int> &pos, bool down) {
     if(startBtn.onMouse(pos, down))
@@ -70,7 +70,7 @@ void StartMenu::draw() {
 
     // Highscore
     char scoreDisplay[32];
-    std::sprintf(scoreDisplay, "HIGHSCORE: %d", hiScore);
+    std::sprintf(scoreDisplay, "HIGHSCORE: %5d", hiScore);
     graphic.renderText(scoreDisplay, &scoreRect, 0);
 }
 
@@ -123,7 +123,7 @@ void DeadMenu::draw() {
     graphic.renderText("MENU", &menuBtn, menuBtn.state * 0x00ff00);
 
     char distDisplay[32];
-    std::sprintf(distDisplay, "SCORE:%5d", score);
+    std::sprintf(distDisplay, "SCORE:%d", score);
     graphic.renderText(distDisplay, &distRect, 0);
 }
 

@@ -3,7 +3,11 @@
  * Date: 2018/06/25
  */
 
-#if defined(unix) || defined(__unix__) || defined(__unix)
+#if !defined(__ANDROID__) && (defined(unix) || defined(__unix__) || defined(__unix))
+#define USE_HOME
+#endif
+
+#ifdef USE_HOME
 #include <cstdio>
 #include <cerrno>
 #include <sys/stat.h>
@@ -24,7 +28,7 @@ HighScore::HighScore() {
 
     char *scoreDir = nullptr;
 
-#if defined(unix) || defined(__unix__) || defined(__unix)
+#ifdef USE_HOME
     // I want to put stuff under $HOME/.Runbot in unix systems
     char *home = std::getenv("HOME");
     if(home) {
