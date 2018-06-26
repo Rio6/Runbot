@@ -74,7 +74,10 @@ void Game::setState(State newState) {
             bgCh = Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("start.wav"), -1);
             break;
         case RUNNING:
-            menu = std::make_unique<GameMenu>(this);
+            if(SDL_GetNumTouchDevices() > 0)
+                menu = std::make_unique<GameMenu>(this);
+            else
+                menu = nullptr;
             if(state == DEAD)
                 reset();
 
