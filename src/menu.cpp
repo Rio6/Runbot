@@ -105,8 +105,8 @@ DeadMenu::DeadMenu(Game *game, int score, int hiScore) : game(game),
     titleRect{Game::W / 2 - 125, 200, 250, 80},
     restartBtn{Game::W / 2 - 160, Game::H / 2, 140, 50},
     menuBtn{Game::W / 2 + 20, Game::H / 2, 140, 50},
-    scoreRect{Game::W / 2 - 100, Game::H / 2 + 75, 200, 40},
-    hiScoreRect{Game::W / 2 - 105, Game::H / 2 + 120, 210, 40} {}
+    scoreRect{Game::W / 2 - 100, Game::H / 2 + 65, 200, 40},
+    hiScoreRect{Game::W / 2 - 105, Game::H / 2 + 110, 210, 40} {}
 
 bool DeadMenu::onMouse(Vector<int> &pos, bool down) {
     if(restartBtn.onMouse(pos, down))

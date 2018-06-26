@@ -89,8 +89,8 @@ void Game::setState(State newState) {
             menu = std::make_unique<PauseMenu>(this);
             break;
         case DEAD:
-            menu = std::make_unique<DeadMenu>(this, TOTAL_SCORE, highScore.getScore());
             highScore.updateScore(TOTAL_SCORE);
+            menu = std::make_unique<DeadMenu>(this, TOTAL_SCORE, highScore.getScore());
             break;
         default:
             break;
