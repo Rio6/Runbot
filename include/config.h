@@ -1,3 +1,3 @@
-#define VERSION "0.2"
+#define VERSION "0.3"
 #define DATA_DIR "assets/"
 #define USE_VSYNC
