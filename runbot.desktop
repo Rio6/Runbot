@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Runbot
+Comment=Run robot!
+Exec=runbot
+Icon=runbot
+Terminal=false
+Categories=Game;ArcadeGame;
