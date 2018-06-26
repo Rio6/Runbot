@@ -23,7 +23,7 @@ include(FindPkgConfig)
 find_package(PkgConfig REQUIRED)
 
 pkg_check_modules(SDL2 REQUIRED sdl2 SDL2_image SDL2_mixer)
-include_directories(${SDL2_INCLUDES})
+include_directories(${SDL2_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME} ${SDL2_LIBRARIES})
 
 # Configs

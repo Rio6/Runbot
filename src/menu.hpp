@@ -6,7 +6,7 @@
 #ifndef _MENU_H_
 #define _MENU_H_
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "vector.hpp"
 
 namespace runbot {

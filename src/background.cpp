@@ -3,7 +3,7 @@
  * Date: 2017/12/08
  */
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 
 #include "background.hpp"
 #include "graphic.hpp"

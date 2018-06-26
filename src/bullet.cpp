@@ -3,8 +3,8 @@
  * Date: 2018/01/08
  */
 
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_mixer.h"
+#include "SDL.h"
+#include "SDL_mixer.h"
 
 #include "bullet.hpp"
 #include "object.hpp"

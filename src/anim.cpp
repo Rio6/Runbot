@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "SDL2/SDL.h"
+#include "SDL.h"
 #include "anim.hpp"
 
 using runbot::Animation;
