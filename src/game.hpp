@@ -17,6 +17,7 @@
 #include "background.hpp"
 #include "level.hpp"
 #include "menu.hpp"
+#include "highscore.hpp"
 
 namespace runbot {
     const char *const NAME = "Runbot";
@@ -59,6 +60,7 @@ namespace runbot {
             std::vector<std::shared_ptr<Object>> objects;
             Level level;
             Background bg;
+            HighScore highScore;
 
             State state = STOP;
             std::unique_ptr<Menu> menu;

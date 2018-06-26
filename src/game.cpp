@@ -23,6 +23,8 @@
 #include "level.hpp"
 #include "media.hpp"
 
+#define TOTAL_SCORE (distance / 10 + score)
+
 using runbot::Game;
 
 Game::Game() : level(this) {
@@ -65,7 +67,7 @@ void Game::setState(State newState) {
     switch(newState) {
         case START:
             reset();
-            menu = std::make_unique<StartMenu>(this);
+            menu = std::make_unique<StartMenu>(this, highScore.getScore());
 
             if(bgCh >= 0)
                 Mix_HaltChannel(bgCh);
@@ -84,7 +86,8 @@ void Game::setState(State newState) {
             menu = std::make_unique<PauseMenu>(this);
             break;
         case DEAD:
-            menu = std::make_unique<DeadMenu>(this, distance / 10 + score);
+            menu = std::make_unique<DeadMenu>(this, TOTAL_SCORE);
+            highScore.updateScore(TOTAL_SCORE);
             break;
         default:
             break;
@@ -257,7 +260,7 @@ void Game::draw() {
     if(state == RUNNING) {
         // Draw score
         char distDisplay[32];
-        std::sprintf(distDisplay, "SCORE:%5d", distance / 10 + score);
+        std::sprintf(distDisplay, "SCORE:%5d", TOTAL_SCORE);
         SDL_Rect des = {Game::W - 200, Game::H - 40, 200, 40};
         graphic.renderText(distDisplay, &des);
         // Draw HP
