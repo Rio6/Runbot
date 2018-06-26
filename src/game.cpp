@@ -74,7 +74,7 @@ void Game::setState(State newState) {
             bgCh = Mix_PlayChannel(-1, Media::get<Mix_Chunk*>("start.wav"), -1);
             break;
         case RUNNING:
-            menu.release();
+            menu = std::make_unique<GameMenu>(this);
             if(state == DEAD)
                 reset();
 
@@ -101,6 +101,23 @@ void Game::processEvents() {
     SDL_Event eve;
     while(SDL_PollEvent(&eve)) {
         switch(eve.type) {
+            case SDL_FINGERUP:
+            case SDL_FINGERDOWN:
+            case SDL_FINGERMOTION:
+                {
+                    bool down = eve.type != SDL_FINGERUP;
+                    if(menu != nullptr) {
+                        Vector<int> pos = {static_cast<int>(eve.tfinger.x * Game::W),
+                            static_cast<int>(eve.tfinger.y * Game::H)};
+                        if(!menu->onMouse(pos, down)) {
+                            if(eve.tfinger.x < .5f)
+                                keys["jump"] = down;
+                            else
+                                keys["shoot"] = down;
+                        }
+                    }
+                    break;
+                }
             case SDL_KEYDOWN:
                 switch(eve.key.keysym.sym) {
                     case SDLK_UP:
@@ -110,6 +127,7 @@ void Game::processEvents() {
                         keys["shoot"] = true;
                         break;
                     case SDLK_ESCAPE:
+                    case SDLK_AC_BACK:
                         switch(state) {
                             case RUNNING:
                                 setState(PAUSED);
@@ -160,6 +178,11 @@ void Game::processEvents() {
                     menu->onMouse(pos, true);
                 }
                 break;
+            case SDL_APP_WILLENTERBACKGROUND:
+                if(state == RUNNING)
+                    setState(PAUSED);
+                break;
+            case SDL_APP_TERMINATING:
             case SDL_QUIT:
                 setState(STOP);
                 break;

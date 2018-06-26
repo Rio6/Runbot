@@ -35,6 +35,7 @@ namespace runbot {
                 {"cursor.png", nullptr},
                 {"letters.png", nullptr},
                 {"explosion.png", nullptr},
+                {"pause.png", nullptr},
                 {"menu.png", nullptr},
                 {"shooter.png", nullptr},
                 {"heart.png", nullptr}

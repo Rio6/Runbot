@@ -131,3 +131,16 @@ void DeadMenu::draw() {
     std::sprintf(scoreDisplay, "HIGHSCORE: %d", hiScore);
     graphic.renderText(scoreDisplay, &hiScoreRect, 0);
 }
+
+GameMenu::GameMenu(Game *game) : game(game),
+    pauseBtn{0, 0, 50, 50} {}
+
+bool GameMenu::onMouse(Vector<int> &pos, bool down) {
+    if(pauseBtn.onMouse(pos, down))
+        game->setState(Game::PAUSED);
+    return pauseBtn.state == MenuRect::DOWN;
+}
+
+void GameMenu::draw() {
+    Graphic::instance().renderImage("pause.png", nullptr, &pauseBtn, pauseBtn.state * 0x00ff00);
+}

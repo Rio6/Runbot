@@ -56,6 +56,10 @@ Graphic::Graphic() {
     if(!rend)
         throw std::runtime_error(SDL_GetError());
 
+    // Configure SDL
+    SDL_ShowCursor(false);
+    SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
+
     // Configure the renderer
     SDL_RenderSetLogicalSize(rend, Game::W, Game::H);
     SDL_SetRenderDrawColor(rend, 0x00, 0x00, 0x00, 0xff);
@@ -75,6 +79,8 @@ Graphic::~Graphic() {
 
     rend = nullptr;
     win = nullptr;
+
+    Mix_CloseAudio();
 
     Mix_Quit();
     IMG_Quit();
@@ -104,7 +110,8 @@ void Graphic::renderImage(const std::string &name,
                 (0xff0000 & color) >> 16,
                 (0x00ff00 & color) >> 8,
                 0x0000ff & color);
-        SDL_RenderCopy(rend, text, src, des);
+        if(SDL_RenderCopy(rend, text, src, des) < 0)
+            SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Render error: %s", SDL_GetError());
     } else {
         SDL_LogError(SDL_LOG_CATEGORY_RENDER, "Cannot render %s", name.c_str());
     }

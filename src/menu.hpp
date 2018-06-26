@@ -79,6 +79,16 @@ namespace runbot {
             MenuRect scoreRect;
             MenuRect hiScoreRect;
     };
+
+    class GameMenu : public Menu {
+        public:
+            GameMenu(Game*);
+            bool onMouse(Vector<int> &pos, bool down);
+            void draw();
+        private:
+            Game *game;
+            MenuRect pauseBtn;
+    };
 };
 
 #endif
