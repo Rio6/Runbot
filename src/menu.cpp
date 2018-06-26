@@ -44,11 +44,12 @@ bool Menu::MenuRect::inRect(const Vector<int> &pos) {
 }
 
 
-StartMenu::StartMenu(Game *game) : game(game),
+StartMenu::StartMenu(Game *game, int hiScore) : game(game), hiScore(hiScore),
     bgRect{100, 50, Game::W - 200, Game::H - 100},
     titleRect{Game::W / 2 - 300, 150, 600, 150},
     startBtn{Game::W / 2 - 100, Game::H / 2 + 50, 200, 80},
-    verRect{Game::W - 100, Game::H - 20, 100, 20} {}
+    verRect{3, Game::H - 22, 100, 20},
+    scoreRect{Game::W - 200, Game::H - 40, 200, 40} {}
 
 bool StartMenu::onMouse(Vector<int> &pos, bool down) {
     if(startBtn.onMouse(pos, down))
@@ -66,6 +67,11 @@ void StartMenu::draw() {
     graphic.renderText("VERSION " VERSION, &verRect, 0);
     // UP = 0; DOWN = 1; So state * color would be black when UP, the color when DOWN
     graphic.renderText("PLAY", &startBtn, startBtn.state * 0x00ff00);
+
+    // Highscore
+    char scoreDisplay[32];
+    std::sprintf(scoreDisplay, "HIGHSCORE: %d", hiScore);
+    graphic.renderText(scoreDisplay, &scoreRect, 0);
 }
 
 

@@ -34,16 +34,18 @@ namespace runbot {
 
     class StartMenu : public Menu {
         public:
-            StartMenu(Game*);
+            StartMenu(Game*, int hiScore);
             bool onMouse(Vector<int> &pos, bool down);
             void draw();
         private:
             Game *game;
+            int hiScore;
 
             MenuRect bgRect;
             MenuRect titleRect;
             MenuRect startBtn;
             MenuRect verRect;
+            MenuRect scoreRect;
     };
 
     class PauseMenu : public Menu {
