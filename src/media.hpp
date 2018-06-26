@@ -9,8 +9,8 @@
 #include <string>
 #include <map>
 
-#include "SDL2/SDL.h"
-#include "SDL2/SDL_mixer.h"
+#include "SDL.h"
+#include "SDL_mixer.h"
 
 namespace runbot {
     class Media {
@@ -35,6 +35,7 @@ namespace runbot {
                 {"cursor.png", nullptr},
                 {"letters.png", nullptr},
                 {"explosion.png", nullptr},
+                {"pause.png", nullptr},
                 {"menu.png", nullptr},
                 {"shooter.png", nullptr},
                 {"heart.png", nullptr}
