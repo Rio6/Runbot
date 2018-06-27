@@ -246,15 +246,19 @@ void Game::doTick() {
 
     if(state == RUNNING) { // Only do these when game is running
 
-        // Move camera up if robot is too high
+        // Move camera if robot is too high or too low
         int robotY = robot->getPos().y;
         if(robotY < 0)
             cameraY = robotY / 2;
+        else if(robotY + Robot::H > Game::H)
+            cameraY = (robotY + Robot::H - Game::H) / 2;
         else
             cameraY /= 2;
 
         // Make game go faster
         if(tick % 1000 == 0) speed += 0.5;
+    } else {
+        cameraY *= .95;
     }
 
     tick++;

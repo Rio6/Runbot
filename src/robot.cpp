@@ -58,7 +58,7 @@ void Robot::doTick(int tick) {
 
     pos += speed;
 
-    if(pos.x + Robot::W * 2 < game->distance || pos.y > Game::H || hp <= 0)
+    if(pos.x + Robot::W < game->distance || pos.y > Game::H || hp <= 0)
         die();
 
     hitbox.speed = speed;
