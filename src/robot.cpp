@@ -30,16 +30,14 @@ void Robot::draw() {
     if(dead) return;
 
     Graphic &graphic = Graphic::instance();
-    SDL_Rect src, des;
+    SDL_Rect src, des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
 
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
     graphic.renderImage("robot.png", &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
     graphic.renderImage("robot.png", &src, &des);
 }
 

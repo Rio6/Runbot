@@ -32,16 +32,14 @@ Shooter::Shooter(Game *game, Vector<int> pos) :
 
 void Shooter::draw() {
     Graphic &graphic = Graphic::instance();
-    SDL_Rect src, des;
+    SDL_Rect src, des = {pos.x - game->distance, pos.y - game->cameraY, Shooter::W, Shooter::H};
 
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y - game->cameraY, Shooter::W, Shooter::H};
     graphic.renderImage("shooter.png", &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y - game->cameraY, Shooter::W, Shooter::H};
     graphic.renderImage("shooter.png", &src, &des);
 }
 
