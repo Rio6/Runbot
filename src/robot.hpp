@@ -18,7 +18,6 @@ namespace runbot {
         public:
             static const int W = 100;
             static const int H = 200;
-            static const int JUMP_FORCE = 25;
 
             Robot(Game*);
             void draw();
@@ -36,6 +35,9 @@ namespace runbot {
             void die();
 
         private:
+            static const float JUMP_FORCE;
+            static const float GRAV;
+
             Game *game;
             Animation bodyAnim;
             Animation armAnim;

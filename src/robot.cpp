@@ -18,6 +18,9 @@
 
 using runbot::Robot;
 
+const float Robot::JUMP_FORCE = 22;
+const float Robot::GRAV = 0.8;
+
 Robot::Robot(Game *game) :
     Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 20, Robot::H}}),
     game(game),
@@ -51,7 +54,7 @@ void Robot::doTick(int tick) {
     else if(speed.x > game->speed)
         speed.x = game->speed;
 
-    speed.y += 1;
+    speed.y += GRAV;
 
     pos += speed;
 
@@ -117,7 +120,7 @@ void Robot::jump() {
 
 void Robot::releaseJump() {
     if(!onGround)
-        speed.y += 2;
+        speed.y += GRAV * 2;
 }
 
 void Robot::shoot() {
