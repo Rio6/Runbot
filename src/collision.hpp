@@ -36,7 +36,6 @@ namespace runbot {
         private:
             Object *a, *b;
             Direction dir;
-            Vector<int> normal;
             float time;
 
             void calculate();

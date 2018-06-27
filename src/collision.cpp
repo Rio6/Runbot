@@ -84,7 +84,7 @@ void Collision::calculate() {
     float entryTime = std::max(entry.x, entry.y);
     float exitTime = std::min(exit.x, exit.y);
 
-    if(exitTime < 0 || entryTime < -1 || entryTime > 0) {
+    if(exitTime < 0 || entryTime < -5 || entryTime > 0) {
         dir = NONE;
         time = 1;
     } else {
@@ -104,7 +104,7 @@ void Collision::solve() {
     // Recalculate before solving
     calculate();
 
-    if(time >= -1 && time <= 0) {
+    if(dir != NONE) {
 
         bool aSolve = a->onCollide(*b, dir);
         bool bSolve = b->onCollide(*a, getOpposite(dir));
