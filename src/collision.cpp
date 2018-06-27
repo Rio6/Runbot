@@ -46,17 +46,33 @@ void Collision::calculate() {
     if(speed.x < 0) {
         entryDist.x = hb.maxPos.x - ha.minPos.x;
         exitDist.x = hb.minPos.x - ha.maxPos.x;
-    } else {
+    } else if(speed.x > 0) {
         entryDist.x = hb.minPos.x - ha.maxPos.x;
         exitDist.x = hb.maxPos.x - ha.minPos.x;
+    } else {
+        if(ha.minPos.x < hb.maxPos.x && hb.minPos.x < ha.maxPos.x) {
+            entryDist.x = -1;
+            exitDist.x = 1;
+        } else {
+            entryDist.x = 1;
+            exitDist.x = -1;
+        }
     }
 
     if(speed.y < 0) {
         entryDist.y = hb.maxPos.y - ha.minPos.y;
         exitDist.y = hb.minPos.y - ha.maxPos.y;
-    } else {
+    } else if(speed.y > 0) {
         entryDist.y = hb.minPos.y - ha.maxPos.y;
         exitDist.y = hb.maxPos.y - ha.minPos.y;
+    } else {
+        if(ha.minPos.y < hb.maxPos.y && hb.minPos.y < ha.maxPos.y) {
+            entryDist.y = -1;
+            exitDist.y = 1;
+        } else {
+            entryDist.y = 1;
+            exitDist.y = -1;
+        }
     }
 
     entry.x = entryDist.x / speed.x;
@@ -68,7 +84,7 @@ void Collision::calculate() {
     float entryTime = std::max(entry.x, entry.y);
     float exitTime = std::min(exit.x, exit.y);
 
-    if(exitTime <= 0 || entryTime < -1 || entryTime > 0) {
+    if(exitTime < 0 || entryTime < -1 || entryTime > 0) {
         dir = NONE;
         time = 1;
     } else {
