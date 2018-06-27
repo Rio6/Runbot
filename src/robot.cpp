@@ -18,6 +18,9 @@
 
 using runbot::Robot;
 
+const float Robot::JUMP_FORCE = 22;
+const float Robot::GRAV = 0.8;
+
 Robot::Robot(Game *game) :
     Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 20, Robot::H}}),
     game(game),
@@ -30,16 +33,14 @@ void Robot::draw() {
     if(dead) return;
 
     Graphic &graphic = Graphic::instance();
-    SDL_Rect src, des;
+    SDL_Rect src, des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
 
     // Body animation
     src = bodyAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
     graphic.renderImage("robot.png", &src, &des);
 
     // Arm animation
     src = armAnim.getCurrentClip();
-    des = {pos.x - game->distance, pos.y - game->cameraY, Robot::W, Robot::H};
     graphic.renderImage("robot.png", &src, &des);
 }
 
@@ -53,11 +54,11 @@ void Robot::doTick(int tick) {
     else if(speed.x > game->speed)
         speed.x = game->speed;
 
-    speed.y += 1;
+    speed.y += GRAV;
 
     pos += speed;
 
-    if(pos.x + Robot::W * 2 < game->distance || pos.y > Game::H || hp <= 0)
+    if(pos.x + Robot::W < game->distance || pos.y > Game::H || hp <= 0)
         die();
 
     hitbox.speed = speed;
@@ -90,6 +91,8 @@ bool Robot::onCollide(Object &other, Direction dir) {
         case BULLET:
             if(dynamic_cast<Bullet&>(other).isEnemy())
                 hp--;
+            else
+                return false;
             break;
         default:
             break;
@@ -119,7 +122,7 @@ void Robot::jump() {
 
 void Robot::releaseJump() {
     if(!onGround)
-        speed.y += 2;
+        speed.y += GRAV * 2;
 }
 
 void Robot::shoot() {

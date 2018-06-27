@@ -86,6 +86,7 @@ void Game::setState(State newState) {
             bgCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("bg.wav"), -1, 2000);
             break;
         case PAUSED:
+            highScore.updateScore(TOTAL_SCORE);
             menu = std::make_unique<PauseMenu>(this);
             break;
         case DEAD:
@@ -123,10 +124,10 @@ void Game::processEvents() {
                 }
             case SDL_KEYDOWN:
                 switch(eve.key.keysym.sym) {
-                    case SDLK_UP:
+                    case JUMP_KEY:
                         keys["jump"] = true;
                         break;
-                    case SDLK_RIGHT:
+                    case SHOOT_KEY:
                         keys["shoot"] = true;
                         break;
                     case SDLK_ESCAPE:
@@ -152,10 +153,10 @@ void Game::processEvents() {
                 break;
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
-                    case SDLK_UP:
+                    case JUMP_KEY:
                         keys["jump"] = false;
                         break;
-                    case SDLK_RIGHT:
+                    case SHOOT_KEY:
                         keys["shoot"] = false;
                         break;
                 }
@@ -245,15 +246,19 @@ void Game::doTick() {
 
     if(state == RUNNING) { // Only do these when game is running
 
-        // Move camera up if robot is too high
+        // Move camera if robot is too high or too low
         int robotY = robot->getPos().y;
         if(robotY < 0)
             cameraY = robotY / 2;
+        else if(robotY + Robot::H > Game::H)
+            cameraY = (robotY + Robot::H - Game::H) / 2;
         else
             cameraY /= 2;
 
         // Make game go faster
         if(tick % 1000 == 0) speed += 0.5;
+    } else {
+        cameraY *= .95;
     }
 
     tick++;

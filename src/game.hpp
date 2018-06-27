@@ -51,6 +51,9 @@ namespace runbot {
             std::vector<std::shared_ptr<Object>> getObjectsIn(Vector<int>, int xRange, int yRange);
 
         private:
+            static const SDL_Keycode JUMP_KEY = SDLK_SPACE;
+            static const SDL_Keycode SHOOT_KEY = SDLK_RETURN;
+
             static const int CURSOR_SIZE = 20;
             Vector<int> cursor {0, -CURSOR_SIZE};
 
