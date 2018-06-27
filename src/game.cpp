@@ -86,6 +86,7 @@ void Game::setState(State newState) {
             bgCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("bg.wav"), -1, 2000);
             break;
         case PAUSED:
+            highScore.updateScore(TOTAL_SCORE);
             menu = std::make_unique<PauseMenu>(this);
             break;
         case DEAD:
