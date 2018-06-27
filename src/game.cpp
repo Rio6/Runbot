@@ -123,10 +123,10 @@ void Game::processEvents() {
                 }
             case SDL_KEYDOWN:
                 switch(eve.key.keysym.sym) {
-                    case SDLK_UP:
+                    case JUMP_KEY:
                         keys["jump"] = true;
                         break;
-                    case SDLK_RIGHT:
+                    case SHOOT_KEY:
                         keys["shoot"] = true;
                         break;
                     case SDLK_ESCAPE:
@@ -152,10 +152,10 @@ void Game::processEvents() {
                 break;
             case SDL_KEYUP:
                 switch(eve.key.keysym.sym) {
-                    case SDLK_UP:
+                    case JUMP_KEY:
                         keys["jump"] = false;
                         break;
-                    case SDLK_RIGHT:
+                    case SHOOT_KEY:
                         keys["shoot"] = false;
                         break;
                 }
