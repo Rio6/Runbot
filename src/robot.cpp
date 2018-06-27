@@ -91,6 +91,8 @@ bool Robot::onCollide(Object &other, Direction dir) {
         case BULLET:
             if(dynamic_cast<Bullet&>(other).isEnemy())
                 hp--;
+            else
+                return false;
             break;
         default:
             break;
