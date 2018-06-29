@@ -101,12 +101,12 @@ void PauseMenu::draw() {
 
 DeadMenu::DeadMenu(Game *game, int score, int hiScore) : game(game),
     score(score), hiScore(hiScore),
-    bgRect{Game::W / 2 - 220, Game::H / 2 - 160, 440, 395},
-    titleRect{Game::W / 2 - 125, 200, 250, 80},
-    restartBtn{Game::W / 2 - 160, Game::H / 2, 140, 50},
-    menuBtn{Game::W / 2 + 20, Game::H / 2, 140, 50},
-    scoreRect{Game::W / 2 - 100, Game::H / 2 + 65, 200, 40},
-    hiScoreRect{Game::W / 2 - 105, Game::H / 2 + 110, 210, 40} {}
+    bgRect{Game::W / 2 - 220, Game::H / 2 - 180, 440, 395},
+    titleRect{Game::W / 2 - 125, 180, 250, 80},
+    restartBtn{Game::W / 2 - 160, Game::H / 2 - 20, 140, 50},
+    menuBtn{Game::W / 2 + 20, Game::H / 2 - 20, 140, 50},
+    scoreRect{Game::W / 2 - 100, Game::H / 2 + 45, 200, 40},
+    hiScoreRect{Game::W / 2 - 105, Game::H / 2 + 90, 210, 40} {}
 
 bool DeadMenu::onMouse(Vector<int> &pos, bool down) {
     if(restartBtn.onMouse(pos, down))
