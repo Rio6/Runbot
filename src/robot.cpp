@@ -22,7 +22,7 @@ const float Robot::JUMP_FORCE = 22;
 const float Robot::GRAV = 0.8;
 
 Robot::Robot(Game *game) :
-    Object({0, 0}, {.minPos={20, 0}, .maxPos={Robot::W - 20, Robot::H}}),
+    Object({0, Game::H / 4}, {.minPos={20, 0}, .maxPos={Robot::W - 20, Robot::H}}),
     game(game),
     bodyAnim(0, 0, 200, 400, 30, 20, true),
     armAnim(0, 400, 200, 400, 30, 20, false) {
@@ -49,10 +49,10 @@ void Robot::doTick(int tick) {
     if(dead) return;
 
     if(speed.x < -game->speed) speed.x = -game->speed;
-    if(pos.x < game->distance + Robot::W && speed.x < game->speed * 2)
-        speed.x += (game->speed * 2 - speed.x) / 4;
+    if(pos.x < game->distance + Game::W / 5 && speed.x < game->speed * 2)
+        speed.x += (game->speed * 2 - speed.x) / 8;
     else if(speed.x > game->speed)
-        speed.x = game->speed;
+        speed.x += (game->speed - speed.x) / 8;
 
     speed.y += GRAV;
 
