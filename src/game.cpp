@@ -58,6 +58,9 @@ void Game::loop() {
         // Render
         draw();
     }
+
+    // Reset objects
+    objects.clear();
 }
 
 void Game::setState(State newState) {
