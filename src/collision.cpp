@@ -123,6 +123,8 @@ void Collision::solve() {
             switch(dir) {
                 case LEFT:
                 case RIGHT:
+                    if(dir == LEFT && relSpeed.x < 0 || dir == RIGHT && relSpeed.x > 0) break;
+
                     fixA = {speedA.x * time, 0};
                     fixB = {speedB.x * time, 0};
 
@@ -136,6 +138,8 @@ void Collision::solve() {
                     break;
                 case UP:
                 case DOWN:
+                    if(dir == UP && relSpeed.y < 0 || dir == DOWN && relSpeed.y > 0) break;
+
                     fixA = {0, speedA.y * time};
                     fixB = {0, speedB.y * time};
 
