@@ -84,7 +84,7 @@ void Collision::calculate() {
     float entryTime = std::max(entry.x, entry.y);
     float exitTime = std::min(exit.x, exit.y);
 
-    if(exitTime < 0 || entryTime < -5 || entryTime > 0) {
+    if(exitTime < 0 || entryTime < -2 || entryTime > 0) {
         dir = NONE;
         time = 1;
     } else {
@@ -123,6 +123,8 @@ void Collision::solve() {
             switch(dir) {
                 case LEFT:
                 case RIGHT:
+                    if(dir == LEFT && relSpeed.x < 0 || dir == RIGHT && relSpeed.x > 0) break;
+
                     fixA = {speedA.x * time, 0};
                     fixB = {speedB.x * time, 0};
 
@@ -136,6 +138,8 @@ void Collision::solve() {
                     break;
                 case UP:
                 case DOWN:
+                    if(dir == UP && relSpeed.y < 0 || dir == DOWN && relSpeed.y > 0) break;
+
                     fixA = {0, speedA.y * time};
                     fixB = {0, speedB.y * time};
 
