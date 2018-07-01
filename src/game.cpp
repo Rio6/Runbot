@@ -256,7 +256,7 @@ void Game::doTick() {
             cameraY /= 2;
 
         // Make game go faster
-        if(tick % 1000 == 0) speed += 0.5;
+        if(distance % 800 == 0) speed += 0.1;
     } else {
         cameraY *= .95;
     }
