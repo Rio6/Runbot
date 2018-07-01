@@ -13,7 +13,7 @@
 
 using runbot::Shooter;
 
-const float Shooter::SPEED_FACTOR = 5;
+const float Shooter::SPEED_FACTOR = 10;
 
 Shooter::Shooter(Game *game, Vector<int> pos) :
     Object(pos, {game->speed, 0}, {.minPos = pos, .maxPos = pos + Vector<int>{Shooter::W, Shooter::H}}),
@@ -76,10 +76,10 @@ void Shooter::doTick(int tick) {
     int diff = highestY - (pos.y + Shooter::H + 20);
     if(diff < 0) {
         if(speed.y > 0 || (diff < -10 && speed.y > -game->speed))
-            speed.y -= 1 / SPEED_FACTOR;
+            speed.y -= game->speed / SPEED_FACTOR;
     } else if(diff > 0) {
         if(speed.y < 0 || (diff > 10 && speed.y < game->speed))
-            speed.y += 1 / SPEED_FACTOR;
+            speed.y += game->speed / SPEED_FACTOR;
     }
 
     pos += speed;
