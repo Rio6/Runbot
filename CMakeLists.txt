@@ -3,7 +3,7 @@ project(runbot)
 set(VERSION 0.3.1)
 
 # Set flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -Wall")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O2 -Wall -Wno-parentheses")
 
 # Add sources
 file(GLOB sources "src/*.cpp")
