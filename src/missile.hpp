@@ -31,10 +31,14 @@ namespace runbot {
             Type getType();
 
         private:
+            // Only use 1 channel for all missiles
+            static int soundCh;
+            static int missileCount;
+
             Game *game;
             Animation anim;
-            int soundCh = -1;
             bool dead = false;
+            bool active = false;
     };
 };
 

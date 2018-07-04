@@ -17,6 +17,9 @@
 
 using runbot::Missile;
 
+int Missile::soundCh = -1;
+int Missile::missileCount = 0;
+
 Missile::Missile(Game *game, Vector<int> pos) :
     Object(pos, {-game->speed, 0}, {
             .minPos = pos + Vector<int>{10, 0},
@@ -28,10 +31,16 @@ Missile::Missile(Game *game, Vector<int> pos) :
 }
 
 Missile::~Missile() {
-    if(!dead && pos.x < game->distance + Game::W) // Not dead && was in screen
-        Mix_FadeOutChannel(soundCh, 1000);
-    else
-        Mix_HaltChannel(soundCh);
+    if(active) {
+        if(missileCount == 1) {
+            if(!dead && pos.x < game->distance + Game::W) // Not dead && was in screen
+                Mix_FadeOutChannel(soundCh, 1000);
+            else
+                Mix_HaltChannel(soundCh);
+            soundCh = -1;
+        }
+        missileCount--; // Only count missiles that are making sounds
+    }
 }
 
 void Missile::draw() {
@@ -45,6 +54,11 @@ void Missile::doTick(int tick) {
     // Play the missile sound
     if(soundCh < 0) {
         soundCh = Mix_FadeInChannel(-1, Media::get<Mix_Chunk*>("missile.wav"), -1, 1000);
+    }
+
+    if(!active) {
+        missileCount++; // Only count missiles that are making sounds
+        active = true;
     }
 
     pos += speed;
