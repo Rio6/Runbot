@@ -5,7 +5,7 @@
 APP_STL := c++_shared
 APP_CPPFLAGS += -std=gnu++14 -fexceptions -frtti -Wno-parentheses
 
-APP_ABI := armeabi armeabi-v7a x86
+APP_ABI := armeabi armeabi-v7a x86 x86_64
 
 # Min SDK level
 APP_PLATFORM=android-14
