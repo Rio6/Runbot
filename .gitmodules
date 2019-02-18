@@ -1,0 +1,3 @@
+[submodule "src/Runbot"]
+	path = src/Runbot
+	url = https://github.com/Rio6/Runbot
