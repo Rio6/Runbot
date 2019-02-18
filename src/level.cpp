@@ -8,7 +8,13 @@
 #include <string>
 #include <utility>
 
+#include "SDL_platform.h"
+
+#ifdef __IPHONEOS__
+#include "json.hpp"
+#else
 #include "nlohmann/json.hpp"
+#endif
 
 #include "level.hpp"
 #include "game.hpp"

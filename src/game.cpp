@@ -164,6 +164,7 @@ void Game::processEvents() {
                         break;
                 }
                 break;
+#ifndef __IPHONEOS__
             case SDL_MOUSEMOTION:
                 cursor.x = eve.motion.x;
                 cursor.y = eve.motion.y;
@@ -185,6 +186,7 @@ void Game::processEvents() {
                     menu->onMouse(pos, true);
                 }
                 break;
+#endif
             case SDL_APP_WILLENTERBACKGROUND:
                 if(state == RUNNING)
                     setState(PAUSED);
