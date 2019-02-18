@@ -43,6 +43,7 @@
 		288663DB221A57FA0003D6F7 /* libSDL2_image.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 288663CD221A56610003D6F7 /* libSDL2_image.a */; };
 		288663DD221A582C0003D6F7 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288663DC221A582C0003D6F7 /* ImageIO.framework */; };
 		288663E1221A58630003D6F7 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288663E0221A58630003D6F7 /* MobileCoreServices.framework */; };
+		288663EB221A5E300003D6F7 /* assets in Resources */ = {isa = PBXBuildFile; fileRef = 288663EA221A5E300003D6F7 /* assets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -188,6 +189,7 @@
 		288663DC221A582C0003D6F7 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		288663DE221A583A0003D6F7 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		288663E0221A58630003D6F7 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		288663EA221A5E300003D6F7 /* assets */ = {isa = PBXFileReference; lastKnownFileType = folder; name = assets; path = src/Runbot/assets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +226,7 @@
 				288662F3221A44420003D6F7 /* libSDL2.a */,
 				28866246221A43E10003D6F7 /* include */,
 				28866210221A435D0003D6F7 /* src */,
+				288663EA221A5E300003D6F7 /* assets */,
 				288661F9221A42DF0003D6F7 /* Runbot */,
 				288661F8221A42DF0003D6F7 /* Products */,
 				288662F5221A44670003D6F7 /* Frameworks */,
@@ -461,6 +464,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				288663EB221A5E300003D6F7 /* assets in Resources */,
 				28866207221A42E00003D6F7 /* LaunchScreen.storyboard in Resources */,
 				28866204221A42E00003D6F7 /* Assets.xcassets in Resources */,
 				28866202221A42DF0003D6F7 /* Main.storyboard in Resources */,
